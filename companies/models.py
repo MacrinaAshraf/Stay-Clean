@@ -8,7 +8,7 @@ from datetime import datetime
 
 # Create your models here.
 def get_image_name(instance, filename):
-    # title = instance.project.title
+    # title = instance.companies.title
     now = datetime.now()
     title = now.strftime("%H:%M:%S")
     slug = slugify(title)
