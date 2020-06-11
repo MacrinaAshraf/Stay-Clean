@@ -1,9 +1,7 @@
 from django.db import models
 from django.template.defaultfilters import slugify
-# from users.models import Users
+from users.models import Users
 from datetime import datetime
-
-
 
 
 # Create your models here.
@@ -12,13 +10,13 @@ def get_image_name(instance, filename):
     now = datetime.now()
     title = now.strftime("%H:%M:%S")
     slug = slugify(title)
-    return "companies/images/%s-%s" % (slug, filename)
+    return "programs/images/%s-%s" % (slug, filename)
 
 
 class Companies(models.Model):
     name = models.TextField(max_length=200)
     description = models.TextField(max_length=500)
-    logo = models.ImageField(upload_to=get_image_name, verbose_name='Company Image')
+    logo = models.ImageField(upload_to='companies/images', verbose_name='Company Image')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -26,7 +24,7 @@ class Companies(models.Model):
         return self.name
 
 
-class CompanyContacts(models.Model):
+class Company_Contacts(models.Model):
     company = models.ForeignKey(
         'Companies', null=True, on_delete=models.CASCADE)
     contact_info = models.CharField(max_length=255)
@@ -76,11 +74,9 @@ class Programs(models.Model):
         return self.name
 
 
-class ProgramPhotos(models.Model):
+class Program_Photos(models.Model):
     program = models.ForeignKey(
         'Programs', null=True, on_delete=models.CASCADE)
     image = models.ImageField(upload_to=get_image_name, verbose_name='Program Image')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
- 
