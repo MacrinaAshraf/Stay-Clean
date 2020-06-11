@@ -1,11 +1,16 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 # from users.models import Users
+from datetime import datetime
+
+
 
 
 # Create your models here.
 def get_image_name(instance, filename):
-    title = instance.project.title
+    # title = instance.companies.title
+    now = datetime.now()
+    title = now.strftime("%H:%M:%S")
     slug = slugify(title)
     return "companies/images/%s-%s" % (slug, filename)
 
@@ -78,3 +83,4 @@ class ProgramPhotos(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+ 

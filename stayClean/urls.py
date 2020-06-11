@@ -20,9 +20,11 @@ from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('company/', include('companies.urls', namespace='companies')),
+   
 ]
 
 urlpatterns += staticfiles_urlpatterns()

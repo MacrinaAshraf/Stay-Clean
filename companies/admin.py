@@ -1,3 +1,9 @@
 from django.contrib import admin
+from .models import Programs
+from .models import Companies
 
-# Register your models here.
+admin.site.register(Programs)
+admin.site.register(Companies)
+
+
+
