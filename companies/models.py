@@ -44,17 +44,21 @@ class Company_Contacts(models.Model):
 #         return self.phone_number
 
 
-# class CompanyUserMessages(models.Model):
-#     company = models.ForeignKey(
-#         'Companies', null=True, on_delete=models.CASCADE)
-#     company = models.ForeignKey(
-#         'Companies', null=True, on_delete=models.CASCADE)
-#     message = models.TextField()
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-#
-#     def __str__(self):
-#         return self.message
+class CompanyUserMessages(models.Model):
+    company = models.ForeignKey(
+        'Companies', null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        Users, null=True, on_delete=models.CASCADE)
+    message = models.TextField()
+    sender = models.CharField(max_length=1, choices=(
+        ('C', 'company'),
+        ('U', 'user'),
+    ))
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.message
 
 
 class Programs(models.Model):
@@ -77,3 +81,16 @@ class Program_Photos(models.Model):
     image = models.ImageField(upload_to=get_image_name, verbose_name='Program Image')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+class Program_Reviews(models.Model):
+    program = models.ForeignKey(
+        'Programs', null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        Users, null=True, on_delete=models.CASCADE)
+    review = models.TextField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return "%s:%s" % (self.user, self.review)
