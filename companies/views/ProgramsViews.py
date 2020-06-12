@@ -1,4 +1,4 @@
-from companies.models import Programs, Program_Reviews, Users
+from companies.models import Programs, Program_Reviews, Users, Program_Photos
 from companies.serializers.ProgramSerializers import ProgramSerializer, ReviewSerializer
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -35,6 +35,7 @@ def ProgramList(request):
 def ProgramDetail(request, pk):
     try:
         program = Programs.objects.get(pk=pk)
+       
     except Programs.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -51,8 +52,8 @@ def ProgramDetail(request, pk):
 
     elif request.method == 'GET':
         data = Programs.objects.get(pk=pk)
-
-        serializer = ProgramSerializer(data, context={'request': request})
+        photo = Program_Photos.objects.filter(data=data)
+        serializer = ProgramSerializer(data,photo, context={'request': request})
 
         return Response(serializer.data)
 

@@ -68,6 +68,7 @@ class Programs(models.Model):
     description = models.TextField(max_length=500)
     duration = models.IntegerField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
+    image = models.FileField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
