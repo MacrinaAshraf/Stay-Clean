@@ -1,6 +1,6 @@
-from companies.models import Programs, Program_Reviews, Users, Companies
+from companies.models import Programs, Program_Reviews, Users, Companies, CompanyUserMessages
 from companies.serializers.ProgramSerializers import ProgramSerializer, ReviewSerializer
-from companies.serializers.CompanySerializers import CompanySerializer
+from companies.serializers.CompanySerializers import CompanySerializer, MessageSerializer
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -53,3 +53,34 @@ def Home(request):
             'mostTalk': None
         }
         return Response(content, status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['POST'])
+def sendMessage(request):
+        try:
+            company = Companies.objects.get(id=request.POST['company_id'])
+            user = Users.objects.get(id=request.POST['user_id'])
+            sender = request.POST['sender']
+            new_message = CompanyUserMessages(
+                company_id=company.id,
+                user_id=user.id,
+                sender=sender,
+                message=request.POST.get('message'))
+
+            new_message.save()
+            return Response(status=status.HTTP_201_CREATED)
+
+        except company.DoesNotExist:
+            return Response(new_message.errors, status=status.HTTP_400_BAD_REQUEST)
+        except user.DoesNotExist:
+            return Response(new_message.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def getMessage(request, id):
+    message = CompanyUserMessages.objects.get(id=id)
+    serializer = MessageSerializer(
+        message,
+        context={'request': request},
+        )
+    return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
