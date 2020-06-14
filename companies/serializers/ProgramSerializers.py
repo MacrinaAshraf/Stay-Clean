@@ -4,13 +4,11 @@ from companies.models import Programs, Program_Reviews
 
 class ProgramSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Programs 
+        model = Programs
         fields = ('pk', 'name', 'description', 'duration', 'price', 'created_at', 'updated_at')
-
 
     def __str__(self):
         return self.name
-
 
 
 class ReviewSerializer(serializers.ModelSerializer):

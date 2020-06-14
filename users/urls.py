@@ -10,7 +10,7 @@ app_name = 'users'
 urlpatterns = [
     path('', test, name='home'),
     path('register', register_view, name='register'),
-    path('activate/<uidb64>/<time>',activate, name='activate'),
+    path('activate/<uidb64>/<time>', activate, name='activate'),
     path('login', login_view, name='login'),
     # path('logout', logout_view, name='logout'),
 ]
