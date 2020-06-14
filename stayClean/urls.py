@@ -18,11 +18,13 @@ from django.urls import path, include
 from django.conf import settings
 from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from .views import Home
+from .views import Home, sendMessage, getMessage
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('company/', include('companies.urls', namespace='companies')),
     path('user/', include('users.urls', namespace='users')),
+    path('send-message/', sendMessage),
+    path('get-message/<int:id>', getMessage),
     path('', Home),
 
 ]
