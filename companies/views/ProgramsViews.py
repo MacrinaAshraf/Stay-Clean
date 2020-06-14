@@ -125,12 +125,9 @@ def SelectedProgram(request, pk ):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'PUT':
-        print(request.data)
-        serializer = SelectedProgramSerializer( selectedprogram, data=request.data, context={'request': request})
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        newrate = Selected_Programs.objects.filter(pk=pk).update(rate=request.data['rate'])
+        return Response(status=status.HTTP_200_OK)
+       
 
     elif request.method == 'GET':
         data = get_object_or_404(Selected_Programs, pk=pk)
