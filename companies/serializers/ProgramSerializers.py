@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from companies.models import Programs, Program_Reviews
+from companies.models import Programs, Program_Reviews, Selected_Programs
 
 
 class ProgramSerializer(serializers.ModelSerializer):
@@ -23,3 +23,15 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     def __str__(self):
         return self.review
+
+class SelectedProgramSerializer(serializers.ModelSerializer):
+    user = serializers.RelatedField(source='Users', read_only=True)
+    program = serializers.RelatedField(source='Programs', read_only=True)
+
+    class Meta:
+        model = Selected_Programs
+        fields = ('pk', 'program', 'user', 'rate','notes','address', 'created_at', 'updated_at')
+
+    def __str__(self):
+        return self.rate
+        

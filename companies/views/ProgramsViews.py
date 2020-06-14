@@ -1,8 +1,9 @@
-from companies.models import Programs, Program_Reviews, Users, Program_Photos
-from companies.serializers.ProgramSerializers import ProgramSerializer, ReviewSerializer
+from companies.models import Programs, Program_Reviews, Users, Program_Photos, Selected_Programs
+from companies.serializers.ProgramSerializers import ProgramSerializer, ReviewSerializer, SelectedProgramSerializer
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 
 
 # class ProgramList(generics.ListCreateAPIView):
@@ -51,13 +52,14 @@ def ProgramDetail(request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     elif request.method == 'GET':
-        data = Programs.objects.get(pk=pk)
-        photo = Program_Photos.objects.filter(data=data)
-        serializer = ProgramSerializer(data,photo, context={'request': request})
+        data = get_object_or_404(Programs, pk=pk)
+        photo = Program_Photos.objects.filter(program=program)
+        serializer = ProgramSerializer(data, context={'request': request})
 
         return Response(serializer.data)
 
 
+    
 @api_view(['POST'])
 def ProgramReviewList(request):
     try:
@@ -96,3 +98,42 @@ def ProgramReview(request, pk):
 
         except review.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET', 'POST'])
+def SelectedProgramList(request):
+    if request.method == 'GET':
+        data =Selected_Programs.objects.all()
+
+        serializer = SelectedProgramSerializer(data, context={'request': request}, many=True)
+
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = SelectedProgramSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET','PUT'])
+def SelectedProgram(request, pk ):
+    try:
+       selectedprogram = Selected_Programs.objects.get(pk=pk)
+       
+    except Selected_Programs.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'PUT':
+        print(request.data)
+        serializer = SelectedProgramSerializer( selectedprogram, data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'GET':
+        data = get_object_or_404(Selected_Programs, pk=pk)
+        serializer = SelectedProgramSerializer(data, context={'request': request})
+
+        return Response(serializer.data)

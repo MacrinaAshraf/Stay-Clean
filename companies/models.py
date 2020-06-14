@@ -68,7 +68,7 @@ class Programs(models.Model):
     description = models.TextField(max_length=500)
     duration = models.IntegerField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    image = models.FileField(blank=True)
+    image = models.ImageField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -83,6 +83,8 @@ class Program_Photos(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.program.name
 
 class Program_Reviews(models.Model):
     program = models.ForeignKey(
@@ -95,3 +97,24 @@ class Program_Reviews(models.Model):
 
     def __str__(self):
         return "%s:%s" % (self.user, self.review)
+
+class Selected_Programs(models.Model):
+    program = models.ForeignKey(
+        'Programs', null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        Users, null=True, on_delete=models.CASCADE)
+    rate = models.IntegerField(max_length=5, choices=(
+        (1,'1'),
+        (2,'2'),
+        (3,'3'),
+        (4,'4'),
+        (5,'5'),
+    ))
+    notes = models.TextField(max_length=500)
+    address = models.TextField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return "%s:%s" % (self.user, self.rate)
+
