@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'rest_framework.authtoken',
+    # 'rest_framework.authtoken',
     'companies',
     'users'
 ]
@@ -136,14 +136,14 @@ CORS_ORIGIN_WHITELIST = (
 )
 
 # Rest permission
-# REST_FRAMEWORK = {
-#     'DEFAULT_PERMISSION_CLASSES': (
-#         'rest_framework.permissions.IsAuthenticated',
-#         ),
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'authentication.backends.JWTAuthentication',
-#         )
-# }
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+        ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'users.backends.JWTAuthentication',
+        )
+}
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_PERMISSION_CLASSES': [

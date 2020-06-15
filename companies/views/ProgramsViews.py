@@ -19,7 +19,7 @@ class ProgramView(APIView):
     permission_classes = (IsAuthenticated,)
 
     @api_view(['GET', 'POST'])
-    def ProgramList(self, request):
+    def ProgramList(request):
         if request.method == 'GET':
             data = Programs.objects.all()
 
@@ -36,7 +36,7 @@ class ProgramView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @api_view(['PUT', 'DELETE', 'GET'])
-    def ProgramDetail(self, request, pk):
+    def ProgramDetail(request, pk):
         try:
             program = Programs.objects.get(pk=pk)
 
@@ -62,7 +62,7 @@ class ProgramView(APIView):
             return Response(serializer.data)
 
     @api_view(['POST'])
-    def ProgramReviewList(self, request):
+    def ProgramReviewList(request):
         try:
             program = Programs.objects.get(id=request.POST['program_id'])
             user = Users.objects.get(id=request.POST['user_id'])
@@ -80,7 +80,7 @@ class ProgramView(APIView):
             return Response(new_review.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @api_view(['DELETE', 'GET'])
-    def ProgramReview(self, request, pk):
+    def ProgramReview(request, pk):
         if request.method == 'GET':
             reviews = Program_Reviews.objects.all().filter(program_id=pk)
             serializer = ReviewSerializer(
@@ -99,7 +99,7 @@ class ProgramView(APIView):
                 return Response(status=status.HTTP_404_NOT_FOUND)
 
     @api_view(['GET', 'POST'])
-    def SelectedProgramList(self, request):
+    def SelectedProgramList(request):
         if request.method == 'GET':
             data = Selected_Programs.objects.all()
 
@@ -116,7 +116,7 @@ class ProgramView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @api_view(['GET', 'PUT'])
-    def SelectedProgram(self, request, pk):
+    def SelectedProgram(request, pk):
         try:
             selectedprogram = Selected_Programs.objects.get(pk=pk)
 

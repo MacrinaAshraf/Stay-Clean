@@ -12,7 +12,7 @@ class CompanyView(APIView):
     permission_classes = (IsAuthenticated,)
 
     @api_view(['GET'])
-    def send(self, request, pk):
+    def send(request, pk):
         messages = CompanyUserMessages.objects.filter(company_id=pk, sender='C')
         serializer = MessageSerializer(
             messages,
@@ -21,7 +21,7 @@ class CompanyView(APIView):
         return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
 
     @api_view(['GET'])
-    def receive(self, request, pk):
+    def receive(request, pk):
         messages = CompanyUserMessages.objects.filter(company_id=pk, sender='U')
         serializer = MessageSerializer(
             messages,
@@ -30,7 +30,7 @@ class CompanyView(APIView):
         return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
 
     @api_view(['GET', 'POST'])
-    def companies(self, request):
+    def companies(request):
         if request.method == 'GET':
             data = Companies.objects.all()
 
