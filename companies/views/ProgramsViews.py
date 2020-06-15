@@ -134,3 +134,15 @@ def SelectedProgram(request, pk ):
         serializer = SelectedProgramSerializer(data, context={'request': request})
 
         return Response(serializer.data)
+
+
+@api_view(['GET'])    
+def  CompanyProgram(request,cpk , ppk):
+
+    if request.method == 'GET':
+
+        userselect =get_object_or_404(Programs,company_id=cpk , id=ppk)
+        serializer = ProgramSerializer(userselect, context={'request': request})
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    
