@@ -4,12 +4,12 @@ from companies.serializers.CompanySerializers import MessageSerializer, CompanyS
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView
 
 
 class CompanyView(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     @api_view(['GET'])
     def send(request, pk):

@@ -29,13 +29,12 @@ class TabsSection extends React.Component {
   render() {
     return (
       <>
-        <h3 className="h4 text-success font-weight-bold mb-4">Tabs</h3>
         <Row className="justify-content-center">
           <Col lg="6">
             {/* Tabs with icons */}
             <div className="mb-3">
               <small className="text-uppercase font-weight-bold">
-                With icons
+                Most Selected Programs
               </small>
             </div>
             <div className="nav-wrapper">
@@ -55,8 +54,7 @@ class TabsSection extends React.Component {
                     href="#pablo"
                     role="tab"
                   >
-                    <i className="ni ni-cloud-upload-96 mr-2" />
-                    Home
+                    Program 1
                   </NavLink>
                 </NavItem>
                 <NavItem>
@@ -69,8 +67,7 @@ class TabsSection extends React.Component {
                     href="#pablo"
                     role="tab"
                   >
-                    <i className="ni ni-bell-55 mr-2" />
-                    Profile
+                    Program 2
                   </NavLink>
                 </NavItem>
                 <NavItem>
@@ -83,8 +80,7 @@ class TabsSection extends React.Component {
                     href="#pablo"
                     role="tab"
                   >
-                    <i className="ni ni-calendar-grid-58 mr-2" />
-                    Messages
+                    Program 3
                   </NavLink>
                 </NavItem>
               </Nav>
@@ -127,11 +123,12 @@ class TabsSection extends React.Component {
               </CardBody>
             </Card>
           </Col>
+
           <Col className="mt-5 mt-lg-0" lg="6">
             {/* Menu */}
             <div className="mb-3">
               <small className="text-uppercase font-weight-bold">
-                With text
+                Most Reviews in
               </small>
             </div>
             <div className="nav-wrapper">
@@ -151,7 +148,8 @@ class TabsSection extends React.Component {
                     href="#pablo"
                     role="tab"
                   >
-                    Home
+                                        Program 1
+
                   </NavLink>
                 </NavItem>
                 <NavItem>
@@ -164,7 +162,8 @@ class TabsSection extends React.Component {
                     href="#pablo"
                     role="tab"
                   >
-                    Profile
+                                        Program 2
+
                   </NavLink>
                 </NavItem>
                 <NavItem>
@@ -177,7 +176,8 @@ class TabsSection extends React.Component {
                     href="#pablo"
                     role="tab"
                   >
-                    Messages
+                    Program 3
+
                   </NavLink>
                 </NavItem>
               </Nav>
@@ -220,6 +220,8 @@ class TabsSection extends React.Component {
               </CardBody>
             </Card>
           </Col>
+
+
         </Row>
       </>
     );

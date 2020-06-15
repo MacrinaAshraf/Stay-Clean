@@ -1,6 +1,6 @@
 from companies.models import Programs, Program_Reviews, Users, Program_Photos, Selected_Programs
 from companies.serializers.ProgramSerializers import ProgramSerializer, ReviewSerializer, SelectedProgramSerializer
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
@@ -16,7 +16,7 @@ from django.shortcuts import get_object_or_404
 #     queryset = Programs.objects.all()
 #     serializer_class = ProgramSerializer
 class ProgramView(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     @api_view(['GET', 'POST'])
     def ProgramList(request):
@@ -131,5 +131,15 @@ class ProgramView(APIView):
         elif request.method == 'GET':
             data = get_object_or_404(Selected_Programs, pk=pk)
             serializer = SelectedProgramSerializer(data, context={'request': request})
+        return Response(serializer.data)
 
-            return Response(serializer.data)
+
+    @api_view(['GET'])
+    def  CompanyProgram(request,cpk , ppk):
+
+        if request.method == 'GET':
+
+            userselect =get_object_or_404(Programs,company_id=cpk , id=ppk)
+            serializer = ProgramSerializer(userselect, context={'request': request})
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
