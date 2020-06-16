@@ -33,17 +33,6 @@ class Company_Contacts(models.Model):
         return self.url
 
 
-# class CompanyNumbers(models.Model):
-#     company = models.ForeignKey(
-#         'Companies', null=True, on_delete=models.CASCADE)
-#     phone_number = models.CharField(max_length=11)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-#
-#     def __str__(self):
-#         return self.phone_number
-
-
 class CompanyUserMessages(models.Model):
     company = models.ForeignKey(
         'Companies', null=True, on_delete=models.CASCADE)
@@ -68,7 +57,6 @@ class Programs(models.Model):
     description = models.TextField(max_length=500)
     duration = models.IntegerField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    image = models.ImageField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -86,6 +74,7 @@ class Program_Photos(models.Model):
     def __str__(self):
         return self.program.name
 
+
 class Program_Reviews(models.Model):
     program = models.ForeignKey(
         'Programs', null=True, on_delete=models.CASCADE)
@@ -98,12 +87,13 @@ class Program_Reviews(models.Model):
     def __str__(self):
         return "%s:%s" % (self.user, self.review)
 
+
 class Selected_Programs(models.Model):
     program = models.ForeignKey(
         'Programs', null=True, on_delete=models.CASCADE)
     user = models.ForeignKey(
         Users, null=True, on_delete=models.CASCADE)
-    rate = models.IntegerField(max_length=5, choices=(
+    rate = models.IntegerField(choices=(
         (1,'1'),
         (2,'2'),
         (3,'3'),

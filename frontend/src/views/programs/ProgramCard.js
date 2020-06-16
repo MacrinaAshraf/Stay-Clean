@@ -6,9 +6,6 @@ import { Container, Row, Col, Button, Badge, Card, CardBody } from "reactstrap";
     const ProgramCard = (props) =>{
         return (
         
-         
-                 
-                  
                   <Col lg="4">
                     <Card className="card-lift--hover shadow border-0">
                       <CardBody className="py-5">
@@ -22,7 +19,7 @@ import { Container, Row, Col, Button, Badge, Card, CardBody } from "reactstrap";
                          {props.program.description}
                         </p>
                         <div>
-                          <Badge color="info" pill className="mr-1">
+                          <Badge color="info" pill className="mr-1  ">
                             {props.program.price} $
                           </Badge>
                           <Badge color="info" pill className="mr-1">
@@ -31,25 +28,8 @@ import { Container, Row, Col, Button, Badge, Card, CardBody } from "reactstrap";
                           <Badge color="info" pill className="mr-1">
                           info
                           </Badge>
-                        </div>
-                        <Button
-                          className="mt-4"
-                          color="info" 
-                          outline type="button"
-                          href="#pablo"
-                          onClick={e => e.preventDefault()}
-                        >
-                          UPDATE
-                        </Button>
-                        <Button
-                          className="mt-4"
-                          color="info"
-                           outline type="button"
-                          href="#pablo"
-                          onClick={e => e.preventDefault()}
-                        >
-                         DELETE
-                        </Button>
+                        </div> 
+                       {props.children}
                       </CardBody>
                     </Card>
                   </Col>

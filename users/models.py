@@ -1,3 +1,7 @@
+from datetime import timedelta, datetime
+
+import jwt
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.validators import RegexValidator
@@ -14,8 +18,8 @@ class MyUserManger(BaseUserManager):
             raise ValueError('User must have a last name...')
         if not phone:
             raise ValueError('User must have a phone...')
-        if not photo:
-            raise ValueError('User must have a photo...')
+        # if not photo:
+        #     raise ValueError('User must have a photo...')
 
         user = self.model(email=self.normalize_email(email), first_name=first_name, last_name=last_name, phone=phone,
                           photo=photo)
@@ -69,3 +73,36 @@ class Users(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
+
+    @property
+    def token(self):
+        """
+        Allows us to get a user's token by calling `user.token` instead of
+        `user.generate_jwt_token().
+
+        The `@property` decorator above makes this possible. `token` is called
+        a "dynamic property".
+        """
+        return self._generate_jwt_token()
+
+    def get_name(self):
+        """
+        This method is required by Django for things like handling emails.
+        Typically this would be the user's first and last name. Since we do
+        not store the user's real name, we return their username instead.
+        """
+        return self.first_name
+
+    def _generate_jwt_token(self):
+        """
+        Generates a JSON Web Token that stores this user's ID and has an expiry
+        date set to 60 days into the future.
+        """
+        dt = datetime.now() + timedelta(days=60)
+
+        token = jwt.encode({
+            'id': self.pk,
+            'exp': int(dt.strftime('%s'))
+        }, settings.SECRET_KEY, algorithm='HS256')
+
+        return token.decode('utf-8')
