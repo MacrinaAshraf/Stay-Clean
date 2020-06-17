@@ -26,13 +26,11 @@ class CompanySerializer(serializers.ModelSerializer):
 
 
 class MessageSerializer(serializers.ModelSerializer):
-    # company_id = serializers.RelatedField(source='Companies', read_only=True)
-    # user_id = serializers.RelatedField(source='Users', read_only=True)
+
     created_at = SerializerMethodField()
 
     class Meta:
         model = CompanyUserMessage
-        # fields = ('id', 'message', 'sender',  'created_at', 'updated_at', 'company_id', 'user_id')
         exclude = ['updated_at']
 
     def get_created_at(self, obj):

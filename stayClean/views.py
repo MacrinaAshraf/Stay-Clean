@@ -16,16 +16,6 @@ def Home(request):
     programs = Program.objects.all()
 
 
-# =======
-# def all_companies(request):
-#     companies = Companies.objects.all()
-#     serializer = CompanySerializer(companies, context={'request': request}, many=True)
-#     content = {
-#         'all_companies': serializer.data,
-#     }
-#     return Response(content, status=status.HTTP_200_OK)
-
-
 @api_view(['GET'])
 def most_selected_program(request):
     programs = Program.objects.all()

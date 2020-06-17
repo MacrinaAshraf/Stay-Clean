@@ -86,6 +86,17 @@ class ProgramPhotoSerializer(serializers.ModelSerializer):
         return obj.get_absolute_url()
 
 
+def get_average_rate(program):
+    print(program)
+    rate_sum = 0
+    program_lists = SelectedProgram.objects.filter(program=program)
+
+    for program_list in program_lists:
+        rate_sum = rate_sum + program_list.rate
+    avg_rate = rate_sum / len(program_lists)
+    return avg_rate
+
+
 class SelectedProgramSerializer(serializers.ModelSerializer):
     created_at = SerializerMethodField()
 
@@ -98,20 +109,24 @@ class SelectedProgramSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         customer = get_object_or_404(Customer, user=self.context['request'].user)
-        selected_program = ProgramReview.objects.create(
+        selected_program = SelectedProgram.objects.create(
             customer=customer,
             program=validated_data.get('program'),
             company=validated_data.get('company'),
-            rate=validated_data.get('rate'),
+            rate=validated_data.get('rate', 0),
             address=validated_data.get('address')
         )
         return selected_program
 
     def update(self, instance, validated_data):
         SelectedProgram.objects.filter(pk=instance.pk).update(**validated_data)
+        selected_program = SelectedProgram.objects.filter(pk=instance.pk).first()
+        avg_rate = get_average_rate(selected_program.program)
+        Program.objects.filter(pk=selected_program.program.pk).update(avgRate=avg_rate)
         return SelectedProgram.objects.filter(pk=instance.pk).first()
 
     def delete(self, request, pk):
         selected_program = SelectedProgram.objects.get(pk=pk)
         selected_program.delete()
         return Response(status=status.HTTP_200_OK)
+

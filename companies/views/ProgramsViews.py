@@ -43,7 +43,7 @@ class SelectedProgramView(viewsets.ModelViewSet):
 
     def get_object(self):
         return get_object_or_404(
-            ProgramReview,
+            SelectedProgram,
             pk=self.kwargs.get('pk')
         )
 

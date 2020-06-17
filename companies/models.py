@@ -47,11 +47,13 @@ class Program(models.Model):
     description = models.TextField(max_length=500)
     duration = models.IntegerField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
+    avgRate = models.DecimalField(default=0.0, max_digits=2, decimal_places=1)
+    is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return self.name
+    # def __str__(self):
+    #     return self.name
 
 
 class ProgramPhoto(models.Model):
@@ -78,9 +80,6 @@ class ProgramReview(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return "%s:%s" % (self.user, self.review)
-
 
 class SelectedProgram(models.Model):
     program = models.ForeignKey(
@@ -90,6 +89,7 @@ class SelectedProgram(models.Model):
     company = models.ForeignKey(
         Company, null=True, on_delete=models.CASCADE)
     rate = models.IntegerField(choices=(
+        (0, '0'),
         (1, '1'),
         (2, '2'),
         (3, '3'),

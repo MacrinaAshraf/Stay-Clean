@@ -76,6 +76,7 @@ class Company(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(max_length=500)
     logo = models.ImageField(upload_to='companies/images', verbose_name='Company Image')
+    address = models.CharField(max_length=300)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -99,42 +100,3 @@ def create_user_profile(sender, instance, created, **kwargs):
             Customer.objects.create(user=instance)
         Token.objects.create(user=instance)
 
-    # @receiver(post_save, sender=User)
-    # def save_user_profile(sender, instance, **kwargs):
-    #     print('------')
-    #     # if instance.is_admin:
-    #     #     return
-    #     if not kwargs.get('created'):
-    #         if instance.is_company:
-    #             instance.company_profile.save()
-    #         else:
-    #             Customer.objects.get_or_create(user=instance)
-
-    # jwt functions
-    # @property
-    # def token(self):
-    #     """
-    #     Allows us to get a user's token by calling `user.token` instead of
-    #     `user.generate_jwt_token().
-    #
-    #     The `@property` decorator above makes this possible. `token` is called
-    #     a "dynamic property".
-    #     """
-    #     return self._generate_jwt_token()
-    #
-    # def _generate_jwt_token(self):
-    #     """
-    #     Generates a JSON Web Token that stores this user's ID and has an expiry
-    #     date set to 60 days into the future.
-    #     """
-    #     dt = datetime.now() + timedelta(days=60)
-    #
-    #     token = jwt.encode({
-    #         'id': self.pk,
-    #         'exp': int(dt.strftime('%s'))
-    #     }, settings.SECRET_KEY, algorithm='HS256')
-    #
-    #     return token.decode('utf-8')
-
-    # User piece
-    # REQUIRED_FIELDS = ['first_name', 'last_name', 'phone', 'photo']

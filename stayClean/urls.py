@@ -21,13 +21,15 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from rest_framework import routers
 from rest_framework.authtoken.views import obtain_auth_token
 
-from companies.views.ProgramsViews import ProgramView, ReviewView, ProgramPhotoView, RetDelUpProgramPhotoView
+from companies.views.ProgramsViews import ProgramView, ReviewView, ProgramPhotoView, RetDelUpProgramPhotoView, \
+    SelectedProgramView
 from companies.views.CompanyViews import ListCreateMessageView, RetrieveMessageView
 from .views import Home, most_review_program, most_selected_program
 
 router = routers.SimpleRouter()
 router.register('programs', ProgramView)
 router.register('reviews', ReviewView)
+router.register('selected', SelectedProgramView)
 # router.register('photo', ProgramPhotoView.as_view())
 
 
