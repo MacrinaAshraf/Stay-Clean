@@ -2,14 +2,14 @@ from django.urls import re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import url
-from .views import RegistrationAPIView
-from .views import LoginAPIView
+# from .views import RegistrationAPIView
+# from .views import LoginAPIView
 
 app_name = 'users'
 
 urlpatterns = [
-    re_path(r'^register/?$', RegistrationAPIView.as_view(), name='user_registration'),
-    re_path(r'^login/?$', LoginAPIView.as_view(), name='user_login'),
+    # re_path(r'^register/?$', RegistrationAPIView.as_view(), name='user_registration'),
+    # re_path(r'^login/?$', LoginAPIView.as_view(), name='user_login'),
 ]
 
 

@@ -1,23 +1,56 @@
 from rest_framework import serializers
-from companies.models import Companies, CompanyUserMessages
+from rest_framework.fields import SerializerMethodField
+from rest_framework.generics import get_object_or_404
+
+from companies.models import Company, CompanyUserMessage
+from users.models import Customer
 
 
 class CompanySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Companies
-        fields = ('id', 'name', 'description', 'logo', 'created_at', 'updated_at')
+    user = SerializerMethodField()
+    created_at = SerializerMethodField()
+    logo = SerializerMethodField()
 
-    def __str__(self):
-        return self.name
+    class Meta:
+        model = Company
+        fields = ('id', 'name', 'description', 'logo', 'created_at', 'user')
+
+    def get_user(self, obj):
+        return obj.user.email
+
+    def get_created_at(self, obj):
+        return obj.created_at.strftime("%d/%m/%Y %H:%M")
+
+    def get_logo(self, obj):
+        return obj.get_absolute_url()
 
 
 class MessageSerializer(serializers.ModelSerializer):
-    company_id = serializers.RelatedField(source='Companies', read_only=True)
-    user_id = serializers.RelatedField(source='Users', read_only=True)
+    # company_id = serializers.RelatedField(source='Companies', read_only=True)
+    # user_id = serializers.RelatedField(source='Users', read_only=True)
+    created_at = SerializerMethodField()
 
     class Meta:
-        model = CompanyUserMessages
-        fields = ('id', 'message', 'sender',  'created_at', 'updated_at', 'company_id', 'user_id')
+        model = CompanyUserMessage
+        # fields = ('id', 'message', 'sender',  'created_at', 'updated_at', 'company_id', 'user_id')
+        exclude = ['updated_at']
 
-    def __str__(self):
-        return self.message
+    def get_created_at(self, obj):
+        return obj.created_at.strftime("%d/%m/%Y %H:%M")
+
+    def create(self, validated_data):
+        if validated_data.get('sender') == 'U':
+            customer = get_object_or_404(Customer, user=self.context['request'].user)
+            company = validated_data.get('company')
+        elif validated_data.get('sender') == 'C':
+            company = get_object_or_404(Company, user=self.context['request'].user)
+            customer = validated_data.get('customer') # or user from frontend
+
+        message = CompanyUserMessage.objects.create(
+            customer=customer,
+            company=company,
+            message=validated_data.get('message'),
+            sender=validated_data.get('sender'),
+        )
+        return message
+

@@ -1,4 +1,4 @@
-from companies.models import Programs, Program_Reviews, Users, Companies, CompanyUserMessages
+from companies.models import Program, ProgramReview, User, Company, CompanyUserMessage
 from companies.serializers.ProgramSerializers import ProgramSerializer, ReviewSerializer
 from companies.serializers.CompanySerializers import CompanySerializer, MessageSerializer
 from rest_framework import status
@@ -10,17 +10,17 @@ import json
 
 @api_view(['GET'])
 def Home(request):
-    companies = Companies.objects.all()
+    companies = Company.objects.all()
     CSerializer = CompanySerializer(companies, context={'request': request}, many=True)
 
-    programs = Programs.objects.all();
+    programs = Program.objects.all()
 
     tempCount = -1
     tempID = -1
 
     if(programs.count() > 0):
         for prog in programs:
-            temp = Program_Reviews.objects.filter(program_id=prog.id).count()
+            temp = ProgramReview.objects.filter(program_id=prog.id).count()
             try:
                 if tempCount < temp:
                     tempCount = temp;
@@ -29,7 +29,7 @@ def Home(request):
                 print("")
 
         if (tempID != -1 ):
-            program = Programs.objects.get(id=tempID)
+            program = Program.objects.get(id=tempID)
 
             serializer = ProgramSerializer(
                 program,
@@ -55,32 +55,32 @@ def Home(request):
         return Response(content, status=status.HTTP_204_NO_CONTENT)
 
 
-@api_view(['POST'])
-def sendMessage(request):
-        try:
-            company = Companies.objects.get(id=request.POST['company_id'])
-            user = Users.objects.get(id=request.POST['user_id'])
-            sender = request.POST['sender']
-            new_message = CompanyUserMessages(
-                company_id=company.id,
-                user_id=user.id,
-                sender=sender,
-                message=request.POST.get('message'))
-
-            new_message.save()
-            return Response(status=status.HTTP_201_CREATED)
-
-        except company.DoesNotExist:
-            return Response(new_message.errors, status=status.HTTP_400_BAD_REQUEST)
-        except user.DoesNotExist:
-            return Response(new_message.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(['GET'])
-def getMessage(request, id):
-    message = CompanyUserMessages.objects.get(id=id)
-    serializer = MessageSerializer(
-        message,
-        context={'request': request},
-        )
-    return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
+# @api_view(['POST'])
+# def sendMessage(request):
+#         try:
+#             company = Company.objects.get(id=request.POST['company_id'])
+#             user = User.objects.get(id=request.POST['user_id'])
+#             sender = request.POST['sender']
+#             new_message = CompanyUserMessage(
+#                 company_id=company.id,
+#                 user_id=user.id,
+#                 sender=sender,
+#                 message=request.POST.get('message'))
+#
+#             new_message.save()
+#             return Response(status=status.HTTP_201_CREATED)
+#
+#         except company.DoesNotExist:
+#             return Response(new_message.errors, status=status.HTTP_400_BAD_REQUEST)
+#         except user.DoesNotExist:
+#             return Response(new_message.errors, status=status.HTTP_400_BAD_REQUEST)
+#
+#
+# @api_view(['GET'])
+# def getMessage(request, id):
+#     message = CompanyUserMessage.objects.get(id=id)
+#     serializer = MessageSerializer(
+#         message,
+#         context={'request': request},
+#         )
+#     return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)

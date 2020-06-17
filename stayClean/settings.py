@@ -26,7 +26,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-AUTH_USER_MODEL = 'users.Users'
+AUTH_USER_MODEL = 'users.User'
 
 # Application definition
 
@@ -37,9 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'corsheaders',
     'rest_framework',
-    # 'rest_framework.authtoken',
+    'rest_framework.authtoken',
     'companies',
     'users'
 ]
@@ -74,6 +75,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'stayClean.wsgi.application'
+
+SITE_ID = 1
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -136,12 +139,23 @@ CORS_ORIGIN_WHITELIST = (
 )
 
 # Rest permission
-REST_FRAMEWORK = {
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+#         ),
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'users.backends.JWTAuthentication',
+#         )
+# }
+
+REST_FRAMEWORK= {
+    'DEFAULT_AUTHENTICATION_CLASSES':(
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-        ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'users.backends.JWTAuthentication',
-        )
+        'rest_framework.permissions.IsAuthenticated',
+    )
+
 }
 
