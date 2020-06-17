@@ -11,6 +11,10 @@ import Landing from "views/examples/Landing.js";
 import Login from "views/examples/Login.js";
 import Profile from "views/examples/Profile.js";
 import Register from "views/examples/Register.js";
+import List from "views/programs/list.js";
+import Messages from "views/examples/Messages.js";
+import Program from "views/user/Program.js";
+import Company from "views/user/Company.js";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -31,6 +35,26 @@ ReactDOM.render(
         path="/register-page"
         exact
         render={props => <Register {...props} />}
+      />
+       <Route
+        path="/messages-page"
+        exact
+        render={props => <Messages {...props} />}
+      />
+      <Route
+        path="/program-page"
+        exact
+        render={props => <Program {...props} />}
+      />
+       <Route
+        path="/company-page"
+        exact
+        render={props => <Company {...props} />}
+      />
+        <Route
+        path="/list-programs-page"
+        exact
+        render={props => <List {...props} />}
       />
       <Redirect to="/" />
     </Switch>

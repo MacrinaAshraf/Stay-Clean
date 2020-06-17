@@ -23,11 +23,15 @@ from rest_framework.authtoken.views import obtain_auth_token
 
 from companies.views.ProgramsViews import ProgramView, ReviewView
 from companies.views.CompanyViews import ListCreateMessageView, RetrieveMessageView
-from .views import Home
+from .views import Home, most_review_program, most_selected_program
 
 router = routers.SimpleRouter()
 router.register('programs', ProgramView)
 router.register('reviews', ReviewView)
+
+# def all_companies(args):
+#     pass
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,6 +40,15 @@ urlpatterns = [
     path('message/', ListCreateMessageView.as_view()),
     path('message/<int:pk>', RetrieveMessageView.as_view()),
     path('', Home),
+    # urlpatterns = [
+    #     path('admin/', admin.site.urls),
+    #     path('company/', include('companies.urls', namespace='companies')),
+    #     path('user/', include('users.urls', namespace='users')),
+    #     path('send-message/', sendMessage),
+    #     path('get-message/<int:id>', getMessage),
+    path('most_review_program/', most_review_program),
+    path('most_selected_program/', most_selected_program),
+    # path('all_companies/', all_companies),
     path('api-auth/', include('rest_framework.urls')),
     path('api-token-auth/', obtain_auth_token, name='api_token_auth')
 ]

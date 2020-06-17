@@ -1,59 +1,95 @@
-from companies.models import Program, ProgramReview, User, Company, CompanyUserMessage
+from companies.models import Program, ProgramReview, User, Company, CompanyUserMessage, SelectedProgram
 from companies.serializers.ProgramSerializers import ProgramSerializer, ReviewSerializer
+
+# from companies.models import Programs, Program_Reviews, Users, Companies, CompanyUserMessages, Selected_Programs
+from companies.serializers.ProgramSerializers import ProgramSerializer
 from companies.serializers.CompanySerializers import CompanySerializer, MessageSerializer
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.db.models import Count
-import json
 
 
 @api_view(['GET'])
 def Home(request):
     companies = Company.objects.all()
     CSerializer = CompanySerializer(companies, context={'request': request}, many=True)
-
     programs = Program.objects.all()
 
-    tempCount = -1
-    tempID = -1
 
-    if(programs.count() > 0):
-        for prog in programs:
-            temp = ProgramReview.objects.filter(program_id=prog.id).count()
+# =======
+# def all_companies(request):
+#     companies = Companies.objects.all()
+#     serializer = CompanySerializer(companies, context={'request': request}, many=True)
+#     content = {
+#         'all_companies': serializer.data,
+#     }
+#     return Response(content, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def most_selected_program(request):
+    programs = Program.objects.all()
+    temp_count = -1
+    temp_id = -1
+
+    if programs.count() > 0:
+        for program in programs:
+            temp = SelectedProgram.objects.filter(program_id=program.id).count()
             try:
-                if tempCount < temp:
-                    tempCount = temp;
-                    tempID = prog.id;
+                if temp_count < temp:
+                    temp_count = temp
+                    temp_id = program.id
             except temp.DoesNotExist:
                 print("")
 
-        if (tempID != -1 ):
-            program = Program.objects.get(id=tempID)
-
+        if temp_id != -1:
+            program = Program.objects.get(id=temp_id)
             serializer = ProgramSerializer(
                 program,
                 context={'request': request})
-            content= {
-                'allCompanies': CSerializer.data,
-                'mostTalk': serializer.data
+            content = {
+                'most_selected_program': serializer.data
             }
-            return Response(content, status=status.HTTP_204_NO_CONTENT)
+            return Response(content, status=status.HTTP_200_OK)
 
         else:
-            content = {
-                'allCompanies': CSerializer.data,
-                'mostTalk': None
-            }
-            return Response(content, status=status.HTTP_204_NO_CONTENT)
+            return Response({}, status=status.HTTP_200_OK)
 
     else:
-        content = {
-            'allCompanies': CSerializer.data,
-            'mostTalk': None
-        }
-        return Response(content, status=status.HTTP_204_NO_CONTENT)
+        return Response({}, status=status.HTTP_200_OK)
 
+
+@api_view(['GET'])
+def most_review_program(request):
+    programs = Program.objects.all()
+    temp_count = -1
+    temp_id = -1
+
+    if programs.count() > 0:
+        for program in programs:
+            temp = ProgramReview.objects.filter(program_id=program.id).count()
+            try:
+                if temp_count < temp:
+                    temp_count = temp
+                    temp_id = program.id
+            except temp.DoesNotExist:
+                print("")
+
+        if temp_id != -1:
+            program = Program.objects.get(id=temp_id)
+            serializer = ProgramSerializer(
+                program,
+                context={'request': request})
+            content = {
+                'most_review_program': serializer.data
+            }
+            return Response(content, status=status.HTTP_200_OK)
+
+        else:
+            return Response({}, status=status.HTTP_200_OK)
+
+    else:
+        return Response({}, status=status.HTTP_200_OK)
 
 # @api_view(['POST'])
 # def sendMessage(request):

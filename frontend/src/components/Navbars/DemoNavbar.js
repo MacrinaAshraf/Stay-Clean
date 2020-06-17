@@ -174,6 +174,19 @@ class DemoNavbar extends React.Component {
                       <DropdownItem to="/register-page" tag={Link}>
                         Register
                       </DropdownItem>
+                      <DropdownItem to="/messages-page" tag={Link}>
+                        My Messages
+                      </DropdownItem>
+                      <DropdownItem to="/program-page" tag={Link}>
+                        Program
+                      </DropdownItem>
+                      <DropdownItem to="/company-page" tag={Link}>
+                        Company
+                      </DropdownItem>
+                      <DropdownItem to="/list-programs-page" tag={Link}>
+                        list all programs
+                      </DropdownItem>
+
                     </DropdownMenu>
                   </UncontrolledDropdown>
                 </Nav>
