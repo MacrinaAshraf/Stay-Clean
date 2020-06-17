@@ -18,16 +18,18 @@ from django.urls import path, include
 from django.conf import settings
 from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from .views import most_review_program, most_selected_program, all_companies, sendMessage, getMessage
 from rest_framework.authtoken.views import obtain_auth_token
-
-from .views import Home, sendMessage, getMessage
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('company/', include('companies.urls', namespace='companies')),
     path('user/', include('users.urls', namespace='users')),
     path('send-message/', sendMessage),
     path('get-message/<int:id>', getMessage),
-    path('', Home),
+    path('most_review_program/', most_review_program),
+    path('most_selected_program/', most_selected_program),
+    path('all_companies/', all_companies),
+
     path('api-auth/', include('rest_framework.urls')),
     path('api-token-auth/', obtain_auth_token, name='api_token_auth')
 ]

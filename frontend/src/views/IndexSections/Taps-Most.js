@@ -30,11 +30,11 @@ class TabsSection extends React.Component {
     return (
       <>
         <Row className="justify-content-center">
-          <Col lg="6">
+          <Col lg="12">
             {/* Tabs with icons */}
             <div className="mb-3">
               <small className="text-uppercase font-weight-bold">
-                Most Selected Programs
+
               </small>
             </div>
             <div className="nav-wrapper">
@@ -54,7 +54,7 @@ class TabsSection extends React.Component {
                     href="#pablo"
                     role="tab"
                   >
-                    Program 1
+                    Most Selected Program
                   </NavLink>
                 </NavItem>
                 <NavItem>
@@ -67,159 +67,100 @@ class TabsSection extends React.Component {
                     href="#pablo"
                     role="tab"
                   >
-                    Program 2
+                    Program has most reviews
                   </NavLink>
                 </NavItem>
-                <NavItem>
-                  <NavLink
-                    aria-selected={this.state.iconTabs === 3}
-                    className={classnames("mb-sm-3 mb-md-0", {
-                      active: this.state.iconTabs === 3
-                    })}
-                    onClick={e => this.toggleNavs(e, "iconTabs", 3)}
-                    href="#pablo"
-                    role="tab"
-                  >
-                    Program 3
-                  </NavLink>
-                </NavItem>
+
               </Nav>
             </div>
             <Card className="shadow">
               <CardBody>
                 <TabContent activeTab={"iconTabs" + this.state.iconTabs}>
                   <TabPane tabId="iconTabs1">
-                    <p className="description">
-                      Raw denim you probably haven't heard of them jean shorts
-                      Austin. Nesciunt tofu stumptown aliqua, retro synth master
-                      cleanse. Mustache cliche tempor, williamsburg carles vegan
-                      helvetica. Reprehenderit butcher retro keffiyeh
-                      dreamcatcher synth.
-                    </p>
-                    <p className="description">
-                      Raw denim you probably haven't heard of them jean shorts
-                      Austin. Nesciunt tofu stumptown aliqua, retro synth master
-                      cleanse.
-                    </p>
+                    <Row className="row-grid align-items-center">
+                      <Col className="order-md-2" md="6">
+                        <img
+                          alt="..."
+                          className="img-fluid floating"
+                          src={require("assets/img/dez/dez12.jpg")}
+                        />
+                      </Col>
+                      <Col className="order-md-2" md="6">
+
+
+                        <h3 className="display-3">
+                          {this.props.most_selected_program.name}
+                        </h3>
+
+
+                        <p className="lead">
+
+                          {this.props.most_selected_program.description}
+                          <br />
+
+                          Sterilizer within  : {this.props.most_selected_program.duration}
+                          {this.props.most_selected_program.duration > 1 &&
+                            this.props.most_selected_program.duration < 11 ? (
+                              <> Hours</>
+                            ) : (
+                              <> Hour</>
+                            )}
+                          <br />
+                          Cost is : {this.props.most_selected_program.price} $
+
+
+                        </p>
+
+                      </Col>
+
+                    </Row>
                   </TabPane>
                   <TabPane tabId="iconTabs2">
-                    <p className="description">
-                      Cosby sweater eu banh mi, qui irure terry richardson ex
-                      squid. Aliquip placeat salvia cillum iphone. Seitan
-                      aliquip quis cardigan american apparel, butcher voluptate
-                      nisi qui.
-                    </p>
+                  <Row className="row-grid align-items-center">
+                      <Col className="order-md-2" md="6">
+                        <img
+                          alt="..."
+                          className="img-fluid floating"
+                          src={require("assets/img/dez/dez12.jpg")}
+                        />
+                      </Col>
+                      <Col className="order-md-2" md="6">
+
+
+                        <h3 className="display-3">
+                          {this.props.most_review_program.name}
+                        </h3>
+
+
+                        <p className="lead">
+
+                          {this.props.most_review_program.description}
+                          <br />
+
+                          Sterilizer within  : {this.props.most_review_program.duration}
+                          {this.props.most_review_program.duration > 1 &&
+                            this.props.most_review_program.duration < 11 ? (
+                              <> Hours</>
+                            ) : (
+                              <> Hour</>
+                            )}
+                          <br />
+                          Cost is : {this.props.most_selected_program.price} $
+
+
+                        </p>
+
+                      </Col>
+
+                    </Row>
+                
                   </TabPane>
-                  <TabPane tabId="iconTabs3">
-                    <p className="description">
-                      Raw denim you probably haven't heard of them jean shorts
-                      Austin. Nesciunt tofu stumptown aliqua, retro synth master
-                      cleanse. Mustache cliche tempor, williamsburg carles vegan
-                      helvetica. Reprehenderit butcher retro keffiyeh
-                      dreamcatcher synth.
-                    </p>
-                  </TabPane>
+
                 </TabContent>
               </CardBody>
             </Card>
           </Col>
 
-          <Col className="mt-5 mt-lg-0" lg="6">
-            {/* Menu */}
-            <div className="mb-3">
-              <small className="text-uppercase font-weight-bold">
-                Most Reviews in
-              </small>
-            </div>
-            <div className="nav-wrapper">
-              <Nav
-                className="nav-fill flex-column flex-md-row"
-                id="tabs-icons-text"
-                pills
-                role="tablist"
-              >
-                <NavItem>
-                  <NavLink
-                    aria-selected={this.state.plainTabs === 1}
-                    className={classnames("mb-sm-3 mb-md-0", {
-                      active: this.state.plainTabs === 1
-                    })}
-                    onClick={e => this.toggleNavs(e, "plainTabs", 1)}
-                    href="#pablo"
-                    role="tab"
-                  >
-                                        Program 1
-
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink
-                    aria-selected={this.state.plainTabs === 2}
-                    className={classnames("mb-sm-3 mb-md-0", {
-                      active: this.state.plainTabs === 2
-                    })}
-                    onClick={e => this.toggleNavs(e, "plainTabs", 2)}
-                    href="#pablo"
-                    role="tab"
-                  >
-                                        Program 2
-
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink
-                    aria-selected={this.state.plainTabs === 3}
-                    className={classnames("mb-sm-3 mb-md-0", {
-                      active: this.state.plainTabs === 3
-                    })}
-                    onClick={e => this.toggleNavs(e, "plainTabs", 3)}
-                    href="#pablo"
-                    role="tab"
-                  >
-                    Program 3
-
-                  </NavLink>
-                </NavItem>
-              </Nav>
-            </div>
-            <Card className="shadow">
-              <CardBody>
-                <TabContent activeTab={"plainTabs" + this.state.plainTabs}>
-                  <TabPane tabId="plainTabs1">
-                    <p className="description">
-                      Raw denim you probably haven't heard of them jean shorts
-                      Austin. Nesciunt tofu stumptown aliqua, retro synth master
-                      cleanse. Mustache cliche tempor, williamsburg carles vegan
-                      helvetica. Reprehenderit butcher retro keffiyeh
-                      dreamcatcher synth.
-                    </p>
-                    <p className="description">
-                      Raw denim you probably haven't heard of them jean shorts
-                      Austin. Nesciunt tofu stumptown aliqua, retro synth master
-                      cleanse.
-                    </p>
-                  </TabPane>
-                  <TabPane tabId="plainTabs2">
-                    <p className="description">
-                      Cosby sweater eu banh mi, qui irure terry richardson ex
-                      squid. Aliquip placeat salvia cillum iphone. Seitan
-                      aliquip quis cardigan american apparel, butcher voluptate
-                      nisi qui.
-                    </p>
-                  </TabPane>
-                  <TabPane tabId="plainTabs3">
-                    <p className="description">
-                      Raw denim you probably haven't heard of them jean shorts
-                      Austin. Nesciunt tofu stumptown aliqua, retro synth master
-                      cleanse. Mustache cliche tempor, williamsburg carles vegan
-                      helvetica. Reprehenderit butcher retro keffiyeh
-                      dreamcatcher synth.
-                    </p>
-                  </TabPane>
-                </TabContent>
-              </CardBody>
-            </Card>
-          </Col>
 
 
         </Row>

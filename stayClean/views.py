@@ -1,79 +1,105 @@
-from companies.models import Programs, Program_Reviews, Users, Companies, CompanyUserMessages
-from companies.serializers.ProgramSerializers import ProgramSerializer, ReviewSerializer
+from companies.models import Programs, Program_Reviews, Users, Companies, CompanyUserMessages, Selected_Programs
+from companies.serializers.ProgramSerializers import ProgramSerializer
 from companies.serializers.CompanySerializers import CompanySerializer, MessageSerializer
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.db.models import Count
-import json
+
+@api_view(['GET'])
+def all_companies(request):
+    companies = Companies.objects.all()
+    serializer = CompanySerializer(companies, context={'request': request}, many=True)
+    content = {
+        'all_companies': serializer.data,
+    }
+    return Response(content, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
-def Home(request):
-    companies = Companies.objects.all()
-    CSerializer = CompanySerializer(companies, context={'request': request}, many=True)
-
+def most_selected_program(request):
     programs = Programs.objects.all();
+    temp_count = -1
+    temp_id = -1
 
-    tempCount = -1
-    tempID = -1
-
-    if(programs.count() > 0):
-        for prog in programs:
-            temp = Program_Reviews.objects.filter(program_id=prog.id).count()
+    if programs.count() > 0:
+        for program in programs:
+            temp = Selected_Programs.objects.filter(program_id=program.id).count()
             try:
-                if tempCount < temp:
-                    tempCount = temp;
-                    tempID = prog.id;
+                if temp_count < temp:
+                    temp_count = temp;
+                    temp_id = program.id;
             except temp.DoesNotExist:
                 print("")
 
-        if (tempID != -1 ):
-            program = Programs.objects.get(id=tempID)
-
+        if temp_id != -1:
+            program = Programs.objects.get(id=temp_id)
             serializer = ProgramSerializer(
                 program,
                 context={'request': request})
-            content= {
-                'allCompanies': CSerializer.data,
-                'mostTalk': serializer.data
+            content = {
+                'most_selected_program': serializer.data
             }
-            return Response(content, status=status.HTTP_204_NO_CONTENT)
+            return Response(content, status=status.HTTP_200_OK)
 
         else:
-            content = {
-                'allCompanies': CSerializer.data,
-                'mostTalk': None
-            }
-            return Response(content, status=status.HTTP_204_NO_CONTENT)
+            return Response({}, status=status.HTTP_200_OK)
 
     else:
-        content = {
-            'allCompanies': CSerializer.data,
-            'mostTalk': None
-        }
-        return Response(content, status=status.HTTP_204_NO_CONTENT)
+        return Response({}, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def most_review_program(request):
+    programs = Programs.objects.all();
+    temp_count = -1
+    temp_id = -1
+
+    if programs.count() > 0:
+        for program in programs:
+            temp = Program_Reviews.objects.filter(program_id=program.id).count()
+            try:
+                if temp_count < temp:
+                    temp_count = temp;
+                    temp_id = program.id;
+            except temp.DoesNotExist:
+                print("")
+
+        if temp_id != -1:
+            program = Programs.objects.get(id=temp_id)
+            serializer = ProgramSerializer(
+                program,
+                context={'request': request})
+            content = {
+                'most_review_program': serializer.data
+            }
+            return Response(content, status=status.HTTP_200_OK)
+
+        else:
+            return Response({}, status=status.HTTP_200_OK)
+
+    else:
+        return Response({}, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
 def sendMessage(request):
-        try:
-            company = Companies.objects.get(id=request.POST['company_id'])
-            user = Users.objects.get(id=request.POST['user_id'])
-            sender = request.POST['sender']
-            new_message = CompanyUserMessages(
-                company_id=company.id,
-                user_id=user.id,
-                sender=sender,
-                message=request.POST.get('message'))
+    try:
+        company = Companies.objects.get(id=request.POST['company_id'])
+        user = Users.objects.get(id=request.POST['user_id'])
+        sender = request.POST['sender']
+        new_message = CompanyUserMessages(
+            company_id=company.id,
+            user_id=user.id,
+            sender=sender,
+            message=request.POST.get('message'))
 
-            new_message.save()
-            return Response(status=status.HTTP_201_CREATED)
+        new_message.save()
+        return Response(status=status.HTTP_201_CREATED)
 
-        except company.DoesNotExist:
-            return Response(new_message.errors, status=status.HTTP_400_BAD_REQUEST)
-        except user.DoesNotExist:
-            return Response(new_message.errors, status=status.HTTP_400_BAD_REQUEST)
+    except company.DoesNotExist:
+        return Response(new_message.errors, status=status.HTTP_400_BAD_REQUEST)
+    except user.DoesNotExist:
+        return Response(new_message.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET'])
@@ -82,5 +108,5 @@ def getMessage(request, id):
     serializer = MessageSerializer(
         message,
         context={'request': request},
-        )
-    return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
+    )
+    return Response(serializer.data, status=status.HTTP_200_OK)

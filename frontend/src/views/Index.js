@@ -3,43 +3,86 @@ import { Container, Row, Button, Col } from "reactstrap";
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
 import Hero from "./IndexSections/Hero.js";
-import Buttons from "./IndexSections/Buttons.js";
-import Inputs from "./IndexSections/Inputs.js";
-import CustomControls from "./IndexSections/CustomControls.js";
-import Menus from "./IndexSections/Menus.js";
-import Navbars from "./IndexSections/Navbars.js";
 import Blogs from "./IndexSections/Blogs.js";
 import TapsMost from "./IndexSections/Taps-Most";
-import ShowImage from "./IndexSections/ShowImage.js";
-import Pagination from "./IndexSections/Pagination.js";
-import Pills from "./IndexSections/Pills.js";
-import Labels from "./IndexSections/Labels.js";
-import Alerts from "./IndexSections/Alerts.js";
-import Typography from "./IndexSections/Typography.js";
-import Modals from "./IndexSections/Modals.js";
-import Datepicker from "./IndexSections/Datepicker.js";
-import TooltipPopover from "./IndexSections/TooltipPopover.js";
-import Carousel from "./IndexSections/Carousel.js";
-import Icons from "./IndexSections/Icons.js";
-import Login from "./IndexSections/Login.js";
-import Download from "./IndexSections/Download.js";
-
+import axios from 'axios';
 class Index extends React.Component {
+
+  state = {
+    all_companies: [],
+    most_review_program: {},
+    most_selected_program: {},
+  }
+
+  all_companies = () => {
+    axios.get('http://127.0.0.1:8000/all_companies/')
+      .then(res => {
+        // console.log("res.data.all_companies")
+        // console.log(res.data)
+
+        if (res.data.all_companies) {
+          this.setState({ all_companies: res.data.all_companies })
+
+        }
+      })
+      .catch(error => console.error(error))
+  }
+
+  most_review_program = () => {
+    axios.get('http://127.0.0.1:8000/most_review_program/')
+      .then(res => {
+        // console.log("most_review_program")
+        // console.log(res.data)
+        if (res.data.most_review_program) {
+          this.setState({ most_review_program: res.data.most_review_program })
+
+        }
+
+      })
+      .catch(error => console.error(error))
+  }
+
+  most_selected_program = () => {
+    axios.get('http://127.0.0.1:8000/most_selected_program/')
+      .then(res => {
+        console.log("res.data.most_selected_program")
+        console.log(res.data)
+        if (res.data.most_selected_program) {
+          this.setState({ most_selected_program: res.data.most_selected_program })
+        }
+
+
+      })
+      .catch(error => console.error(error))
+  }
+
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     this.refs.main.scrollTop = 0;
+
+
+    this.all_companies();
+    this.most_review_program();
+    this.most_selected_program();
+
   }
+
   render() {
+
     return (
       <>
         <DemoNavbar />
         <main ref="main">
           <Hero />
-         
+
+
           <section className="section section-components">
             <Container>
-            <TapsMost />
+              <TapsMost
+                most_selected_program={this.state.most_selected_program}
+                most_review_program={this.state.most_review_program}
+              />
             </Container>
           </section>
           <Blogs />
@@ -52,184 +95,37 @@ class Index extends React.Component {
                 </Col>
               </Row>
               <Row>
-                <Col className="mb-5 mb-lg-0" lg="3" md="6">
-                  <div className="px-4">
-                    <img
-                      alt="..."
-                      className="rounded-circle img-center img-fluid shadow shadow-lg--hover"
-                      src={require("assets/img/theme/team-1-800x800.jpg")}
-                      style={{ width: "200px" }}
-                    />
-                    <div className="pt-4 text-center">
-                      <h5 className="title">
-                        <span className="d-block mb-1">Ryan Tompson</span>
-                        <small className="h6 text-muted">Web Developer</small>
-                      </h5>
-                      <div className="mt-3">
-                        <Button
-                          className="btn-icon-only rounded-circle"
-                          color="warning"
-                          href="#pablo"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i className="fa fa-twitter" />
-                        </Button>
-                        <Button
-                          className="btn-icon-only rounded-circle ml-1"
-                          color="warning"
-                          href="#pablo"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i className="fa fa-facebook" />
-                        </Button>
-                        <Button
-                          className="btn-icon-only rounded-circle ml-1"
-                          color="warning"
-                          href="#pablo"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i className="fa fa-dribbble" />
-                        </Button>
+                {this.state.all_companies.map(comp => (
+                  <Col className="mb-5 mb-lg-0" lg="3" md="6">
+
+
+
+
+
+                    <div className="px-4">
+                      <img
+                        alt="..."
+                        className="rounded-circle img-center img-fluid shadow shadow-lg--hover"
+                        src={require("assets/img/theme/team-2-800x800.jpg")}
+                        style={{ width: "200px" }}
+                      />
+                      <div className="pt-4 text-center">
+                        <h5 className="title">
+                          <span className="d-block mb-1">{comp.name}</span>
+                          <small className="h6 text-muted">Web Developer</small>
+                        </h5>
                       </div>
                     </div>
-                  </div>
-                </Col>
-                <Col className="mb-5 mb-lg-0" lg="3" md="6">
-                  <div className="px-4">
-                    <img
-                      alt="..."
-                      className="rounded-circle img-center img-fluid shadow shadow-lg--hover"
-                      src={require("assets/img/theme/team-2-800x800.jpg")}
-                      style={{ width: "200px" }}
-                    />
-                    <div className="pt-4 text-center">
-                      <h5 className="title">
-                        <span className="d-block mb-1">Romina Hadid</span>
-                        <small className="h6 text-muted">
-                          Marketing Strategist
-                        </small>
-                      </h5>
-                      <div className="mt-3">
-                        <Button
-                          className="btn-icon-only rounded-circle"
-                          color="primary"
-                          href="#pablo"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i className="fa fa-twitter" />
-                        </Button>
-                        <Button
-                          className="btn-icon-only rounded-circle ml-1"
-                          color="primary"
-                          href="#pablo"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i className="fa fa-facebook" />
-                        </Button>
-                        <Button
-                          className="btn-icon-only rounded-circle ml-1"
-                          color="primary"
-                          href="#pablo"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i className="fa fa-dribbble" />
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </Col>
-                <Col className="mb-5 mb-lg-0" lg="3" md="6">
-                  <div className="px-4">
-                    <img
-                      alt="..."
-                      className="rounded-circle img-center img-fluid shadow shadow-lg--hover"
-                      src={require("assets/img/theme/team-3-800x800.jpg")}
-                      style={{ width: "200px" }}
-                    />
-                    <div className="pt-4 text-center">
-                      <h5 className="title">
-                        <span className="d-block mb-1">Alexander Smith</span>
-                        <small className="h6 text-muted">UI/UX Designer</small>
-                      </h5>
-                      <div className="mt-3">
-                        <Button
-                          className="btn-icon-only rounded-circle"
-                          color="info"
-                          href="#pablo"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i className="fa fa-twitter" />
-                        </Button>
-                        <Button
-                          className="btn-icon-only rounded-circle ml-1"
-                          color="info"
-                          href="#pablo"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i className="fa fa-facebook" />
-                        </Button>
-                        <Button
-                          className="btn-icon-only rounded-circle ml-1"
-                          color="info"
-                          href="#pablo"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i className="fa fa-dribbble" />
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </Col>
-                <Col className="mb-5 mb-lg-0" lg="3" md="6">
-                  <div className="px-4">
-                    <img
-                      alt="..."
-                      className="rounded-circle img-center img-fluid shadow shadow-lg--hover"
-                      src={require("assets/img/theme/team-4-800x800.jpg")}
-                      style={{ width: "200px" }}
-                    />
-                    <div className="pt-4 text-center">
-                      <h5 className="title">
-                        <span className="d-block mb-1">John Doe</span>
-                        <small className="h6 text-muted">Founder and CEO</small>
-                      </h5>
-                      <div className="mt-3">
-                        <Button
-                          className="btn-icon-only rounded-circle"
-                          color="success"
-                          href="#pablo"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i className="fa fa-twitter" />
-                        </Button>
-                        <Button
-                          className="btn-icon-only rounded-circle ml-1"
-                          color="success"
-                          href="#pablo"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i className="fa fa-facebook" />
-                        </Button>
-                        <Button
-                          className="btn-icon-only rounded-circle ml-1"
-                          color="success"
-                          href="#pablo"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i className="fa fa-dribbble" />
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </Col>
+                  </Col>
+                ))}
+
               </Row>
             </Container>
           </section>
-          
-         
-         
-         
-         
+
+
+
+
         </main>
         <SimpleFooter />
       </>
