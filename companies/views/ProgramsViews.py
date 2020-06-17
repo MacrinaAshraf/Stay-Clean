@@ -33,7 +33,7 @@ class ProgramView(APIView):
                 serializer.save()
                 return Response(status=status.HTTP_201_CREATED)
 
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors)
 
     @api_view(['PUT', 'DELETE', 'GET'])
     def ProgramDetail(request, pk):
@@ -48,7 +48,7 @@ class ProgramView(APIView):
             if serializer.is_valid():
                 serializer.save()
                 return Response(status=status.HTTP_200_OK)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors)
 
         elif request.method == 'DELETE':
             program.delete()

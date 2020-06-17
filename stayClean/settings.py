@@ -133,7 +133,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
-    "http://localhost:000"
+    "http://localhost:8000"
 ]
 # Filter urls with cors middleware
 # CORS_ORIGIN_ALLOW_ALL = False
@@ -143,7 +143,7 @@ CORS_ORIGIN_WHITELIST = [
 # Rest permission
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        'rest_framework.permissions.AllowAny',
         ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'users.backends.JWTAuthentication',

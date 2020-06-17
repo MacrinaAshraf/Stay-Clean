@@ -2,12 +2,15 @@ import React from "react";
 import axios from "axios";
 import ProgramCard from "./ProgramCard.js";
 import ConfirmRemovalModal from "./ConfirmRemovalModal.js";
+import NewProgramModal from "./NewProgramModal";
 // reactstrap components
 import { Container, Row, Col, Button, Badge, Card, CardBody } from "reactstrap";
 
 // core components
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
+import NewProgramForm from "./NewProgramForm.js";
+
 
 class List extends React.Component {
     state = {
@@ -71,8 +74,10 @@ class List extends React.Component {
                                                     images and you're good to go.
                       </p>
                                                 <div className="btn-wrapper"></div>
+                                            
                                             </Col>
                                         </Row>
+                                        <NewProgramModal create={true} resetState={this.resetState} />
                                     </div>
                                 </Container>
                                 {/* SVG separator */}
@@ -92,8 +97,10 @@ class List extends React.Component {
                                     </svg>
                                 </div>
                             </section>
+                        
                             {/* 1st Hero Variation */}
                         </div>
+                        
                         <section className="section section-lg pt-lg-0 mt--200">
                             <Container>
                                 <Row className="justify-content-center">
@@ -104,20 +111,30 @@ class List extends React.Component {
 
                                                 <ProgramCard program={item}
                                                 >
+                                                      <NewProgramModal
+                                                        create= {false}
+                                                        item={item}
+                                                        resetState={this.resetState}
+                                                    />
+                                                  
                                                     <ConfirmRemovalModal
                                                         pk={item.pk}
                                                         resetState={this.resetState}
                                                     />
 
+                                                  
+
                                                 </ProgramCard>
 
 
-                                            ))}
 
+                                            ))}
+                                               
                                         </Row>
                                     </Col>
 
                                 </Row>
+                              
                             </Container>
                         </section>
                     </main>
