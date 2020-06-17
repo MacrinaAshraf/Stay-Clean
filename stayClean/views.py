@@ -1,4 +1,4 @@
-from companies.models import Program, ProgramReview, User, Company, CompanyUserMessage, SelectedProgram
+from companies.models import Program, ProgramReview, Company, CompanyUserMessage, SelectedProgram
 from companies.serializers.ProgramSerializers import ProgramSerializer, ReviewSerializer
 
 # from companies.models import Programs, Program_Reviews, Users, Companies, CompanyUserMessages, Selected_Programs

@@ -21,16 +21,14 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from rest_framework import routers
 from rest_framework.authtoken.views import obtain_auth_token
 
-from companies.views.ProgramsViews import ProgramView, ReviewView
+from companies.views.ProgramsViews import ProgramView, ReviewView, ProgramPhotoView, RetDelUpProgramPhotoView
 from companies.views.CompanyViews import ListCreateMessageView, RetrieveMessageView
 from .views import Home, most_review_program, most_selected_program
 
 router = routers.SimpleRouter()
 router.register('programs', ProgramView)
 router.register('reviews', ReviewView)
-
-# def all_companies(args):
-#     pass
+# router.register('photo', ProgramPhotoView.as_view())
 
 
 urlpatterns = [
@@ -40,15 +38,10 @@ urlpatterns = [
     path('message/', ListCreateMessageView.as_view()),
     path('message/<int:pk>', RetrieveMessageView.as_view()),
     path('', Home),
-    # urlpatterns = [
-    #     path('admin/', admin.site.urls),
-    #     path('company/', include('companies.urls', namespace='companies')),
-    #     path('user/', include('users.urls', namespace='users')),
-    #     path('send-message/', sendMessage),
-    #     path('get-message/<int:id>', getMessage),
+    path('photo/', ProgramPhotoView.as_view(), name='upload_get_photo'),
+    path('photo/<int:pk>', RetDelUpProgramPhotoView.as_view(), name='delete_update_photo'),
     path('most_review_program/', most_review_program),
     path('most_selected_program/', most_selected_program),
-    # path('all_companies/', all_companies),
     path('api-auth/', include('rest_framework.urls')),
     path('api-token-auth/', obtain_auth_token, name='api_token_auth')
 ]

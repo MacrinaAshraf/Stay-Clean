@@ -66,6 +66,10 @@ class Customer(models.Model):
     def __str__(self):
         return self.first_name
 
+    def get_absolute_url(self):
+        relative = self.photo.url
+        return ('http://%s%s' % (Site.objects.get_current().domain, relative))
+
 
 class Company(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='company_profile')

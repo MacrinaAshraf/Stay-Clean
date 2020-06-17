@@ -71,14 +71,26 @@ class ReviewSerializer(serializers.ModelSerializer):
         return Response(status=status.HTTP_200_OK)
 
 
+class ProgramPhotoSerializer(serializers.ModelSerializer):
+    created_at = SerializerMethodField()
+    image = serializers.ImageField()
+
+    class Meta:
+        model = ProgramPhoto
+        exclude = ['updated_at']
+
+    def get_created_at(self, obj):
+        return obj.created_at.strftime("%d/%m/%Y %H:%M")
+
+    def get_image(self, obj):
+        return obj.get_absolute_url()
+
+
 class SelectedProgramSerializer(serializers.ModelSerializer):
-    # user = serializers.RelatedField(source='Users', read_only=True)
-    # program = serializers.RelatedField(source='Programs', read_only=True)
     created_at = SerializerMethodField()
 
     class Meta:
         model = SelectedProgram
-        # fields = ('pk', 'program', 'user', 'rate', 'notes', 'address', 'created_at', 'updated_at')
         exclude = ['updated_at']
 
     def get_created_at(self, obj):

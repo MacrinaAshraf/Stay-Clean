@@ -11,4 +11,5 @@ app_name = 'companies'
 urlpatterns = [
     path('<int:pk>', RetrieveCompanyView.as_view()),
     path('', ListCompanyView.as_view()),
+    # path('upload')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

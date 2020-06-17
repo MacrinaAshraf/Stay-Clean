@@ -1,6 +1,7 @@
+from django.contrib.sites.models import Site
 from django.db import models
 from django.template.defaultfilters import slugify
-from users.models import User, Customer, Company
+from users.models import Customer, Company
 
 
 # Create your models here.
@@ -60,8 +61,12 @@ class ProgramPhoto(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return self.program.name
+    # def __str__(self):
+    #     return self.program.name
+
+    def get_absolute_url(self):
+        relative = self.image.url
+        return ('http://%s%s' % (Site.objects.get_current().domain, relative))
 
 
 class ProgramReview(models.Model):
