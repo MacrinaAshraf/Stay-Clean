@@ -1,7 +1,6 @@
 from companies.models import Program, ProgramReview, Company, CompanyUserMessage, SelectedProgram
 from companies.serializers.ProgramSerializers import ProgramSerializer, ReviewSerializer
 
-# from companies.models import Programs, Program_Reviews, Users, Companies, CompanyUserMessages, Selected_Programs
 from companies.serializers.ProgramSerializers import ProgramSerializer
 from companies.serializers.CompanySerializers import CompanySerializer, MessageSerializer
 from rest_framework import status

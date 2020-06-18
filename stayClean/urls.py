@@ -21,8 +21,9 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from rest_framework import routers
 from rest_framework.authtoken.views import obtain_auth_token
 
-from companies.views.ProgramsViews import ProgramView, ReviewView, ProgramPhotoView, RetDelUpProgramPhotoView, \
-    SelectedProgramView
+from companies.views.ProgramsViews import ProgramView, ReviewView, ProgramPhotoView, SelectedProgramView
+
+# RetDelUpProgramPhotoView,
 from companies.views.CompanyViews import ListCreateMessageView, RetrieveMessageView
 from .views import Home, most_review_program, most_selected_program
 
@@ -30,7 +31,7 @@ router = routers.SimpleRouter()
 router.register('programs', ProgramView)
 router.register('reviews', ReviewView)
 router.register('selected', SelectedProgramView)
-# router.register('photo', ProgramPhotoView.as_view())
+router.register('photo', ProgramPhotoView)
 
 
 urlpatterns = [
@@ -40,8 +41,6 @@ urlpatterns = [
     path('message/', ListCreateMessageView.as_view()),
     path('message/<int:pk>', RetrieveMessageView.as_view()),
     path('', Home),
-    path('photo/', ProgramPhotoView.as_view(), name='upload_get_photo'),
-    path('photo/<int:pk>', RetDelUpProgramPhotoView.as_view(), name='delete_update_photo'),
     path('most_review_program/', most_review_program),
     path('most_selected_program/', most_selected_program),
     path('api-auth/', include('rest_framework.urls')),

@@ -1,3 +1,4 @@
+from rest_framework.decorators import action
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework.utils import json
@@ -11,6 +12,11 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import status, generics, viewsets
 from django.shortcuts import get_object_or_404
 
+from users.models import Customer, Company
+
+
+def detail_route(methods, url_path):
+    pass
 
 
 class ProgramView(viewsets.ModelViewSet):
@@ -24,6 +30,12 @@ class ProgramView(viewsets.ModelViewSet):
             pk=self.kwargs.get('pk')
         )
 
+    @action(detail=True, methods=['get'], name="Company Programs")
+    def company_program(self, request, pk=None):
+        user_select = Program.objects.filter(company=pk)
+        serializer = ProgramSerializer(user_select, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 class ReviewView(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
@@ -35,6 +47,12 @@ class ReviewView(viewsets.ModelViewSet):
             ProgramReview,
             pk=self.kwargs.get('pk')
         )
+
+    @action(detail=True, methods=['get'], name="Program Reviews")
+    def program_review(self, request, pk=None):
+        reviews = ProgramReview.objects.filter(program=pk)
+        serializer = ReviewSerializer(reviews, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class SelectedProgramView(viewsets.ModelViewSet):
@@ -48,13 +66,26 @@ class SelectedProgramView(viewsets.ModelViewSet):
             pk=self.kwargs.get('pk')
         )
 
+    @action(methods=['get'], detail=False, name="User Selected Programs")
+    def user_program(self, request):
+        user = Customer.objects.filter(user=request.user).first()
+        if user is None:
+            user = Company.objects.filter(user=request.user).first()
+            programs = SelectedProgram.objects.filter(company=user)
+        else:
+            programs = SelectedProgram.objects.filter(customer=user)
 
-class ProgramPhotoView(APIView):
+        serializer = SelectedProgramSerializer(programs, many=True)
+        return Response(serializer.data)
+
+
+class ProgramPhotoView(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     queryset = ProgramPhoto.objects.all()
+    serializer_class = ProgramPhotoSerializer
     parser_classes = (MultiPartParser, FormParser)
 
-    def post(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs):
         image = request.FILES["image"]
         data = json.loads(request.data['data'])
         print(image, data.get('program'))
@@ -67,16 +98,11 @@ class ProgramPhotoView(APIView):
             print('error', photo_serializer.errors)
             return Response(photo_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def get(self, request, *args, **kwargs):
-        photos = ProgramPhoto.objects.all()
+    @action(methods=['get'], detail=True, name="Program Photo")
+    def program_photo(self, request, pk=None):
+        photos = ProgramPhoto.objects.filter(program=pk)
         serializer = ProgramPhotoSerializer(photos, many=True)
         return Response(serializer.data)
-
-class RetDelUpProgramPhotoView(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsAuthenticated,)
-    queryset = ProgramPhoto.objects.all()
-
-    serializer_class = ProgramPhotoSerializer
 
 # class ProgramList(generics.ListCreateAPIView):
 #     queryset = Programs.objects.all()

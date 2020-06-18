@@ -134,14 +134,12 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000",
-    "http://localhost:8000"
-]
+# CORS_ORIGIN_WHITELIST = [
+#     "http://localhost:3000",
+#     "http://localhost:8000"
+# ]
 # Filter urls with cors middleware
-# CORS_ORIGIN_ALLOW_ALL = False
-#
-
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Rest permission
 # REST_FRAMEWORK = {
