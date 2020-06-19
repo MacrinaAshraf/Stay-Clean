@@ -15,13 +15,17 @@ class Index extends React.Component {
   }
 
   all_companies = () => {
-    axios.get('http://127.0.0.1:8000/all_companies/')
+    axios.get('http://127.0.0.1:8000/company/' , {
+      headers: {
+          Authorization:
+              "Token ebbc0d47e9b1dcbd3d71ed795e61d01c595279fd",
+      },})
       .then(res => {
         // console.log("res.data.all_companies")
-        // console.log(res.data)
+        console.log(res.data)
 
-        if (res.data.all_companies) {
-          this.setState({ all_companies: res.data.all_companies })
+        if (res.data) {
+          this.setState({ all_companies: res.data })
 
         }
       })
@@ -29,7 +33,11 @@ class Index extends React.Component {
   }
 
   most_review_program = () => {
-    axios.get('http://127.0.0.1:8000/most_review_program/')
+    axios.get('http://127.0.0.1:8000/most_review_program/' , {
+      headers: {
+          Authorization:
+              "Token ebbc0d47e9b1dcbd3d71ed795e61d01c595279fd",
+      },})
       .then(res => {
         // console.log("most_review_program")
         // console.log(res.data)
@@ -43,7 +51,11 @@ class Index extends React.Component {
   }
 
   most_selected_program = () => {
-    axios.get('http://127.0.0.1:8000/most_selected_program/')
+    axios.get('http://127.0.0.1:8000/most_selected_program/' , {
+      headers: {
+          Authorization:
+              "Token ebbc0d47e9b1dcbd3d71ed795e61d01c595279fd",
+      },})
       .then(res => {
         console.log("res.data.most_selected_program")
         console.log(res.data)

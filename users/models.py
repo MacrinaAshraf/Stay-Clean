@@ -81,7 +81,7 @@ class Company(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name
+        return self.user.email
 
     def get_absolute_url(self):
         relative = self.logo.url

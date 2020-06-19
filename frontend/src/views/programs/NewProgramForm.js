@@ -7,7 +7,7 @@ import axios from "axios";
 
 class NewProgramForm extends React.Component {
   state = {
-    pk: 0,
+    id: "",
     name: "",
     description: "",
     duration: "",
@@ -17,8 +17,8 @@ class NewProgramForm extends React.Component {
   componentDidMount() {
     if (this.props.item) {
       console.log("hello"+this.props.item);
-      const { pk, name, description, duration, price } = this.props.item;
-      this.setState({ pk, name, description, duration, price });
+      const { id, name, description, duration, price } = this.props.item;
+      this.setState({ id, name, description, duration, price });
     }
   }
 
@@ -28,7 +28,11 @@ class NewProgramForm extends React.Component {
 
   createProgram = e => {
     e.preventDefault();
-    axios.post("http://localhost:8000/company/programs/", this.state).then(() => {
+    axios.post("http://localhost:8000/api/programs/", this.state, {
+                      headers: {
+                          Authorization:
+                              "Token ebbc0d47e9b1dcbd3d71ed795e61d01c595279fd",
+                      },}).then(() => {
       this.props.resetState();
       this.props.toggle();
     });
@@ -36,7 +40,11 @@ class NewProgramForm extends React.Component {
 
   editProgram = e => {
     e.preventDefault();
-    axios.put("http://localhost:8000/company/programs/"+ this.state.pk, this.state).then(() => {
+    axios.patch("http://localhost:8000/api/programs/"+ this.state.id+"/", this.state , {
+      headers: {
+          Authorization:
+              "Token ebbc0d47e9b1dcbd3d71ed795e61d01c595279fd",
+      },}).then(() => {
       this.props.resetState();
       this.props.toggle();
     });
@@ -50,7 +58,7 @@ class NewProgramForm extends React.Component {
     return (
       <Form onSubmit={this.props.item ? this.editProgram : this.createProgram}>
           <Label for="name">Name:</Label>
-        <FormGroup>
+        <FormGroup> 
           <Input
             type="text"
             name="name"
@@ -70,7 +78,7 @@ class NewProgramForm extends React.Component {
         <FormGroup>
           <Label for="duration">duration:</Label>
           <Input
-            type="text"
+            type="number"
             name="duration"
             onChange={this.onChange}
             value={this.defaultIfEmpty(this.state.duration)}
@@ -79,7 +87,7 @@ class NewProgramForm extends React.Component {
         <FormGroup>
           <Label for="price">price:</Label>
           <Input
-            type="text"
+            type="number"
             name="price"
             onChange={this.onChange}
             value={this.defaultIfEmpty(this.state.price)}

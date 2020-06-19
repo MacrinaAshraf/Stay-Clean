@@ -15,8 +15,12 @@ class ConfirmRemovalModal extends Component {
     }));
   };
 
-  deleteProgram = pk => {
-    axios.delete("http://localhost:8000/company/programs/" + pk).then(() => {
+  deleteProgram = id => {
+    axios.delete("http://localhost:8000/api/programs/" +id  , {
+      headers: {
+          Authorization:
+              "Token ebbc0d47e9b1dcbd3d71ed795e61d01c595279fd",
+      },}).then(() => {
       this.props.resetState();
       this.toggle();
     });
@@ -25,6 +29,7 @@ class ConfirmRemovalModal extends Component {
   render() {
     return (
       <Fragment>
+        
         <Button  onClick={() => this.toggle()} className="mt-4"
                           color="info"
                            outline type="button"
@@ -44,7 +49,7 @@ class ConfirmRemovalModal extends Component {
             <Button
               type="button"
               color="primary"
-              onClick={() => this.deleteProgram(this.props.pk)}
+              onClick={() => this.deleteProgram(this.props.id)}
               
             >
               Yes

@@ -20,7 +20,7 @@ def detail_route(methods, url_path):
 
 
 class ProgramView(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
     queryset = Program.objects.all()
     serializer_class = ProgramSerializer
 
@@ -36,6 +36,12 @@ class ProgramView(viewsets.ModelViewSet):
         serializer = ProgramSerializer(user_select, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    @action(detail=True, methods=['get'], name="Program Reviews")
+    def review(self, request, pk=None):
+        reviews = ProgramReview.objects.filter(program=pk)
+        serializer = ReviewSerializer(reviews, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 class ReviewView(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
@@ -48,11 +54,6 @@ class ReviewView(viewsets.ModelViewSet):
             pk=self.kwargs.get('pk')
         )
 
-    @action(detail=True, methods=['get'], name="Program Reviews")
-    def program_review(self, request, pk=None):
-        reviews = ProgramReview.objects.filter(program=pk)
-        serializer = ReviewSerializer(reviews, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class SelectedProgramView(viewsets.ModelViewSet):

@@ -8,6 +8,7 @@ import { Container, Row, Col, Button, Badge, Card, CardBody } from "reactstrap";
 
 // core components
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
+import StarRatingComponent from "react-star-rating-component";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
 import NewProgramForm from "./NewProgramForm.js";
 
@@ -15,12 +16,14 @@ import NewProgramForm from "./NewProgramForm.js";
 class List extends React.Component {
     state = {
         programs: [],
-
+       
     };
+    
     componentDidMount() {
         // document.documentElement.scrollTop = 0;
         // document.scrollingElement.scrollTop = 0;
         // this.refs.main.scrollTop = 0;
+       
         this.resetState();
 
     }
@@ -28,7 +31,11 @@ class List extends React.Component {
 
     getPrograms = () => {
 
-        axios.get("http://127.0.0.1:8000/company/programs/").then(res => this.setState({ programs: res.data }));
+        axios.get("http://127.0.0.1:8000/api/programs/"  , {
+            headers: {
+                Authorization:
+                    "Token ebbc0d47e9b1dcbd3d71ed795e61d01c595279fd",
+            },}).then(res => this.setState({ programs: res.data }));
 
     }
 
@@ -37,6 +44,7 @@ class List extends React.Component {
     };
 
     render() {
+      
         return (
             <>
                 <div>
@@ -118,11 +126,14 @@ class List extends React.Component {
                                                     />
                                                   
                                                     <ConfirmRemovalModal
-                                                        pk={item.pk}
+                                                        id={item.id}
                                                         resetState={this.resetState}
                                                     />
-
-                                                  
+                                                     <div>
+                                                            
+                                                        
+                                                </div>
+                                                                                            
 
                                                 </ProgramCard>
 
