@@ -42,6 +42,70 @@ class ProgramView(viewsets.ModelViewSet):
         serializer = ReviewSerializer(reviews, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    @action(detail=True, methods=['get'], name="Most Selected Program")
+    def most_selected_program(self, request):
+        programs = Program.objects.all()
+        temp_count = -1
+        temp_id = -1
+
+        if programs.count() > 0:
+            for program in programs:
+                temp = SelectedProgram.objects.filter(program_id=program.id).count()
+                try:
+                    if temp_count < temp:
+                        temp_count = temp
+                        temp_id = program.id
+                except temp.DoesNotExist:
+                    print("")
+
+            if temp_id != -1:
+                program = Program.objects.get(id=temp_id)
+                serializer = ProgramSerializer(
+                    program,
+                    context={'request': request})
+                content = {
+                    'most_selected_program': serializer.data
+                }
+                return Response(content, status=status.HTTP_200_OK)
+
+            else:
+                return Response({}, status=status.HTTP_200_OK)
+
+        else:
+            return Response({}, status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=['get'], name="Most Reviewed Program")
+    def most_review_program(self, request):
+        programs = Program.objects.all()
+        temp_count = -1
+        temp_id = -1
+
+        if programs.count() > 0:
+            for program in programs:
+                temp = ProgramReview.objects.filter(program_id=program.id).count()
+                try:
+                    if temp_count < temp:
+                        temp_count = temp
+                        temp_id = program.id
+                except temp.DoesNotExist:
+                    print("")
+
+            if temp_id != -1:
+                program = Program.objects.get(id=temp_id)
+                serializer = ProgramSerializer(
+                    program,
+                    context={'request': request})
+                content = {
+                    'most_review_program': serializer.data
+                }
+                return Response(content, status=status.HTTP_200_OK)
+
+            else:
+                return Response({}, status=status.HTTP_200_OK)
+
+        else:
+            return Response({}, status=status.HTTP_200_OK)
+
 
 class ReviewView(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
@@ -53,7 +117,6 @@ class ReviewView(viewsets.ModelViewSet):
             ProgramReview,
             pk=self.kwargs.get('pk')
         )
-
 
 
 class SelectedProgramView(viewsets.ModelViewSet):

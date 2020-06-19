@@ -68,17 +68,17 @@ class Profile extends React.Component {
                       lg="4"
                     >
                       <div className="card-profile-actions py-4 mt-lg-0">
-                  
-                     </div>
+
+                      </div>
                     </Col>
                     <Col className="order-lg-1" lg="4">
                       <div className="card-profile-stats d-flex justify-content-center">
-                     
+
                         <div>
                           <span className="heading">10</span>
                           <span className="description">selected</span>
                         </div>
-                        
+
                       </div>
                     </Col>
                   </Row>
@@ -100,11 +100,39 @@ class Profile extends React.Component {
                       University of Computer Science
                     </div>
                   </div>
-                  <div className="mt-5 py-5 border-top text-center">
-                    <Row className="justify-content-center">
-                     
-                     
-                    </Row>
+                  <div className=" py-1 border-top text-center">
+                  <section className="section">
+                        <Container>
+                          <Card className="bg-gradient-warning shadow-lg border-0">
+                            <div className="p-2">
+                              <Row className="align-items-center">
+                                <Col lg="8">
+                                  <h3 className="text-white">
+
+                                  </h3>
+                                  <p className="lead text-white mt-3">
+                                    I will be the leader of a company that ends up being
+                                    worth billions of dollars, because I got the answers. I
+                                    understand culture.
+                      </p>
+                                </Col>
+                                <Col className="ml-lg-auto" lg="3">
+                                  <Button
+                                    block
+                                    className="btn-white"
+                                    color="default"
+                                    href="https://www.creative-tim.com/product/argon-design-system-react?ref=adsr-landing-page"
+                                    size="lg"
+                                  >
+                                    Download React
+                      </Button>
+                                </Col>
+                              </Row>
+                            </div>
+                          </Card>
+                        </Container>
+                      </section>
+
                   </div>
                 </div>
               </Card>

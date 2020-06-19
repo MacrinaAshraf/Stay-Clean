@@ -1,84 +1,18 @@
 from companies.models import Program, ProgramReview, Company, CompanyUserMessage, SelectedProgram
-from companies.serializers.ProgramSerializers import ProgramSerializer, ReviewSerializer
 
 from companies.serializers.ProgramSerializers import ProgramSerializer
-from companies.serializers.CompanySerializers import CompanySerializer, MessageSerializer
+from companies.serializers.CompanySerializers import CompanySerializer
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+#
+# @api_view(['GET'])
+# def Home(request):
+#     companies = Company.objects.all()
+#     CSerializer = CompanySerializer(companies, context={'request': request}, many=True)
+#     programs = Program.objects.all()
 
-@api_view(['GET'])
-def Home(request):
-    companies = Company.objects.all()
-    CSerializer = CompanySerializer(companies, context={'request': request}, many=True)
-    programs = Program.objects.all()
-
-
-@api_view(['GET'])
-def most_selected_program(request):
-    programs = Program.objects.all()
-    temp_count = -1
-    temp_id = -1
-
-    if programs.count() > 0:
-        for program in programs:
-            temp = SelectedProgram.objects.filter(program_id=program.id).count()
-            try:
-                if temp_count < temp:
-                    temp_count = temp
-                    temp_id = program.id
-            except temp.DoesNotExist:
-                print("")
-
-        if temp_id != -1:
-            program = Program.objects.get(id=temp_id)
-            serializer = ProgramSerializer(
-                program,
-                context={'request': request})
-            content = {
-                'most_selected_program': serializer.data
-            }
-            return Response(content, status=status.HTTP_200_OK)
-
-        else:
-            return Response({}, status=status.HTTP_200_OK)
-
-    else:
-        return Response({}, status=status.HTTP_200_OK)
-
-
-@api_view(['GET'])
-def most_review_program(request):
-    programs = Program.objects.all()
-    temp_count = -1
-    temp_id = -1
-
-    if programs.count() > 0:
-        for program in programs:
-            temp = ProgramReview.objects.filter(program_id=program.id).count()
-            try:
-                if temp_count < temp:
-                    temp_count = temp
-                    temp_id = program.id
-            except temp.DoesNotExist:
-                print("")
-
-        if temp_id != -1:
-            program = Program.objects.get(id=temp_id)
-            serializer = ProgramSerializer(
-                program,
-                context={'request': request})
-            content = {
-                'most_review_program': serializer.data
-            }
-            return Response(content, status=status.HTTP_200_OK)
-
-        else:
-            return Response({}, status=status.HTTP_200_OK)
-
-    else:
-        return Response({}, status=status.HTTP_200_OK)
 
 # @api_view(['POST'])
 # def sendMessage(request):
@@ -101,11 +35,3 @@ def most_review_program(request):
 #             return Response(new_message.errors, status=status.HTTP_400_BAD_REQUEST)
 #
 #
-# @api_view(['GET'])
-# def getMessage(request, id):
-#     message = CompanyUserMessage.objects.get(id=id)
-#     serializer = MessageSerializer(
-#         message,
-#         context={'request': request},
-#         )
-#     return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
