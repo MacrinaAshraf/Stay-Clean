@@ -1,13 +1,13 @@
 import React from "react";
-import { Container, Row, Button, Col } from "reactstrap";
-import DemoNavbar from "components/Navbars/DemoNavbar.js";
-import SimpleFooter from "components/Footers/SimpleFooter.js";
+import axios from 'axios';
 import Hero from "./IndexSections/Hero.js";
 import Blogs from "./IndexSections/Blogs.js";
 import TapsMost from "./IndexSections/Taps-Most";
-import axios from 'axios';
-class Index extends React.Component {
+import { Container, Row, Col } from "reactstrap";
+import DemoNavbar from "components/Navbars/DemoNavbar.js";
+import SimpleFooter from "components/Footers/SimpleFooter.js";
 
+class Index extends React.Component {
   state = {
     all_companies: [],
     most_review_program: {},
@@ -15,55 +15,34 @@ class Index extends React.Component {
   }
 
   all_companies = () => {
-    axios.get('http://127.0.0.1:8000/company/' , {
-      headers: {
-          Authorization:
-              "Token ebbc0d47e9b1dcbd3d71ed795e61d01c595279fd",
-      },})
+    axios.get('http://127.0.0.1:8000/company/')
       .then(res => {
-        // console.log("res.data.all_companies")
         console.log(res.data)
-
         if (res.data) {
           this.setState({ all_companies: res.data })
-
         }
       })
       .catch(error => console.error(error))
   }
 
   most_review_program = () => {
-    axios.get('http://127.0.0.1:8000/most_review_program/' , {
-      headers: {
-          Authorization:
-              "Token ebbc0d47e9b1dcbd3d71ed795e61d01c595279fd",
-      },})
+    axios.get('http://127.0.0.1:8000/api/programs/most_review_program')
       .then(res => {
-        // console.log("most_review_program")
-        // console.log(res.data)
         if (res.data.most_review_program) {
           this.setState({ most_review_program: res.data.most_review_program })
-
         }
-
       })
       .catch(error => console.error(error))
   }
 
   most_selected_program = () => {
-    axios.get('http://127.0.0.1:8000/most_selected_program/' , {
-      headers: {
-          Authorization:
-              "Token ebbc0d47e9b1dcbd3d71ed795e61d01c595279fd",
-      },})
+    axios.get('http://127.0.0.1:8000/api/programs/most_selected_program')
       .then(res => {
         console.log("res.data.most_selected_program")
         console.log(res.data)
         if (res.data.most_selected_program) {
           this.setState({ most_selected_program: res.data.most_selected_program })
         }
-
-
       })
       .catch(error => console.error(error))
   }
@@ -109,17 +88,12 @@ class Index extends React.Component {
               <Row>
                 {this.state.all_companies.map(comp => (
                   <Col className="mb-5 mb-lg-0" lg="3" md="6">
-
-
-
-
-
                     <div className="px-4">
                       <img
                         alt="..."
                         className="rounded-circle img-center img-fluid shadow shadow-lg--hover"
-                        src={require("assets/img/theme/team-2-800x800.jpg")}
-                        style={{ width: "200px" }}
+                        src={comp.logo}
+                        style={{ width: "200px", height: "100px",objectFit: "fill" }}
                       />
                       <div className="pt-4 text-center">
                         <h5 className="title">
@@ -130,14 +104,9 @@ class Index extends React.Component {
                     </div>
                   </Col>
                 ))}
-
               </Row>
             </Container>
           </section>
-
-
-
-
         </main>
         <SimpleFooter />
       </>

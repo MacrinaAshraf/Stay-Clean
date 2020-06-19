@@ -9,7 +9,7 @@ from users.models import Customer
 class CompanySerializer(serializers.ModelSerializer):
     user = SerializerMethodField()
     created_at = SerializerMethodField()
-    logo = SerializerMethodField()
+    logo = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
 
     class Meta:
         model = Company
