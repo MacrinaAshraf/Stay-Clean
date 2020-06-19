@@ -177,10 +177,10 @@ class DemoNavbar extends React.Component {
                       <DropdownItem to="/messages-page" tag={Link}>
                         My Messages
                       </DropdownItem>
-                      <DropdownItem to="/program-page" tag={Link}>
+                      <DropdownItem to="/program/1" tag={Link}>
                         Program
                       </DropdownItem>
-                      <DropdownItem to="/company-page" tag={Link}>
+                      <DropdownItem to="/company/4" tag={Link}>
                         Company
                       </DropdownItem>
                       <DropdownItem to="/list-programs-page" tag={Link}>

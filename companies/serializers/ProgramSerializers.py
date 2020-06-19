@@ -28,7 +28,8 @@ class ProgramSerializer(serializers.ModelSerializer):
             name=validated_data.get('name'),
             description=validated_data.get('description', ""),
             duration=validated_data.get('duration'),
-            price=validated_data.get('price')
+            price=validated_data.get('price'),
+            is_active=True
         )
         return program
 
@@ -114,7 +115,8 @@ class SelectedProgramSerializer(serializers.ModelSerializer):
             program=validated_data.get('program'),
             company=validated_data.get('company'),
             rate=validated_data.get('rate', 0),
-            address=validated_data.get('address')
+            address=validated_data.get('address'),
+            is_active=True
         )
         return selected_program
 

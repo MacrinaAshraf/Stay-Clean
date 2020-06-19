@@ -1,5 +1,6 @@
 import React from "react";
 import axios from 'axios';
+import { Link } from "react-router-dom";
 import Hero from "./IndexSections/Hero.js";
 import Blogs from "./IndexSections/Blogs.js";
 import TapsMost from "./IndexSections/Taps-Most";
@@ -17,7 +18,6 @@ class Index extends React.Component {
   all_companies = () => {
     axios.get('http://127.0.0.1:8000/company/')
       .then(res => {
-        console.log(res.data)
         if (res.data) {
           this.setState({ all_companies: res.data })
         }
@@ -38,8 +38,6 @@ class Index extends React.Component {
   most_selected_program = () => {
     axios.get('http://127.0.0.1:8000/api/programs/most_selected_program')
       .then(res => {
-        console.log("res.data.most_selected_program")
-        console.log(res.data)
         if (res.data.most_selected_program) {
           this.setState({ most_selected_program: res.data.most_selected_program })
         }
@@ -97,8 +95,7 @@ class Index extends React.Component {
                       />
                       <div className="pt-4 text-center">
                         <h5 className="title">
-                          <span className="d-block mb-1">{comp.name}</span>
-                          <small className="h6 text-muted">Web Developer</small>
+                        <Link to={'/company/'+comp.id}><span className="d-block mb-1">{comp.name}</span></Link>                          <small className="h6 text-muted">{comp.description}</small>
                         </h5>
                       </div>
                     </div>

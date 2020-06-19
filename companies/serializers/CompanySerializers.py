@@ -13,7 +13,7 @@ class CompanySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Company
-        fields = ('id', 'name', 'description', 'logo', 'created_at', 'user')
+        fields = ('id', 'name', 'description', 'logo', 'created_at', 'user', 'address')
 
     def get_user(self, obj):
         return obj.user.email

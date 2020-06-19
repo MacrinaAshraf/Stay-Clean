@@ -14,8 +14,8 @@ import Register from "views/examples/Register.js";
 import List from "views/programs/list.js";  
 import SelectedProgram from "views/SelectedProgram/SelectedProgram.js";
 import Messages from "views/examples/Messages.js";
-import Program from "views/user/Program.js";
-import Company from "views/user/Company.js";
+import Program from "views/specificData/Program.js";
+import Company from "views/specificData/Company.js";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -43,12 +43,12 @@ ReactDOM.render(
         render={props => <Messages {...props} />}
       />
       <Route
-        path="/program-page"
+        path="/program/:id"
         exact
         render={props => <Program {...props} />}
       />
        <Route
-        path="/company-page"
+        path="/company/:id"
         exact
         render={props => <Company {...props} />}
       />

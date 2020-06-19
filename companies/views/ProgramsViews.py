@@ -113,7 +113,7 @@ class ProgramView(viewsets.ModelViewSet):
 
 
 class ReviewView(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
     queryset = ProgramReview.objects.all()
     serializer_class = ReviewSerializer
 
@@ -125,7 +125,7 @@ class ReviewView(viewsets.ModelViewSet):
 
 
 class SelectedProgramView(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
     queryset = SelectedProgram.objects.all()
     serializer_class = SelectedProgramSerializer
 
@@ -149,7 +149,7 @@ class SelectedProgramView(viewsets.ModelViewSet):
 
 
 class ProgramPhotoView(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
     queryset = ProgramPhoto.objects.all()
     serializer_class = ProgramPhotoSerializer
     parser_classes = (MultiPartParser, FormParser)
