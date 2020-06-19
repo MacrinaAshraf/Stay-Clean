@@ -187,6 +187,11 @@ class DemoNavbar extends React.Component {
                         list all programs
                       </DropdownItem>
 
+                      <DropdownItem to="/list-selected-programs-page" tag={Link}>
+                        list all selected programs
+                      </DropdownItem>
+
+
                     </DropdownMenu>
                   </UncontrolledDropdown>
                 </Nav>

@@ -11,7 +11,8 @@ import Landing from "views/examples/Landing.js";
 import Login from "views/examples/Login.js";
 import Profile from "views/examples/Profile.js";
 import Register from "views/examples/Register.js";
-import List from "views/programs/list.js";
+import List from "views/programs/list.js";  
+import SelectedProgram from "views/SelectedProgram/SelectedProgram.js";
 import Messages from "views/examples/Messages.js";
 import Program from "views/user/Program.js";
 import Company from "views/user/Company.js";
@@ -55,6 +56,11 @@ ReactDOM.render(
         path="/list-programs-page"
         exact
         render={props => <List {...props} />}
+      />
+      <Route
+        path="/list-selected-programs-page"
+        exact
+        render={props => <SelectedProgram {...props} />}
       />
       <Redirect to="/" />
     </Switch>
