@@ -26,7 +26,7 @@ class Profile extends React.Component {
     data: { id: -1 },
     allprograms: [],
     index: 0,
-    selected:0
+    selected: 0
   }
 
   handleSelect = (selectedIndex, e) => {
@@ -48,25 +48,28 @@ class Profile extends React.Component {
       this.refs.main.scrollTop = 0
     }
     else {
-      axios.get(`http://127.0.0.1:8000/api/programs/${this.props.match.params.id}/company_program`)
-      .then(res => {
-        if (res.data) {
-          this.setState({count: res.data.count()})
-        }
-      })
-      .catch(error => console.error(error))
+      axios.get(`http://127.0.0.1:8000/api/selected/${this.props.match.params.id}/all_selected`)
+        .then(res => {
+          if (res.data) {
+            this.setState({ selected: res.data.length })
+          }
+        })
+        .catch(error => console.error(error))
 
       axios.get(`http://localhost:8000/api/photo/${this.props.match.params.id}/program_photo/`)
         .then(res => {
-          items = res.data.map(img => {
-            return {
-              src: "http://localhost:8000" + img.image,
-              altText: "",
-              caption: "",
-              header: "",
-            }
-          })
+          if (res.data.length != 0) {
+            items = res.data.map(img => {
+              return {
+                src: "http://localhost:8000" + img.image,
+                altText: "",
+                caption: "",
+                header: "",
+              }
+            })
+          }
         })
+
         .catch(error => console.error(error))
     }
   }
@@ -135,7 +138,7 @@ class Profile extends React.Component {
                             <div className="card-profile-stats d-flex justify-content-center">
 
                               <div>
-                                <span className="heading">{this.state.count}</span>
+                                <span className="heading">{this.state.selected}</span>
                                 <span className="description">selected</span>
                               </div>
 
@@ -158,7 +161,7 @@ class Profile extends React.Component {
 
                         <div className="text-center mt-0">
                           <h3>
-                            {this.state.name}
+                            {this.state.data.name}
                           </h3>
                           <div className="h6 mt-2">
                             <i className="ni business_briefcase-24 mr-2" />

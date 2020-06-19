@@ -147,6 +147,17 @@ class SelectedProgramView(viewsets.ModelViewSet):
         serializer = SelectedProgramSerializer(programs, many=True)
         return Response(serializer.data)
 
+    @action(methods=['get'], detail=True, name="all Users Select")
+    def all_selected(self, request, pk=None):
+        program = get_object_or_404(Program, id=pk)
+        try:
+            selected = SelectedProgram.objects.filter(program=program)
+            serializer = SelectedProgramSerializer(selected, many=True)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except program.DoesNotExist:
+            return Response([], status=status.HTTP_200_OK)
+
 
 class ProgramPhotoView(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
