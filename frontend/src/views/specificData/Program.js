@@ -3,6 +3,7 @@ import axios from 'axios';
 import classnames from "classnames";
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
+import Review from "../IndexSections/Review.js"
 import {
   Button,
   Card,
@@ -30,7 +31,6 @@ class Profile extends React.Component {
     index: 0,
     selected: 0,
     reviews: [],
-    userReviews: [],
     allprograms: [],
     data: { id: -1 },
   }
@@ -82,6 +82,7 @@ class Profile extends React.Component {
   getReviews = async () => {
     await axios.get(`http://localhost:8000/api/programs/${this.props.match.params.id}/review/`)
       .then(res => {
+        console.log(res.data);
 
           this.setState({ reviews: res.data })
 
@@ -91,12 +92,7 @@ class Profile extends React.Component {
 
   }
 
-  getCustomerName = async (id) => {
-    return await axios.get(`http://localhost:8000/user/customer/${id}/customer_name/`)
-      .then(res => {
-        return res.data.name
-      })
-  }
+
 
   componentDidMount() {
     this.getProgramData()
@@ -227,46 +223,14 @@ class Profile extends React.Component {
                 <section className="row-grid align-items-center" style={{ maxHeight: "400px", overflow: "scroll" }}>
 
                   {this.state.reviews.map((review, index) => (
-
-                    <section className="section section-lg pt-0 pb-2">
-                      <Container>
-                        <Card className="bg-gradient-warning shadow-lg border-0">
-                          <div className="p-2">
-
-                            <Row className="align-items-center m-0">
-                              <Col>
-                                <h3 className="text-white">
-
-                                  {console.log(review)}
-
-                                   :
-                                  </h3>
-
-                                <p className="lead text-white mt-3">
-                                  {review.review}
-
-                                </p>
-                              </Col>
-
-                            </Row>
-
-                          </div>
-                        </Card>
-
-                      </Container>
-
-
-
-
-
-
-
-
-
-
-                    </section>
+                          <Review 
+                          customerID={review.customer}
+                          review = {review.review}  
+                          />
 
                   ))}
+
+
 
 
                 </section>
