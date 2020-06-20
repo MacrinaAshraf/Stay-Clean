@@ -11,6 +11,7 @@ import {
   Container,
   Col,
   FormGroup,
+  Form,
   Input,
   InputGroup,
   Row,
@@ -26,6 +27,7 @@ var items = [
   }
 ];
 
+
 class Profile extends React.Component {
   state = {
     index: 0,
@@ -33,11 +35,31 @@ class Profile extends React.Component {
     reviews: [],
     allprograms: [],
     data: { id: -1 },
+    myReview: "",
   }
 
   handleSelect = (selectedIndex, e) => {
     this.setState({ selectedIndex: selectedIndex })
   };
+
+
+  handleSubmit = event => {
+    event.preventDefault();
+    if (this.state.myReview != "") {
+      axios.post("http://127.0.0.1:8000/api/reviews/", {
+        review: this.state.myReview,
+        program: this.state.data.id
+      }, {
+        headers: {
+          Authorization:
+            "Token 687365a03c105c2cbfc33deb0fb9cb342a788c2d",
+        },
+      }).then(() => {
+        this.setState({ myReview: "" });
+      });
+    };
+
+  }
 
   getSelectedPrograms = async () => {
     await axios.get(`http://127.0.0.1:8000/api/selected/${this.props.match.params.id}/all_selected`)
@@ -82,14 +104,9 @@ class Profile extends React.Component {
   getReviews = async () => {
     await axios.get(`http://localhost:8000/api/programs/${this.props.match.params.id}/review/`)
       .then(res => {
-        console.log(res.data);
-
-          this.setState({ reviews: res.data })
-
+        this.setState({ reviews: res.data })
       })
       .catch(error => console.error(error))
-
-
   }
 
 
@@ -108,6 +125,50 @@ class Profile extends React.Component {
       this.getReviews()
 
     }
+  }
+
+  async componentDidUpdate(prevProps) {
+    if (prevProps.text !== this.props.text) {
+      this.updateAndNotify();
+    }
+
+
+    await axios.get(`http://localhost:8000/api/programs/${this.props.match.params.id}/review/`)
+      .then(res => {
+        if (res.data.length != this.state.reviews.length) {
+          this.setState({ reviews: res.data })
+        }
+      })
+      .catch(error => console.error(error))
+
+    await axios.get(`http://localhost:8000/api/photo/${this.props.match.params.id}/program_photo/`)
+      .then(res => {
+        if (res.data.length != items.length ) {
+          if (res.data.length != 0) {
+            items = res.data.map(img => {
+              return {
+                src: "http://localhost:8000" + img.image,
+                altText: "",
+                caption: "",
+                header: "",
+              }
+            })
+          }
+        }
+      })
+      .catch(error => console.error(error))
+
+      await axios.get(`http://127.0.0.1:8000/api/selected/${this.props.match.params.id}/all_selected`)
+      .then(res => {
+        if (res.data) {
+          if (res.data != this.state.selected) {
+            this.setState({ selected: res.data.length })
+          }
+        }
+      })
+      .catch(error => console.error(error))
+
+
   }
   render() {
     return (
@@ -221,18 +282,13 @@ class Profile extends React.Component {
                   </Container>
                 </section>
                 <section className="row-grid align-items-center" style={{ maxHeight: "400px", overflow: "scroll" }}>
-
                   {this.state.reviews.map((review, index) => (
-                          <Review 
-                          customerID={review.customer}
-                          review = {review.review}  
-                          />
+                    <Review
+                      customerID={review.customer}
+                      review={review.review}
+                    />
 
                   ))}
-
-
-
-
                 </section>
 
 
@@ -270,32 +326,40 @@ class Profile extends React.Component {
                         <Card className="bg-gradient-secondary shadow">
                           <CardBody className="p-lg-5">
                             <h4 className="mb-1">Want to Add Review ?</h4>
-                            <FormGroup
-                              className={classnames("mt-0", {
-                                focused: this.state.nameFocused
-                              })}
-                            >
-                              <InputGroup className="input-group-alternative">
+                            <Form onSubmit={this.handleSubmit}>
 
-                                <Input
-                                  type="text"
-                                  onFocus={e => this.setState({ nameFocused: true })}
-                                  onBlur={e => this.setState({ nameFocused: false })}
-                                />
-                              </InputGroup>
-                            </FormGroup>
-
-                            <div>
-                              <Button
-                                block
-                                className="btn-round"
-                                color="default"
-                                size="lg"
-                                type="button"
+                              <FormGroup
+                                className={classnames("mt-0", {
+                                  focused: this.state.nameFocused
+                                })}
                               >
-                                Send
+                                <InputGroup className="input-group-alternative">
+
+                                  <Input
+                                    type="text"
+                                    onFocus={e => this.setState({ nameFocused: true })}
+                                    onBlur={e => this.setState({ nameFocused: false })}
+                                    value={this.state.myReview}
+                                    onChange={e => {
+                                      this.setState({ myReview: e.target.value })
+                                    }}
+                                  />
+                                </InputGroup>
+                              </FormGroup>
+
+                              <div>
+                                <Button
+                                  block
+                                  className="btn-round"
+                                  color="default"
+                                  size="lg"
+                                >
+                                  Send
                         </Button>
-                            </div>
+                              </div>
+
+                            </Form>
+
                           </CardBody>
                         </Card>
                       </Col>
