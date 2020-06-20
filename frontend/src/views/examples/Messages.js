@@ -1,92 +1,55 @@
 import React from "react";
+import axios from 'axios';
 import classnames from "classnames";
+import Hero from "../IndexSections/Hero.js";
+import TapsMessages from "../IndexSections/Taps-Messages";
+import DemoNavbar from "components/Navbars/DemoNavbar.js";
+import SimpleFooter from "components/Footers/SimpleFooter.js";
 
-// reactstrap components
 import {
   Button,
   Card,
   CardBody,
+  Col,
+  Container,
+  DropdownToggle,
+  DropdownItem,
+  DropdownMenu,
   FormGroup,
   Input,
   InputGroupAddon,
   InputGroupText,
   InputGroup,
-  Container,
   Row,
-  Col,
-  DropdownToggle,
-  DropdownItem,
-  DropdownMenu,
   UncontrolledDropdown,
 } from "reactstrap";
 
-
-// index page sections
-import DemoNavbar from "components/Navbars/DemoNavbar.js";
-import SimpleFooter from "components/Footers/SimpleFooter.js";
-import Hero from "../IndexSections/Hero.js";
-import Blogs from "../IndexSections/Blogs.js";
-import TapsMessages from "../IndexSections/Taps-Messages";
-import axios from 'axios';
 class Messages extends React.Component {
 
   state = {
     all_companies: [],
-    most_review_program: {},
-    most_selected_program: {},
   }
 
   all_companies = () => {
-    axios.get('http://127.0.0.1:8000/all_companies/')
+    axios.get('http://127.0.0.1:8000/company/')
       .then(res => {
-        // console.log("res.data.all_companies")
-        // console.log(res.data)
-
-        if (res.data.all_companies) {
-          this.setState({ all_companies: res.data.all_companies })
-
+        if (res.data) {
+          this.setState({ all_companies: res.data })
         }
       })
       .catch(error => console.error(error))
   }
-
-  most_review_program = () => {
-    axios.get('http://127.0.0.1:8000/most_review_program/')
-      .then(res => {
-        // console.log("most_review_program")
-        // console.log(res.data)
-        if (res.data.most_review_program) {
-          this.setState({ most_review_program: res.data.most_review_program })
-
-        }
-
-      })
-      .catch(error => console.error(error))
+  handleChange=(e)=>{
+    console.log(e.target.value);
   }
 
-  most_selected_program = () => {
-    axios.get('http://127.0.0.1:8000/most_selected_program/')
-      .then(res => {
-        console.log("res.data.most_selected_program")
-        console.log(res.data)
-        if (res.data.most_selected_program) {
-          this.setState({ most_selected_program: res.data.most_selected_program })
-        }
-
-
-      })
-      .catch(error => console.error(error))
-  }
 
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     this.refs.main.scrollTop = 0;
 
-
     this.all_companies();
-    this.most_review_program();
-    this.most_selected_program();
 
   }
 
@@ -101,9 +64,7 @@ class Messages extends React.Component {
 
           <section className="section section-components">
             <Container>
-              <TapsMessages
-                userId="1"
-              />
+              <TapsMessages />
             </Container>
           </section>
 
@@ -127,16 +88,21 @@ class Messages extends React.Component {
 
                         <UncontrolledDropdown>
                           <DropdownToggle caret >
-                            
+
                             <h6 className="mb-0">Select Company</h6>
 
-                           </DropdownToggle>
-                          <DropdownMenu>
-                            <DropdownItem>Another Action</DropdownItem>
-                            <DropdownItem divider />
-                            <DropdownItem>Another Action</DropdownItem>
-                            <DropdownItem divider />
-                            <DropdownItem>Another Action</DropdownItem>
+                          </DropdownToggle>
+                          <DropdownMenu  
+                          onChange={this.handleChange}
+                          >
+                            {this.state.all_companies.map((comp) => (
+                              (
+                                <>
+                                  <DropdownItem value={comp.id}>{comp.name}</DropdownItem>
+                                  <DropdownItem divider />
+                                </>
+                              )
+                            ))}
                           </DropdownMenu>
                         </UncontrolledDropdown>
 
