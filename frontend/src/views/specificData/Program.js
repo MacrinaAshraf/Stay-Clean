@@ -1,15 +1,18 @@
 import React from "react";
 import axios from 'axios';
+import classnames from "classnames";
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
 import {
-  Badge,
   Button,
   Card,
   CardBody,
   Container,
-  Row,
   Col,
+  FormGroup,
+  Input,
+  InputGroup,
+  Row,
   UncontrolledCarousel
 } from "reactstrap";
 
@@ -21,20 +24,34 @@ var items = [
     header: ""
   }
 ];
+
 class Profile extends React.Component {
   state = {
-    data: { id: -1 },
-    allprograms: [],
     index: 0,
-    selected: 0
+    selected: 0,
+    reviews: [],
+    userReviews: [],
+    allprograms: [],
+    data: { id: -1 },
   }
 
   handleSelect = (selectedIndex, e) => {
     this.setState({ selectedIndex: selectedIndex })
   };
 
-  componentDidMount() {
-    axios.get(`http://127.0.0.1:8000/api/programs/${this.props.match.params.id}`)
+  getSelectedPrograms = async () => {
+    await axios.get(`http://127.0.0.1:8000/api/selected/${this.props.match.params.id}/all_selected`)
+      .then(res => {
+        if (res.data) {
+          this.setState({ selected: res.data.length })
+        }
+      })
+      .catch(error => console.error(error))
+
+  }
+
+  getProgramData = async () => {
+    await axios.get(`http://127.0.0.1:8000/api/programs/${this.props.match.params.id}`)
       .then(res => {
         if (res.data) {
           this.setState({ data: res.data })
@@ -42,35 +59,58 @@ class Profile extends React.Component {
       })
       .catch(error => console.error(error))
 
+  }
+
+  getPhotos = async () => {
+    await axios.get(`http://localhost:8000/api/photo/${this.props.match.params.id}/program_photo/`)
+      .then(res => {
+        if (res.data.length != 0) {
+          items = res.data.map(img => {
+            return {
+              src: "http://localhost:8000" + img.image,
+              altText: "",
+              caption: "",
+              header: "",
+            }
+          })
+        }
+      })
+      .catch(error => console.error(error))
+
+  }
+
+  getReviews = async () => {
+    await axios.get(`http://localhost:8000/api/programs/${this.props.match.params.id}/review/`)
+      .then(res => {
+
+          this.setState({ reviews: res.data })
+
+      })
+      .catch(error => console.error(error))
+
+
+  }
+
+  getCustomerName = async (id) => {
+    return await axios.get(`http://localhost:8000/user/customer/${id}/customer_name/`)
+      .then(res => {
+        return res.data.name
+      })
+  }
+
+  componentDidMount() {
+    this.getProgramData()
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     if (this.state.data.id != -1) {
       this.refs.main.scrollTop = 0
     }
     else {
-      axios.get(`http://127.0.0.1:8000/api/selected/${this.props.match.params.id}/all_selected`)
-        .then(res => {
-          if (res.data) {
-            this.setState({ selected: res.data.length })
-          }
-        })
-        .catch(error => console.error(error))
 
-      axios.get(`http://localhost:8000/api/photo/${this.props.match.params.id}/program_photo/`)
-        .then(res => {
-          if (res.data.length != 0) {
-            items = res.data.map(img => {
-              return {
-                src: "http://localhost:8000" + img.image,
-                altText: "",
-                caption: "",
-                header: "",
-              }
-            })
-          }
-        })
+      this.getSelectedPrograms()
+      this.getPhotos()
+      this.getReviews()
 
-        .catch(error => console.error(error))
     }
   }
   render() {
@@ -90,7 +130,7 @@ class Profile extends React.Component {
             :
             (
               <main className="profile-page" ref="main">
-                <section className="section-profile-cover section-shaped my-0">
+                <section className="section-profile-cover section-shaped my-0" style={{ backgroundImage: "url(" + require("assets/img/bg_2.jpg") + ")" }}>
                   {/* Circles background */}
                   <div className="shape shape-style-1 shape-default alpha-4">
                     <span />
@@ -120,7 +160,7 @@ class Profile extends React.Component {
                 </section>
                 <section className="section">
                   <Container>
-                    <Card className="card-profile shadow mt--300">
+                    <Card className="card-profile shadow mt--500">
                       <div className="px-4">
                         <Row className="justify-content-center">
                           <Col className="order-lg-2" lg="3">
@@ -184,7 +224,120 @@ class Profile extends React.Component {
                     </Card>
                   </Container>
                 </section>
+                <section className="row-grid align-items-center" style={{ maxHeight: "400px", overflow: "scroll" }}>
 
+                  {this.state.reviews.map((review, index) => (
+
+                    <section className="section section-lg pt-0 pb-2">
+                      <Container>
+                        <Card className="bg-gradient-warning shadow-lg border-0">
+                          <div className="p-2">
+
+                            <Row className="align-items-center m-0">
+                              <Col>
+                                <h3 className="text-white">
+
+                                  {console.log(review)}
+
+                                   :
+                                  </h3>
+
+                                <p className="lead text-white mt-3">
+                                  {review.review}
+
+                                </p>
+                              </Col>
+
+                            </Row>
+
+                          </div>
+                        </Card>
+
+                      </Container>
+
+
+
+
+
+
+
+
+
+
+                    </section>
+
+                  ))}
+
+
+                </section>
+
+
+                <section className="section section-lg bg-gradient-default">
+                  <Container className="pt-0 pb-25">
+                    <Row className="text-center justify-content-center">
+                      <Col lg="10">
+
+
+                      </Col>
+                    </Row>
+
+                  </Container>
+                  {/* SVG separator */}
+                  <div className="separator separator-bottom separator-skew zindex-100">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      preserveAspectRatio="none"
+                      version="1.1"
+                      viewBox="0 0 1460 100"
+                      x="0"
+                      y="0"
+                    >
+                      <polygon
+                        className="fill-white"
+                        points="1460 0 1460 0 0 100"
+                      />
+                    </svg>
+                  </div>
+                </section>
+                <section className="section section-lg section-contact-us">
+                  <Container>
+                    <Row className="justify-content-center mt--200" >
+                      <Col lg="8">
+                        <Card className="bg-gradient-secondary shadow">
+                          <CardBody className="p-lg-5">
+                            <h4 className="mb-1">Want to Add Review ?</h4>
+                            <FormGroup
+                              className={classnames("mt-0", {
+                                focused: this.state.nameFocused
+                              })}
+                            >
+                              <InputGroup className="input-group-alternative">
+
+                                <Input
+                                  type="text"
+                                  onFocus={e => this.setState({ nameFocused: true })}
+                                  onBlur={e => this.setState({ nameFocused: false })}
+                                />
+                              </InputGroup>
+                            </FormGroup>
+
+                            <div>
+                              <Button
+                                block
+                                className="btn-round"
+                                color="default"
+                                size="lg"
+                                type="button"
+                              >
+                                Send
+                        </Button>
+                            </div>
+                          </CardBody>
+                        </Card>
+                      </Col>
+                    </Row>
+                  </Container>
+                </section>
 
               </main>
 

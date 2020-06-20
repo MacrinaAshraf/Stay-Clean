@@ -95,7 +95,8 @@ class Index extends React.Component {
                       />
                       <div className="pt-4 text-center">
                         <h5 className="title">
-                        <Link to={'/company/'+comp.id}><span className="d-block mb-1">{comp.name}</span></Link>                          <small className="h6 text-muted">{comp.description}</small>
+                        <Link to={'/company/'+comp.id}><span className="d-block mb-1">{comp.name}</span></Link>                   
+
                         </h5>
                       </div>
                     </div>

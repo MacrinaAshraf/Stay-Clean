@@ -67,7 +67,7 @@ class Profile extends React.Component {
           :
           (
             <main className="profile-page" ref="main">
-              <section className="section-profile-cover section-shaped my-0">
+              <section className="section-profile-cover section-shaped my-0" style={{backgroundImage: "url(" + require("assets/img/bg_2.jpg") + ")"}}>
                 {/* Circles background */}
                 <div className="shape shape-style-1 shape-default alpha-4">
                   <span />
