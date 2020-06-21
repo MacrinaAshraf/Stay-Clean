@@ -13,9 +13,7 @@ import {
   Row,
   Col,
   Input,
-  InputGroupAddon,
   FormGroup,
-  InputGroupText,
   Container,
   InputGroup,
 } from "reactstrap";
@@ -54,7 +52,7 @@ class TabsSection extends React.Component {
     })
       .then(res => {
         if (res.data) {
-          console.log(res.data)
+          // console.log(res.data)
           this.setState({ recived: res.data })
         }
       })
@@ -67,24 +65,37 @@ class TabsSection extends React.Component {
       .then(res => {
 
         if (res.data) {
-          var dict={}
+          var dict = {}
 
-          res.data.map(comp=>{
-            dict[comp.id]=comp.name;
+          res.data.map(comp => {
+            dict[comp.id] = comp.name;
           })
           this.setState({ all_companies: dict })
-          console.log(this.state.all_companies)
         }
       })
       .catch(error => console.error(error))
   }
 
 
+
+
   componentDidMount() {
     this.all_companies();
     this.all_recived();
     this.all_send();
+
+    this.interval = setInterval(() => {
+      this.all_companies();
+      this.all_recived();
+      this.all_send();
+    }, 8000);
   }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+
 
   toggleNavs = (e, state, index) => {
     e.preventDefault();
@@ -160,10 +171,10 @@ class TabsSection extends React.Component {
                                     })}
                                   >
                                     <InputGroup className="input-group-alternative">
-                                      
+
                                       <Input
                                         type="text"
-                                        value={this.state.all_companies[mess.company]}
+                                        value={`From : ${this.state.all_companies[mess.company]}`}
                                         disabled={true}
 
                                       />
@@ -180,10 +191,10 @@ class TabsSection extends React.Component {
                                       placeholder="Type a message..."
                                       rows="4"
                                       type="textarea"
-                                      value={mess.message}
+                                      value={`Message : ${mess.message}`}
                                       disabled={true}
 
-                                    
+
                                     />
                                   </FormGroup>
 
@@ -200,7 +211,7 @@ class TabsSection extends React.Component {
                     </Row>
                   </TabPane>
                   <TabPane tabId="iconTabs2">
-                  <Row className="row-grid align-items-center" style={{ maxHeight: "300px", overflow: "scroll" }}>
+                    <Row className="row-grid align-items-center" style={{ maxHeight: "300px", overflow: "scroll" }}>
                       <Col className="order-md-0" md="0">
 
 
@@ -219,7 +230,7 @@ class TabsSection extends React.Component {
                                     <InputGroup className="input-group-alternative">
                                       <Input
                                         type="text"
-                                        value={this.state.all_companies[mess.company]}
+                                        value={`From : ${this.state.all_companies[mess.company]}`}
                                         disabled={true}
 
                                       />
@@ -236,10 +247,10 @@ class TabsSection extends React.Component {
                                       placeholder="Type a message..."
                                       rows="4"
                                       type="textarea"
-                                      value={mess.message}
+                                      value={`Message : ${mess.message}`}
                                       disabled={true}
 
-                                    
+
                                     />
                                   </FormGroup>
 
@@ -254,7 +265,7 @@ class TabsSection extends React.Component {
                       </Col>
 
                     </Row>
-                 
+
                   </TabPane>
 
                 </TabContent>
