@@ -4,13 +4,13 @@ import ProgramCard from "./ProgramCard.js";
 import ConfirmRemovalModal from "./ConfirmRemovalModal.js";
 import NewProgramModal from "./NewProgramModal";
 // reactstrap components
-import { Container, Row, Col, Button, Badge, Card, CardBody } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 
 // core components
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
-import StarRatingComponent from "react-star-rating-component";
+// import StarRatingComponent from "react-star-rating-component";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
-import NewProgramForm from "./NewProgramForm.js";
+// import NewProgramForm from "./NewProgramForm.js";
 
 
 class List extends React.Component {
@@ -34,7 +34,7 @@ class List extends React.Component {
         axios.get("http://127.0.0.1:8000/api/programs/"  , {
             headers: {
                 Authorization:
-                    "Token ebbc0d47e9b1dcbd3d71ed795e61d01c595279fd",
+                    "Token " + localStorage.getItem("token"),
             },}).then(res => this.setState({ programs: res.data }));
 
     }

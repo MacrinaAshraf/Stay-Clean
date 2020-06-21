@@ -19,7 +19,7 @@ class ConfirmRemovalModal extends Component {
     axios.delete("http://localhost:8000/api/programs/" +id  , {
       headers: {
           Authorization:
-              "Token ebbc0d47e9b1dcbd3d71ed795e61d01c595279fd",
+            "Token " + localStorage.getItem("token"),
       },}).then(() => {
       this.props.resetState();
       this.toggle();
