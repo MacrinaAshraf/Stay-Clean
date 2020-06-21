@@ -8,9 +8,10 @@ import "assets/scss/argon-design-system-react.scss?v1.1.0";
 
 import Index from "views/Index.js";
 import Landing from "views/examples/Landing.js";
-import Login from "views/examples/Login.js";
+import Login from "views/auth/Login.js";
 import Profile from "views/examples/Profile.js";
-import Register from "views/examples/Register.js";
+import Register from "views/auth/Register.js";
+import CompanyRegister from "views/auth/CompanyRegister.js";
 import List from "views/programs/list.js";  
 import SelectedProgram from "views/SelectedProgram/SelectedProgram.js";
 import UserMessages from "views/examples/UserMessages.js";
@@ -27,16 +28,25 @@ ReactDOM.render(
         exact
         render={props => <Landing {...props} />}
       />
-      <Route path="/login-page" exact render={props => <Login {...props} />} />
+      <Route 
+        path="/login" 
+        exact 
+        render={props => <Login {...props} />} 
+      />
       <Route
         path="/profile-page"
         exact
         render={props => <Profile {...props} />}
       />
       <Route
-        path="/register-page"
+        path="/register"
         exact
         render={props => <Register {...props} />}
+      />
+      <Route
+        path="/company-register"
+        exact
+        render={props => <CompanyRegister {...props} />}
       />
        <Route
         path="/user-messages"
@@ -64,7 +74,7 @@ ReactDOM.render(
         render={props => <List {...props} />}
       />
       <Route
-        path="/list-selected-programs-page"
+        path="/selected-programs"
         exact
         render={props => <SelectedProgram {...props} />}
       />

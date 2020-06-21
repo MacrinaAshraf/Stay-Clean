@@ -1,12 +1,9 @@
-import axios from "axios";
-import { useParams } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import StarRatingComponent from "react-star-rating-component";
-import { Container, Row, Col, Button, Badge, Card, CardBody } from "reactstrap";
+import { Col, Badge, Card, CardBody } from "reactstrap";
 
 const ProgramCard = (props) => {
  
-
   return (
     <Col lg="4">
       <Card className="card-lift--hover shadow border-0">

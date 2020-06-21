@@ -31,7 +31,7 @@ class NewProgramForm extends React.Component {
     axios.post("http://localhost:8000/api/programs/", this.state, {
                       headers: {
                           Authorization:
-                              "Token ebbc0d47e9b1dcbd3d71ed795e61d01c595279fd",
+                              "Token " + localStorage.getItem("token"),
                       },}).then(() => {
       this.props.resetState();
       this.props.toggle();
@@ -43,7 +43,7 @@ class NewProgramForm extends React.Component {
     axios.patch("http://localhost:8000/api/programs/"+ this.state.id+"/", this.state , {
       headers: {
           Authorization:
-              "Token ebbc0d47e9b1dcbd3d71ed795e61d01c595279fd",
+            "Token " + localStorage.getItem("token"),
       },}).then(() => {
       this.props.resetState();
       this.props.toggle();

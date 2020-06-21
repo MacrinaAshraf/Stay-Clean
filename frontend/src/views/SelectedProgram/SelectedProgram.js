@@ -16,7 +16,7 @@ const SelectedProgram = (props) => {
             .get('http://localhost:8000/api/selected/user_program/', {
                 headers: {
                     Authorization:
-                        "Token ebbc0d47e9b1dcbd3d71ed795e61d01c595279fd",
+                        "Token " + localStorage.getItem("token"),
                 }
             })
             .then(res => {

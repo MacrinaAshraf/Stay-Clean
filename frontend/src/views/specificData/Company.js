@@ -24,7 +24,7 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`http://127.0.0.1:8000/company/${this.props.match.params.id}`)
+    axios.get(`http://127.0.0.1:8000/user-api/company/${this.props.match.params.id}`)
       .then(res => {
         if (res.data) {
           this.setState({ data: res.data })
