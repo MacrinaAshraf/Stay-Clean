@@ -57,8 +57,8 @@ class Customer(models.Model):
     first_name = models.CharField(verbose_name="First Name", null=False, max_length=50)
     last_name = models.CharField(verbose_name="Last Name", null=False, max_length=50)
     phone = models.CharField(verbose_name="Phone", null=True, validators=[phone_regex], max_length=14)
-    photo = models.ImageField(verbose_name="User Photo", upload_to='users/images')
-    facebook_link = models.URLField(null=True)
+    photo = models.ImageField(verbose_name="User Photo", upload_to='users/images',null=True,blank=True)
+    facebook_link = models.URLField(null=True,blank=True)
     date_joined = models.DateTimeField(verbose_name="date_joined",
                                        auto_now=True)
     last_login = models.DateTimeField(verbose_name="last_login", auto_now=True)

@@ -6,6 +6,7 @@ from .models import Customer, User
 
 class CustomerSerializer(serializers.ModelSerializer):
     created_at = SerializerMethodField()
+    photo = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
 
     class Meta:
         model = Customer
