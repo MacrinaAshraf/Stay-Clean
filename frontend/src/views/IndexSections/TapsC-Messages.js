@@ -29,10 +29,10 @@ class TabsSection extends React.Component {
 
 
   all_send = () => {
-    axios.get('http://127.0.0.1:8000/api/message/user_send_messages/', {
+    axios.get('http://127.0.0.1:8000/api/message/company_send_messages/', {
       headers: {
         Authorization:
-          "Token 687365a03c105c2cbfc33deb0fb9cb342a788c2d",
+          "Token 0e9c2682cf618be404411af2289a86b48577b5e9",
       }
     })
       .then(res => {
@@ -44,10 +44,10 @@ class TabsSection extends React.Component {
   }
 
   all_recived = () => {
-    axios.get('http://127.0.0.1:8000/api/message/user_received_messages/', {
+    axios.get('http://127.0.0.1:8000/api/message/company_received_messages/', {
       headers: {
         Authorization:
-          "Token 687365a03c105c2cbfc33deb0fb9cb342a788c2d",
+          "Token 0e9c2682cf618be404411af2289a86b48577b5e9",
       }
     })
       .then(res => {
@@ -62,7 +62,7 @@ class TabsSection extends React.Component {
 
 
   all_users = () => {
-    axios.get('http://localhost:8000/user/customer/company_customer/', {
+    axios.get('http://localhost:8000/user-api/customer/company_customer/', {
       headers: {
         Authorization:
           "Token 0e9c2682cf618be404411af2289a86b48577b5e9",

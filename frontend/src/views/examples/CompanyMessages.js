@@ -27,7 +27,7 @@ class Messages extends React.Component {
   }
 
   all_users = () => {
-    axios.get('http://localhost:8000/user/customer/company_customer/',{
+    axios.get('http://localhost:8000/user-api/customer/company_customer/',{
       headers: {
         Authorization:
           "Token 0e9c2682cf618be404411af2289a86b48577b5e9",

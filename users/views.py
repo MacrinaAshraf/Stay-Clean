@@ -1,5 +1,4 @@
 from .models import Customer, User, Company
-# from .models import Company
 from .serializer import CustomerSerializer, UserSerializer
 from companies.serializers.CompanySerializers import CompanySerializer
 from rest_framework import status, viewsets
@@ -8,7 +7,6 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from companies.models import CompanyUserMessage
-
 
 
 def detail_route(methods, url_path):
@@ -40,6 +38,18 @@ class CustomerView(viewsets.ModelViewSet):
         except user_select.DoesNotExist:
             return Response({}, status=status.HTTP_200_OK)
 
+    @action(detail=False, methods=['get'], name="company's customers")
+    def company_customer(self, request):
+        company = get_object_or_404(Company, user=request.user)
+        message = CompanyUserMessage.objects.filter(company=company, sender="U")
+        id_list = []
+        for mess in message:
+            id_list.append(mess.customer_id)
+        all_customers = Customer.objects.filter(pk__in=id_list)
+        serializer = CustomerSerializer(all_customers, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
     @action(methods=['GET'], detail=False, permission_classes=[IsAuthenticated])
     def me(self, request, *args, **kwargs):
         customer = get_object_or_404(Customer, user=request.user)
@@ -59,7 +69,6 @@ class UserView(viewsets.ModelViewSet):
         )
 
     def create(self, request, *args, **kwargs):
-        print(request.data.get('is_company'))
         if request.data.get('is_company'):
             is_company = request.data.get('is_company')
         else:
@@ -90,18 +99,4 @@ class UserView(viewsets.ModelViewSet):
     def me(self, request, *args, **kwargs):
         self.kwargs.update(pk=request.user.id)
         return self.retrieve(request, *args, **kwargs)
-
-    @action(detail=False, methods=['get'], name="company's customers")
-    def company_customer(self, request):
-        company = get_object_or_404(Company, user=request.user)
-        message = CompanyUserMessage.objects.filter(company=company, sender="U")
-        id_list = []
-        for mess in message:
-            id_list.append(mess.customer_id)
-        all_customers = Customer.objects.filter(pk__in=id_list)
-        print("here2")
-        print(all_customers)
-
-        serializer = CustomerSerializer(all_customers, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
