@@ -13,7 +13,8 @@ import Profile from "views/examples/Profile.js";
 import Register from "views/examples/Register.js";
 import List from "views/programs/list.js";  
 import SelectedProgram from "views/SelectedProgram/SelectedProgram.js";
-import Messages from "views/examples/Messages.js";
+import UserMessages from "views/examples/UserMessages.js";
+import CompanyMessages from "views/examples/CompanyMessages.js";
 import Program from "views/specificData/Program.js";
 import Company from "views/specificData/Company.js";
 
@@ -38,9 +39,14 @@ ReactDOM.render(
         render={props => <Register {...props} />}
       />
        <Route
-        path="/messages-page"
+        path="/user-messages"
         exact
-        render={props => <Messages {...props} />}
+        render={props => <UserMessages {...props} />}
+      />
+       <Route
+        path="/company-messages"
+        exact
+        render={props => <CompanyMessages {...props} />}
       />
       <Route
         path="/program/:id"

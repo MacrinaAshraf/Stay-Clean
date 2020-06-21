@@ -1,9 +1,11 @@
-from .models import Customer
+from .models import Customer, Company
 from .serializer import CustomerSerializer
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
+from companies.models import CompanyUserMessage
+
 
 
 def detail_route(methods, url_path):
@@ -34,3 +36,18 @@ class CustomerView(viewsets.ModelViewSet):
                 status=status.HTTP_200_OK)
         except user_select.DoesNotExist:
             return Response({}, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['get'], name="company's customers")
+    def company_customer(self, request):
+        company = get_object_or_404(Company, user=request.user)
+        message = CompanyUserMessage.objects.filter(company=company, sender="U")
+        id_list = []
+        for mess in message:
+            id_list.append(mess.customer_id)
+        all_customers = Customer.objects.filter(pk__in=id_list)
+        print("here2")
+        print(all_customers)
+
+        serializer = CustomerSerializer(all_customers, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
