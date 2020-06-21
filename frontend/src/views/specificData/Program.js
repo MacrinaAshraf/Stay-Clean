@@ -1,9 +1,9 @@
 import React from "react";
 import axios from 'axios';
 import classnames from "classnames";
+import Review from "../IndexSections/Review.js"
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
-import Review from "../IndexSections/Review.js"
 import {
   Button,
   Card,

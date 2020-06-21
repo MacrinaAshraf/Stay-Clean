@@ -5,29 +5,25 @@ import Hero from "../IndexSections/Hero.js";
 import TapsMessages from "../IndexSections/Taps-Messages";
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
-
 import {
   Button,
   Card,
   CardBody,
   Col,
   Container,
-  DropdownToggle,
-  DropdownItem,
-  DropdownMenu,
+  Form,
   FormGroup,
   Input,
-  InputGroupAddon,
-  InputGroupText,
   InputGroup,
   Row,
-  UncontrolledDropdown,
 } from "reactstrap";
 
 class Messages extends React.Component {
 
   state = {
     all_companies: [],
+    selectedCompany: -1,
+    myMess: ""
   }
 
   all_companies = () => {
@@ -35,12 +31,38 @@ class Messages extends React.Component {
       .then(res => {
         if (res.data) {
           this.setState({ all_companies: res.data })
+          if (res.data.length != 0) {
+            this.setState({ selectedCompany: res.data[0].id })
+          }
         }
       })
       .catch(error => console.error(error))
   }
-  handleChange=(e)=>{
-    console.log(e.target.value);
+
+  handleChange = (e) => {
+    this.setState({ selectedCompany: e.target.value })
+  }
+
+  handleSubmit = event => {
+    event.preventDefault();
+    console.log(this.state.selectedCompany)
+    console.log(this.state.myMess)
+
+    if (this.state.myMess != "") {
+      axios.post("http://127.0.0.1:8000/api/message/", {
+        message: this.state.myMess,
+        company: this.state.selectedCompany,
+        sender: "U"
+      }, {
+        headers: {
+          Authorization:
+            "Token 687365a03c105c2cbfc33deb0fb9cb342a788c2d",
+        },
+      }).then(() => {
+        this.setState({ myMess: "" });
+      });
+    };
+
   }
 
 
@@ -49,8 +71,16 @@ class Messages extends React.Component {
     document.scrollingElement.scrollTop = 0;
     this.refs.main.scrollTop = 0;
 
-    this.all_companies();
+    this.all_companies();    
+    this.interval = setInterval(() => {
+      this.all_companies();
+    }, 8000);
+  }
 
+
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   render() {
@@ -78,97 +108,62 @@ class Messages extends React.Component {
                     <CardBody className="p-lg-5">
                       <h4 className="mb-1">Want to send message to company ?</h4>
 
+                      <Form onSubmit={this.handleSubmit}>
+                        <FormGroup
+                          className={classnames("mt-5", {
+                            focused: this.state.nameFocused
+                          })}
+                        >
 
-
-                      <FormGroup
-                        className={classnames("mt-5", {
-                          focused: this.state.nameFocused
-                        })}
-                      >
-
-                        <UncontrolledDropdown>
-                          <DropdownToggle caret >
-
-                            <h6 className="mb-0">Select Company</h6>
-
-                          </DropdownToggle>
-                          <DropdownMenu  
-                          onChange={this.handleChange}
+                          <select
+                            onChange={this.handleChange}
+                            className="ant-input selectBox"
+                            style={{ width: 200 }}
+                            value={this.state.selectedCompany}
+                            defaultValue={this.state.selectedCompany}
                           >
+
                             {this.state.all_companies.map((comp) => (
                               (
                                 <>
-                                  <DropdownItem value={comp.id}>{comp.name}</DropdownItem>
-                                  <DropdownItem divider />
+                                  <option value={comp.id}>{comp.name}</option>
                                 </>
                               )
                             ))}
-                          </DropdownMenu>
-                        </UncontrolledDropdown>
+
+                          </select>
+                        </FormGroup>
 
 
-                      </FormGroup>
-
-
-                      <FormGroup
-                        className={classnames("mt-5", {
-                          focused: this.state.nameFocused
-                        })}
-                      >
-                        <InputGroup className="input-group-alternative">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-user-run" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Your name"
-                            type="text"
-                            onFocus={e => this.setState({ nameFocused: true })}
-                            onBlur={e => this.setState({ nameFocused: false })}
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                      <FormGroup
-                        className={classnames({
-                          focused: this.state.emailFocused
-                        })}
-                      >
-                        <InputGroup className="input-group-alternative">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-email-83" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Email address"
-                            type="email"
-                            onFocus={e => this.setState({ emailFocused: true })}
-                            onBlur={e => this.setState({ emailFocused: false })}
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                      <FormGroup className="mb-4">
-                        <Input
-                          className="form-control-alternative"
-                          cols="80"
-                          name="name"
-                          placeholder="Type a message..."
-                          rows="4"
-                          type="textarea"
-                        />
-                      </FormGroup>
-                      <div>
-                        <Button
-                          block
-                          className="btn-round"
-                          color="default"
-                          size="lg"
-                          type="button"
-                        >
-                          Send Message
+                        <FormGroup className="mb-4">
+                          <InputGroup className="input-group-alternative">
+                            <Input
+                              className="form-control-alternative"
+                              cols="80"
+                              name="name"
+                              placeholder="Type a message..."
+                              rows="4"
+                              type="textarea"
+                              value={this.state.myMess}
+                              onChange={e => {
+                                this.setState({ myMess: e.target.value })
+                              }}
+                            />
+                          </InputGroup>
+                        </FormGroup>
+                        <div>
+                          <Button
+                            block
+                            className="btn-round"
+                            color="default"
+                            size="lg"
+                          >
+                            Send Message
                         </Button>
-                      </div>
+                        </div>
+                      </Form>
+
+
                     </CardBody>
                   </Card>
                 </Col>
