@@ -16,7 +16,7 @@ class Index extends React.Component {
   }
 
   all_companies = () => {
-    axios.get('http://127.0.0.1:8000/company/')
+    axios.get('http://127.0.0.1:8000/user-api/company/')
       .then(res => {
         if (res.data) {
           this.setState({ all_companies: res.data })

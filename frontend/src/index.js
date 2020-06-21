@@ -8,10 +8,10 @@ import "assets/scss/argon-design-system-react.scss?v1.1.0";
 
 import Index from "views/Index.js";
 import Landing from "views/examples/Landing.js";
-import Login from "views/users/Login.js";
+import Login from "views/auth/Login.js";
 import Profile from "views/examples/Profile.js";
-import Register from "views/users/Register.js";
-import CompanyRegister from "views/users/CompanyRegister.js";
+import Register from "views/auth/Register.js";
+import CompanyRegister from "views/auth/CompanyRegister.js";
 import List from "views/programs/list.js";  
 import SelectedProgram from "views/SelectedProgram/SelectedProgram.js";
 import Messages from "views/examples/Messages.js";

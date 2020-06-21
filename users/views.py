@@ -6,7 +6,7 @@ from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 
 def detail_route(methods, url_path):
@@ -37,6 +37,12 @@ class CustomerView(viewsets.ModelViewSet):
                 status=status.HTTP_200_OK)
         except user_select.DoesNotExist:
             return Response({}, status=status.HTTP_200_OK)
+
+    @action(methods=['GET'], detail=False, permission_classes=[IsAuthenticated])
+    def me(self, request, *args, **kwargs):
+        customer = get_object_or_404(Customer, user=request.user)
+        self.kwargs.update(pk=customer.pk)
+        return self.retrieve(request, *args, **kwargs)
 
 
 class UserView(viewsets.ModelViewSet):
@@ -78,7 +84,7 @@ class UserView(viewsets.ModelViewSet):
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    # @action(methods=['GET'], detail=False, permission_classes=[IsAuthenticated])
-    # def me(self, request, *args, **kwargs):
-    #     self.kwargs.update(pk=request.user.id)
-    #     return self.retrieve(request, *args, **kwargs)
+    @action(methods=['GET'], detail=False, permission_classes=[IsAuthenticated])
+    def me(self, request, *args, **kwargs):
+        self.kwargs.update(pk=request.user.id)
+        return self.retrieve(request, *args, **kwargs)
