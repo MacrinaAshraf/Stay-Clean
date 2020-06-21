@@ -11,6 +11,7 @@ import Landing from "views/examples/Landing.js";
 import Login from "views/users/Login.js";
 import Profile from "views/examples/Profile.js";
 import Register from "views/users/Register.js";
+import CompanyRegister from "views/users/CompanyRegister.js";
 import List from "views/programs/list.js";  
 import SelectedProgram from "views/SelectedProgram/SelectedProgram.js";
 import Messages from "views/examples/Messages.js";
@@ -40,6 +41,11 @@ ReactDOM.render(
         path="/register"
         exact
         render={props => <Register {...props} />}
+      />
+      <Route
+        path="/company-register"
+        exact
+        render={props => <CompanyRegister {...props} />}
       />
        <Route
         path="/messages-page"

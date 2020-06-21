@@ -1,4 +1,5 @@
-from .models import Customer, User
+from .models import Customer, User, Company
+# from .models import Company
 from .serializer import CustomerSerializer, UserSerializer
 from companies.serializers.CompanySerializers import CompanySerializer
 from rest_framework import status, viewsets
@@ -50,6 +51,7 @@ class UserView(viewsets.ModelViewSet):
         )
 
     def create(self, request, *args, **kwargs):
+        print(request.data.get('is_company'))
         if request.data.get('is_company'):
             is_company = request.data.get('is_company')
         else:
