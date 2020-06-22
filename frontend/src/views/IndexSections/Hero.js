@@ -5,47 +5,40 @@ class Hero extends React.Component {
   render() {
     return (
       <>
-        <div className="position-relative" style={{backgroundImage: "url(" + require("assets/img/bg_1.jpg") + ")"}}>
-          {/* Hero for FREE version */}
-          <section className="section section-hero section-shaped" >
-            {/* Background circles */}
+        <div className="position-relative" style={{ backgroundImage: "url(" + require("assets/img/Dark-1.jpg") + ")" }}>
+          {/* shape Hero */}
+          <section className="section section-lg section-shaped pb-250">
             <div className="shape shape-style-1 shape-default">
-              <span className="span-150" />
-              <span className="span-50" />
-              <span className="span-50" />
-              <span className="span-75" />
-              <span className="span-100" />
-              <span className="span-75" />
-              <span className="span-50" />
-              <span className="span-100" />
-              <span className="span-50" />
-              <span className="span-100" />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
             </div>
-            <Container className="shape-container d-flex align-items-center py-lg">
+            <Container className="py-lg-md d-flex">
               <div className="col px-0">
-                <Row className="align-items-center justify-content-center">
-                  <Col className="text-center" lg="6">
-
-
-                    <h1 className="mb-0">                      
-                    Taking care of yourself also means
-                      <br />
-                    Taking care of your environment
+                <Row>
+                  <Col lg="6">
+                    <h1 className="display-3 text-dark">
+                      List Company's Programs{" "}
                     </h1>
+                    <p className="lead text-white">
+                      The design system comes with four pre-built pages to
+                      help you get started faster. You can change the text and
+                      images and you're good to go.
+                      </p>
+                    <div className="btn-wrapper"></div>
 
-                    <div className="btn-wrapper mt-5">
-
-                    </div>
-                    <div className="mt-5">
-
-
-                    </div>
                   </Col>
                 </Row>
               </div>
             </Container>
             {/* SVG separator */}
-            <div className="separator separator-bottom separator-skew zindex-100">
+            <div className="separator separator-bottom separator-skew">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 preserveAspectRatio="none"

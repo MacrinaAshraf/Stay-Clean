@@ -60,7 +60,7 @@ ReactDOM.render(
         render={props => <CompanyMessages {...props} />}
       />
       <Route
-        path="/program/:id"
+        path="/programs/:id"
         exact
         render={props => <Program {...props} />}
       />
@@ -70,7 +70,7 @@ ReactDOM.render(
         render={props => <Company {...props} />}
       />
         <Route
-        path="/list-programs-page"
+        path="/programs"
         exact
         render={props => <List {...props} />}
       />

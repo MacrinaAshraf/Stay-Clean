@@ -68,33 +68,6 @@ class UserView(viewsets.ModelViewSet):
             pk=self.kwargs.get('pk')
         )
 
-    def create(self, request, *args, **kwargs):
-        if request.data.get('is_company'):
-            is_company = request.data.get('is_company')
-        else:
-            is_company = False
-
-        user = User.objects.create(
-            email=request.data.get('email'), is_company=is_company)
-        user.set_password(request.data.get('password'))
-        user.save()
-        if is_company == True:
-            company = Company.objects.filter(user=user.pk).first()
-            company.name = request.data.get('name')
-            company.address = request.data.get('address')
-            company.description = request.data.get('description')
-            company.save()
-            serializer = CompanySerializer(company)
-        else:
-            customer = Customer.objects.filter(user=user.pk).first()
-            customer.first_name = request.data.get('first_name')
-            customer.last_name = request.data.get('last_name')
-            customer.phone = request.data.get('phone')
-            customer.save()
-            serializer = CustomerSerializer(customer)
-
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
     @action(methods=['GET'], detail=False, permission_classes=[IsAuthenticated])
     def me(self, request, *args, **kwargs):
         self.kwargs.update(pk=request.user.id)

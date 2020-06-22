@@ -8,8 +8,25 @@ from users.models import Company, Customer
 from rest_framework.generics import get_object_or_404
 
 
+class ProgramPhotoSerializer(serializers.ModelSerializer):
+    created_at = SerializerMethodField()
+    image = serializers.ImageField()
+
+    class Meta:
+        model = ProgramPhoto
+        exclude = ['updated_at']
+
+    def get_created_at(self, obj):
+        return obj.created_at.strftime("%d/%m/%Y %H:%M")
+
+    def get_image(self, obj):
+        return obj.get_absolute_url()
+
+
 class ProgramSerializer(serializers.ModelSerializer):
     created_at = SerializerMethodField()
+    images = ProgramPhotoSerializer(
+        source='programphoto_set', many=True, read_only=True)
 
     class Meta:
         model = Program
@@ -23,6 +40,7 @@ class ProgramSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         company = get_object_or_404(Company, user=self.context['request'].user)
+        images_data = self.context.get('view').request.FILES
         program = Program.objects.create(
             company=company,
             name=validated_data.get('name'),
@@ -31,6 +49,9 @@ class ProgramSerializer(serializers.ModelSerializer):
             price=validated_data.get('price'),
             is_active=True
         )
+        for image_data in images_data.values():
+            ProgramPhoto.objects.create(program=program, image=image_data)
+
         return program
 
     def update(self, instance, validated_data):
@@ -54,7 +75,8 @@ class ReviewSerializer(serializers.ModelSerializer):
         return obj.created_at.strftime("%d/%m/%Y %H:%M")
 
     def create(self, validated_data):
-        customer = get_object_or_404(Customer, user=self.context['request'].user)
+        customer = get_object_or_404(
+            Customer, user=self.context['request'].user)
         review = ProgramReview.objects.create(
             customer=customer,
             program=validated_data.get('program'),
@@ -70,21 +92,6 @@ class ReviewSerializer(serializers.ModelSerializer):
         review = ProgramReview.objects.get(pk=pk)
         review.delete()
         return Response(status=status.HTTP_200_OK)
-
-
-class ProgramPhotoSerializer(serializers.ModelSerializer):
-    created_at = SerializerMethodField()
-    image = serializers.ImageField()
-
-    class Meta:
-        model = ProgramPhoto
-        exclude = ['updated_at']
-
-    def get_created_at(self, obj):
-        return obj.created_at.strftime("%d/%m/%Y %H:%M")
-
-    def get_image(self, obj):
-        return obj.get_absolute_url()
 
 
 def get_average_rate(program):
@@ -109,7 +116,8 @@ class SelectedProgramSerializer(serializers.ModelSerializer):
         return obj.created_at.strftime("%d/%m/%Y %H:%M")
 
     def create(self, validated_data):
-        customer = get_object_or_404(Customer, user=self.context['request'].user)
+        customer = get_object_or_404(
+            Customer, user=self.context['request'].user)
         selected_program = SelectedProgram.objects.create(
             customer=customer,
             program=validated_data.get('program'),
@@ -122,13 +130,14 @@ class SelectedProgramSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         SelectedProgram.objects.filter(pk=instance.pk).update(**validated_data)
-        selected_program = SelectedProgram.objects.filter(pk=instance.pk).first()
+        selected_program = SelectedProgram.objects.filter(
+            pk=instance.pk).first()
         avg_rate = get_average_rate(selected_program.program)
-        Program.objects.filter(pk=selected_program.program.pk).update(avgRate=avg_rate)
+        Program.objects.filter(
+            pk=selected_program.program.pk).update(avgRate=avg_rate)
         return SelectedProgram.objects.filter(pk=instance.pk).first()
 
     def delete(self, request, pk):
         selected_program = SelectedProgram.objects.get(pk=pk)
         selected_program.delete()
         return Response(status=status.HTTP_200_OK)
-
