@@ -182,12 +182,13 @@ class Profile extends React.Component {
                 alt="..."
                 className="rounded-circle"
                 src={require("assets/img/notFound.jpg")}
+                
               /></>
             )
             :
             (
               <main className="profile-page" ref="main">
-                <section className="section-profile-cover section-shaped my-0" style={{ backgroundImage: "url(" + require("assets/img/bg_2.jpg") + ")" }}>
+                <section className="section-profile-cover section-shaped my-0" style={{   backgroundImage: "url(" + require("assets/img/bg_1.jpg") + ")", }}>
                   {/* Circles background */}
                   <div className="shape shape-style-1 shape-default alpha-4">
                     <span />

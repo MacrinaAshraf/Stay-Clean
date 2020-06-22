@@ -14,6 +14,7 @@ import Register from "views/auth/Register.js";
 import CompanyRegister from "views/auth/CompanyRegister.js";
 import List from "views/programs/list.js";  
 import SelectedProgram from "views/SelectedProgram/SelectedProgram.js";
+import CompanySelectedProgram from "views/SelectedProgram/CompanySelectedProgram.js";
 import UserMessages from "views/examples/UserMessages.js";
 import CompanyMessages from "views/examples/CompanyMessages.js";
 import Program from "views/specificData/Program.js";
@@ -78,6 +79,14 @@ ReactDOM.render(
         exact
         render={props => <SelectedProgram {...props} />}
       />
+
+<Route
+        path="/company-selected-programs"
+        exact
+        render={props => <CompanySelectedProgram {...props} />}
+      />
+
+      
       <Redirect to="/" />
     </Switch>
   </BrowserRouter>,

@@ -8,6 +8,8 @@ const TableDetail = ({ item }) => {
 
     const [rating, setRating] = useState(item.rate);
     const [program, setProgram] = useState({});
+    const [customer, setCustomer] = useState({});
+
 
 
     const onStarClick = async (nextValue) => {
@@ -36,7 +38,8 @@ const TableDetail = ({ item }) => {
             .get('http://localhost:8000/api/programs/' + item.program + "/", {
                 headers: {
                     Authorization:
-                        "Token ebbc0d47e9b1dcbd3d71ed795e61d01c595279fd",
+
+                        "Token " + localStorage.getItem("token"),
                 }
             })
             .then(res => {
@@ -47,28 +50,72 @@ const TableDetail = ({ item }) => {
 
     }, []);
 
+    useEffect(() => {
+        axios
+            .get('http://localhost:8000/user-api/customer/' + item.customer + "/", {
+                headers: {
+                    Authorization:
+
+                        "Token " + localStorage.getItem("token"),
+                }
+            })
+            .then(res => {
+                setCustomer(res.data);
+
+            });
+
+
+    }, []);
+
 
     return (
+       <tr>
+        
+        {
+            sessionStorage.getItem("is_company") ?
+
+               ( <>
 
 
+                    <td>{customer.first_name + " " + customer.last_name}</td>
+                    <td>{customer.phone}</td>
 
-        <tr >
-            <td>{item.notes}</td>
-            <td>{item.address}</td>
-            <td>
-                <StarRatingComponent
-                    name="rate"
-                    starCount={5}
-                    value={rating}
-                    onStarClick={onStarClick}
-                />
+                    <td>{item.notes}</td>
+                    <td>{item.address}</td>
+                    <td>
+                        <StarRatingComponent
+                            name="rate"
+                            starCount={5}
+                            value={rating}
+                            editable = {false}
+                        />
 
-            </td>
-            <td>{program.name}</td>
-        </tr>
+                    </td>
+                    <td>{program.name}</td>
+                    <td>{program.price}</td>
+
+                </>
+               )
+                : (<>
 
 
+                    <td>{item.notes}</td>
+                    <td>{item.address}</td>
+                    <td>
+                        <StarRatingComponent
+                            name="rate"
+                            starCount={5}
+                            value={rating}
+                            onStarClick={onStarClick}
+                        />
 
+                    </td>
+                    <td>{program.name}</td>
+                    <td>{program.price}</td>
+
+                </>)
+        }
+    </tr>
     );
 };
 
