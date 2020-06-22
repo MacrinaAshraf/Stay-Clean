@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Program, ProgramReview, CompanyUserMessage, SelectedProgram, ProgramPhoto
+from .models import Program, ProgramReview, CompanyUserMessage, SelectedProgram, ProgramPhoto, CompanyReview
 
 # admin.site.register(Programs)
 # admin.site.register(Company)
@@ -24,5 +24,10 @@ class PostAdmin(admin.ModelAdmin):
 
 
 @admin.register(ProgramReview)
+class PostReviewAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(CompanyReview)
 class PostReviewAdmin(admin.ModelAdmin):
     pass

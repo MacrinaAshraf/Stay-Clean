@@ -14,7 +14,7 @@ class Review extends React.Component {
 
 
   getCustomerName =  (id) => {
-     axios.get(`http://localhost:8000/user/customer/${id}/customer_name/`)
+     axios.get(`http://localhost:8000/user-api/customer/${id}/customer_name/`)
       .then(res => {
         this.setState({customerName:res.data.name})
       })
@@ -34,7 +34,7 @@ class Review extends React.Component {
     return (
       <>
 
-        <section className="section section-lg pt-0 pb-2">
+        <section className="section section pt-0 pb-2 w-100">
           <Container>
             <Card className="bg-gradient-warning shadow-lg border-0">
               <div className="p-2">

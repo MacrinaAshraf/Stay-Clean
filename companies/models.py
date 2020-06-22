@@ -81,6 +81,16 @@ class ProgramReview(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
+class CompanyReview(models.Model):
+    company = models.ForeignKey(
+        Company, null=True, on_delete=models.CASCADE)
+    customer = models.ForeignKey(
+        Customer, null=True, on_delete=models.CASCADE)
+    review = models.TextField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
 class SelectedProgram(models.Model):
     program = models.ForeignKey(
         'Program', null=True, on_delete=models.CASCADE)

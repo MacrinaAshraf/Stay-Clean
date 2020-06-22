@@ -1,8 +1,9 @@
-from rest_framework import serializers
+from rest_framework import serializers, status
 from rest_framework.fields import SerializerMethodField
 from rest_framework.generics import get_object_or_404
+from rest_framework.response import Response
 
-from companies.models import Company, CompanyUserMessage
+from companies.models import Company, CompanyReview
 from users.models import Customer
 
 
@@ -24,3 +25,31 @@ class CompanySerializer(serializers.ModelSerializer):
     def get_logo(self, obj):
         return obj.get_absolute_url()
 
+
+class ReviewSerializer(serializers.ModelSerializer):
+    created_at = SerializerMethodField()
+
+    class Meta:
+        model = CompanyReview
+        exclude = ['updated_at']
+
+    def get_created_at(self, obj):
+        return obj.created_at.strftime("%d/%m/%Y %H:%M")
+
+    def create(self, validated_data):
+        customer = get_object_or_404(Customer, user=self.context['request'].user)
+        review = CompanyReview.objects.create(
+            customer=customer,
+            company=validated_data.get('company'),
+            review=validated_data.get('review'),
+        )
+        return review
+
+    def update(self, instance, validated_data):
+        CompanyReview.objects.filter(pk=instance.pk).update(**validated_data)
+        return CompanyReview.objects.filter(pk=instance.pk).first()
+
+    def delete(self, request, pk):
+        review = CompanyReview.objects.get(pk=pk)
+        review.delete()
+        return Response(status=status.HTTP_200_OK)

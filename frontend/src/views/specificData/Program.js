@@ -124,52 +124,27 @@ class Profile extends React.Component {
       this.getPhotos()
       this.getReviews()
 
+      this.interval = setInterval(() => {
+        this.getSelectedPrograms()
+        this.getPhotos()
+        this.getReviews()
+      }, 8000);
+
     }
   }
 
-  async componentDidUpdate(prevProps) {
-    if (prevProps.text !== this.props.text) {
-      this.updateAndNotify();
-    }
 
 
-    await axios.get(`http://localhost:8000/api/programs/${this.props.match.params.id}/review/`)
-      .then(res => {
-        if (res.data.length != this.state.reviews.length) {
-          this.setState({ reviews: res.data })
-        }
-      })
-      .catch(error => console.error(error))
-
-    await axios.get(`http://localhost:8000/api/photo/${this.props.match.params.id}/program_photo/`)
-      .then(res => {
-        if (res.data.length != items.length ) {
-          if (res.data.length != 0) {
-            items = res.data.map(img => {
-              return {
-                src: "http://localhost:8000" + img.image,
-                altText: "",
-                caption: "",
-                header: "",
-              }
-            })
-          }
-        }
-      })
-      .catch(error => console.error(error))
-
-      await axios.get(`http://127.0.0.1:8000/api/selected/${this.props.match.params.id}/all_selected`)
-      .then(res => {
-        if (res.data) {
-          if (res.data != this.state.selected) {
-            this.setState({ selected: res.data.length })
-          }
-        }
-      })
-      .catch(error => console.error(error))
-
-
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
+
+
+  
+  
+
+
+
   render() {
     return (
       <>
@@ -187,7 +162,7 @@ class Profile extends React.Component {
             )
             :
             (
-              <main className="profile-page" ref="main">
+              <main className="profile-page"  ref="main">
                 <section className="section-profile-cover section-shaped my-0" style={{   backgroundImage: "url(" + require("assets/img/bg_1.jpg") + ")", }}>
                   {/* Circles background */}
                   <div className="shape shape-style-1 shape-default alpha-4">
@@ -282,7 +257,7 @@ class Profile extends React.Component {
                     </Card>
                   </Container>
                 </section>
-                <section className="row-grid align-items-center" style={{ maxHeight: "400px", overflow: "scroll" }}>
+                <section className="row-grid align-items-center scrollbar style-9">
                   {this.state.reviews.map((review, index) => (
                     <Review
                       customerID={review.customer}

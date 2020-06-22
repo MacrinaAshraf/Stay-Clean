@@ -112,7 +112,7 @@ class ProgramView(viewsets.ModelViewSet):
             return Response({}, status=status.HTTP_200_OK)
 
 
-class ReviewView(viewsets.ModelViewSet):
+class ProgramReviewView(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = ProgramReview.objects.all()
     serializer_class = ReviewSerializer
