@@ -49,7 +49,6 @@ class CustomerView(viewsets.ModelViewSet):
         serializer = CustomerSerializer(all_customers, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-
     @action(methods=['GET'], detail=False, permission_classes=[IsAuthenticated])
     def me(self, request, *args, **kwargs):
         customer = get_object_or_404(Customer, user=request.user)
@@ -72,4 +71,13 @@ class UserView(viewsets.ModelViewSet):
     def me(self, request, *args, **kwargs):
         self.kwargs.update(pk=request.user.id)
         return self.retrieve(request, *args, **kwargs)
+
+    @action(detail=False, methods=['post'], name="user email")
+    def user_email(self, request):
+        user_select = User.objects.filter(email=request.data['email']).count()
+        if user_select != 0:
+            return Response({"found": "true"}, status=status.HTTP_200_OK)
+        else:
+            return Response({"found": "false"}, status=status.HTTP_200_OK)
+
 

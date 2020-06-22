@@ -23,6 +23,7 @@ class CompanyContact(models.Model):
         return self.contact_info
 
 
+
 class CompanyUserMessage(models.Model):
     company = models.ForeignKey(
         Company, null=True, on_delete=models.CASCADE)

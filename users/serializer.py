@@ -12,10 +12,7 @@ class CustomerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
-        fields = ('id', 'first_name', 'last_name', 'phone',
-                  'photo', 'facebook_link', 'created_at',
-                  'date_joined', 'last_login',
-                  )
+        exclude = ['last_login']
 
     def get_created_at(self, obj):
         return obj.date_joined.strftime("%d/%m/%Y %H:%M")
@@ -49,8 +46,21 @@ class UserSerializer(serializers.ModelSerializer):
             customer = Customer.objects.filter(user=user.pk).first()
             customer.first_name = self.context['request'].data.get('first_name')
             customer.last_name = self.context['request'].data.get('last_name')
+            customer.discount = self.context['request'].data.get('discount')
             customer.phone = self.context['request'].data.get('phone')
             customer.save()
+            if self.context['request'].data.get('friendMail'):
+                fMail = self.context['request'].data.get('friendMail')
+                print(fMail)
+                fUser = User.objects.filter(email=fMail).first()
+                fCustomer = Customer.objects.filter(user=fUser.pk).first()
+                print("here1")
+                if fCustomer.discount <= 80:
+                    print("here2")
+                    fCustomer.discount = fCustomer.discount+10
+                    fCustomer.save()
+                print("here3")
+
             serializer = CustomerSerializer(customer)
 
         return user
