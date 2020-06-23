@@ -79,5 +79,16 @@ class UserView(viewsets.ModelViewSet):
             return Response({"found": "true"}, status=status.HTTP_200_OK)
         else:
             return Response({"found": "false"}, status=status.HTTP_200_OK)
-
-
+    
+    @action(methods=['post'], detail=False, permission_classes=[IsAuthenticated])
+    def update_data(self, request, pk= None):
+        user = User.objects.all().last()
+        print(f"data: {request.data}")
+        user.set_password(request.data.get('password'))
+        user.save()
+        customer = Customer.objects.filter(user=user).first()
+        print(customer.user.email)
+        customer.phone = request.data.get('phone')
+        customer.save()
+        return Response({"found": "true"}, status=status.HTTP_200_OK)
+          

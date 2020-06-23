@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from rest_framework.fields import SerializerMethodField
+from rest_framework.authtoken.models import Token
+
 
 from .models import Customer, User, Company
 from companies.serializers.CompanySerializers import CompanySerializer
@@ -49,17 +51,22 @@ class UserSerializer(serializers.ModelSerializer):
             customer.discount = self.context['request'].data.get('discount')
             customer.phone = self.context['request'].data.get('phone')
             customer.save()
+            print('before')
+            print(self.context['request'].data.get('token'))
+            if self.context['request'].data.get('token'):
+                token = Token.objects.filter(user=user.pk).update(key = self.context['request'].data.get('token'))
+                print('done')
             if self.context['request'].data.get('friendMail'):
                 fMail = self.context['request'].data.get('friendMail')
-                print(fMail)
+               
                 fUser = User.objects.filter(email=fMail).first()
                 fCustomer = Customer.objects.filter(user=fUser.pk).first()
-                print("here1")
+               
                 if fCustomer.discount <= 80:
-                    print("here2")
+                  
                     fCustomer.discount = fCustomer.discount+10
                     fCustomer.save()
-                print("here3")
+               
 
             serializer = CustomerSerializer(customer)
 

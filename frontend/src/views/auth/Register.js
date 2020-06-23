@@ -2,6 +2,9 @@ import React from "react";
 import axios from 'axios';
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
+import GoogleLogin from 'react-google-login';
+import "assets/css/googlebutton.css";
+
 import {
   Button,
   Card,
@@ -64,11 +67,11 @@ class Register extends React.Component {
 
     var promise = new Promise((resolve, reject) => {
 
-  
+
       this.setState({
         errCounter: 0,
         discount: "0",
-      },()=>{
+      }, () => {
 
         if (this.state.friendEmail != "") {
 
@@ -77,15 +80,15 @@ class Register extends React.Component {
           })
             .then((response) => {
               if (response.data.found == "true") {
-                return(true)
-  
+                return (true)
+
               } else {
-                return(false)
+                return (false)
               }
             })
             .then((value) => {
               console.log(value)
-  
+
               if (value == true) {
                 self.setState({ discount: "50%" })
                 self.setState({ friendEmailError: "" })
@@ -95,25 +98,25 @@ class Register extends React.Component {
                 self.setState({ friendEmailError: "not valid email / let it empty if not exist" })
               }
             });
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
         }
-  
+
         else {
           this.setState({ friendEmailError: "" })
         }
 
 
-        
+
       })
 
 
-  
-    
+
+
       setTimeout(() => resolve("done"), 1000);
     });
 
@@ -158,10 +161,10 @@ class Register extends React.Component {
           })
             .then(function (response) {
               if (response.data.found == "true") {
-                return(true)
+                return (true)
 
               } else {
-                return(false)
+                return (false)
               }
             })
             .then(function (value) {
@@ -238,7 +241,7 @@ class Register extends React.Component {
             });
         }
       }).
-      catch((error)=> {
+      catch((error) => {
         console.log(error);
       });
 
@@ -274,10 +277,51 @@ class Register extends React.Component {
     const { target: { value } } = e;
     this.setState({ conPassword: value });
   }
+  responseGoogle = (res) => {
 
+
+    console.log("token" + res.accessToken);
+    console.log(res.profileObj);
+    console.log("hello" + res.profileObj.Id);
+
+    const token = res.profileObj.googleId;
+    localStorage.setItem("token", token);
+    console.log(token);
+    // window.location.href = "http://localhost:3000/";
+
+  
+
+    console.log(res.profileObj.givenName);
+
+    axios.post('http://localhost:8000/user-api/user/', {
+      first_name: res.profileObj.givenName,
+      last_name: res.profileObj.familyName,
+      email: res.profileObj.email,
+      password: '12345',
+      discount: 0,
+      token: token,
+    })
+      .then(function (response) {
+        if (response.status == 400) {
+          console.log(response.error)
+        } else {
+          console.log("good");
+          window.location = "http://localhost:3000/test";
+        }
+      })
+      .catch(function (error) {
+        console.log(error)
+      });
+
+
+
+  }
   render() {
+    const inStyle = { width:'300px'};
+
     return (
       <>
+
         <DemoNavbar />
         <main>
           <section className="section section-shaped section-lg ">
@@ -441,7 +485,26 @@ class Register extends React.Component {
                           >
                             Create account
                           </Button>
+
+                          <br></br>
+                          <br></br>
+                        
+                          <GoogleLogin 
+                          
+                          clientId="777963071043-r303g49u2e8ksnjmg2764c4760na901a.apps.googleusercontent.com"
+                          buttonText="USE GOOGLE"
+                          onSuccess={this.responseGoogle}
+                          onFailure={this.responseGoogle}
+                          cookiePolicy={'single_host_origin'}
+                        
+                          
+                       
+                         
+                        />
+
+                         
                         </div>
+
                       </Form>
 
 

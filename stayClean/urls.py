@@ -30,6 +30,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
     path('user-api/', include(user_router.urls)),
+    path('user-api/update_data/', UserView.as_view({"post": "update_data"})),
 
 ]
 

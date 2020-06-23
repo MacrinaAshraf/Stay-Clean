@@ -11,6 +11,8 @@ import Landing from "views/examples/Landing.js";
 import Login from "views/auth/Login.js";
 import Profile from "views/examples/Profile.js";
 import Register from "views/auth/Register.js";
+import Test from "views/auth/test.js";
+
 import CompanyRegister from "views/auth/CompanyRegister.js";
 import List from "views/programs/list.js";  
 import SelectedProgram from "views/SelectedProgram/SelectedProgram.js";
@@ -80,10 +82,16 @@ ReactDOM.render(
         render={props => <SelectedProgram {...props} />}
       />
 
-<Route
+      <Route
         path="/company-selected-programs"
         exact
         render={props => <CompanySelectedProgram {...props} />}
+      />
+
+      <Route
+        path="/test"
+        exact
+        render={props => <Test {...props} />}
       />
 
       
