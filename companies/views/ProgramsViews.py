@@ -19,6 +19,7 @@ from users.models import Customer, Company
 from rest_framework import status, viewsets
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
+from companies.permissions import IsCompany, IsCustomer
 
 
 def detail_route(methods, url_path):
@@ -35,7 +36,7 @@ class ProgramView(viewsets.ModelViewSet):
             pk=self.kwargs.get('pk')
         )
 
-    @action(detail=True, methods=['get'], name="Company Programs")
+    @action(detail=True, methods=['get'], name="Company Programs", permission_classes=[IsAuthenticated, IsCompany])
     def company_program(self, request, pk=None):
         user_select = Program.objects.filter(company=pk)
         serializer = ProgramSerializer(user_select, many=True)
@@ -135,7 +136,7 @@ class SelectedProgramView(viewsets.ModelViewSet):
             pk=self.kwargs.get('pk')
         )
 
-    @action(methods=['get'], detail=False, name="User Selected Programs")
+    @action(methods=['get'], detail=False, name="User Selected Programs", permission_classes=[IsAuthenticated, IsCustomer])
     def user_program(self, request):
         user = Customer.objects.filter(user=request.user).first()
         if user is None:

@@ -32,7 +32,7 @@ class TabsSection extends React.Component {
     axios.get('http://127.0.0.1:8000/api/message/user_send_messages/', {
       headers: {
         Authorization:
-          "Token 687365a03c105c2cbfc33deb0fb9cb342a788c2d",
+          "Token " + localStorage.getItem("token"),
       }
     })
       .then(res => {
@@ -47,7 +47,7 @@ class TabsSection extends React.Component {
     axios.get('http://127.0.0.1:8000/api/message/user_received_messages/', {
       headers: {
         Authorization:
-          "Token 687365a03c105c2cbfc33deb0fb9cb342a788c2d",
+          "Token " + localStorage.getItem("token"),
       }
     })
       .then(res => {
@@ -56,229 +56,239 @@ class TabsSection extends React.Component {
           this.setState({ recived: res.data })
         }
       })
-      .catch(error => console.error(error))
+      .catch(error => {
+      console.log(error);
+      if (
+        error
+          .toString()
+          .includes("Request failed with status code 403")
+      ) {
+        // localStorage.setItem("token", "");
+        window.location.href = "http://localhost:3000";
+      }
+    });
   }
 
 
-  all_companies = () => {
-    axios.get('http://127.0.0.1:8000/user-api/company/')
-      .then(res => {
+all_companies = () => {
+  axios.get('http://127.0.0.1:8000/user-api/company/')
+    .then(res => {
 
-        if (res.data) {
-          var dict = {}
+      if (res.data) {
+        var dict = {}
 
-          res.data.map(comp => {
-            dict[comp.id] = comp.name;
-          })
-          this.setState({ all_companies: dict })
-        }
-      })
-      .catch(error => console.error(error))
-  }
-
-
+        res.data.map(comp => {
+          dict[comp.id] = comp.name;
+        })
+        this.setState({ all_companies: dict })
+      }
+    })
+    .catch(error => console.error(error))
+}
 
 
-  componentDidMount() {
+
+
+componentDidMount() {
+  this.all_companies();
+  this.all_recived();
+  this.all_send();
+
+  this.interval = setInterval(() => {
     this.all_companies();
     this.all_recived();
     this.all_send();
+  }, 8000);
+}
 
-    this.interval = setInterval(() => {
-      this.all_companies();
-      this.all_recived();
-      this.all_send();
-    }, 8000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
+componentWillUnmount() {
+  clearInterval(this.interval);
+}
 
 
 
-  toggleNavs = (e, state, index) => {
-    e.preventDefault();
-    this.setState({
-      [state]: index
-    });
-  };
+toggleNavs = (e, state, index) => {
+  e.preventDefault();
+  this.setState({
+    [state]: index
+  });
+};
 
-  render() {
-    return (
-      <>
-        <Row className="justify-content-center">
-          <Col lg="12">
-            <div className="mb-3">
-              <small className="text-uppercase font-weight-bold">
+render() {
+  return (
+    <>
+      <Row className="justify-content-center">
+        <Col lg="12">
+          <div className="mb-3">
+            <small className="text-uppercase font-weight-bold">
 
-              </small>
-            </div>
-            <div className="nav-wrapper">
-              <Nav
-                className="nav-fill flex-column flex-md-row"
-                id="tabs-icons-text"
-                pills
-                role="tablist"
-              >
-                <NavItem>
-                  <NavLink
-                    aria-selected={this.state.iconTabs === 1}
-                    className={classnames("mb-sm-3 mb-md-0", {
-                      active: this.state.iconTabs === 1
-                    })}
-                    onClick={e => this.toggleNavs(e, "iconTabs", 1)}
-                    href="#pablo"
-                    role="tab"
-                  >
-                    Send Messages
+            </small>
+          </div>
+          <div className="nav-wrapper">
+            <Nav
+              className="nav-fill flex-column flex-md-row"
+              id="tabs-icons-text"
+              pills
+              role="tablist"
+            >
+              <NavItem>
+                <NavLink
+                  aria-selected={this.state.iconTabs === 1}
+                  className={classnames("mb-sm-3 mb-md-0", {
+                    active: this.state.iconTabs === 1
+                  })}
+                  onClick={e => this.toggleNavs(e, "iconTabs", 1)}
+                  href="#pablo"
+                  role="tab"
+                >
+                  Sent Messages
                   </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink
-                    aria-selected={this.state.iconTabs === 2}
-                    className={classnames("mb-sm-3 mb-md-0", {
-                      active: this.state.iconTabs === 2
-                    })}
-                    onClick={e => this.toggleNavs(e, "iconTabs", 2)}
-                    href="#pablo"
-                    role="tab"
-                  >
-                    Recive Messages
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  aria-selected={this.state.iconTabs === 2}
+                  className={classnames("mb-sm-3 mb-md-0", {
+                    active: this.state.iconTabs === 2
+                  })}
+                  onClick={e => this.toggleNavs(e, "iconTabs", 2)}
+                  href="#pablo"
+                  role="tab"
+                >
+                  Recived Messages
                   </NavLink>
-                </NavItem>
+              </NavItem>
 
-              </Nav>
-            </div>
-            <Card className="shadow">
-              <CardBody>
-                <TabContent activeTab={"iconTabs" + this.state.iconTabs}>
-                  <TabPane tabId="iconTabs1">
-                    <Row className="row-grid align-items-center" style={{ maxHeight: "300px", overflow: "scroll" }}>
-                      <Col className="order-md-0" md="0">
-
-
-                        {this.state.send.map((mess) => (
-                          <section className="section section-lg pt-lg-0 section-contact-us">
-                            <Container>
-                              <Card className="bg-gradient-secondary">
-                                <CardBody className="p-lg-5">
+            </Nav>
+          </div>
+          <Card className="shadow">
+            <CardBody>
+              <TabContent activeTab={"iconTabs" + this.state.iconTabs}>
+                <TabPane tabId="iconTabs1">
+                  <Row className="row-grid align-items-center" style={{ maxHeight: "300px", overflow: "scroll" }}>
+                    <Col className="order-md-0" md="0">
 
 
-                                  <FormGroup
-                                    className={classnames("mt-2", {
-                                      focused: this.state.nameFocused
-                                    })}
-                                  >
-                                    <InputGroup className="input-group-alternative">
-
-                                      <Input
-                                        type="text"
-                                        value={`From : ${this.state.all_companies[mess.company]}`}
-                                        disabled={true}
-
-                                      />
-                                    </InputGroup>
-                                  </FormGroup>
+                      {this.state.send.map((mess) => (
+                        <section className="section section-lg pt-lg-0 section-contact-us">
+                          <Container>
+                            <Card className="bg-gradient-secondary">
+                              <CardBody className="p-lg-5">
 
 
+                                <FormGroup
+                                  className={classnames("mt-2", {
+                                    focused: this.state.nameFocused
+                                  })}
+                                >
+                                  <InputGroup className="input-group-alternative">
 
-                                  <FormGroup className="mb-2">
                                     <Input
-                                      className="form-control-alternative"
-                                      cols="80"
-                                      name="name"
-                                      placeholder="Type a message..."
-                                      rows="4"
-                                      type="textarea"
-                                      value={`Message : ${mess.message}`}
+                                      type="text"
+                                      value={`To : ${this.state.all_companies[mess.company]}`}
                                       disabled={true}
 
-
                                     />
-                                  </FormGroup>
-
-                                </CardBody>
-                              </Card>
-                            </Container>
-                          </section>
-                        ))}
+                                  </InputGroup>
+                                </FormGroup>
 
 
 
-                      </Col>
-
-                    </Row>
-                  </TabPane>
-                  <TabPane tabId="iconTabs2">
-                    <Row className="row-grid align-items-center" style={{ maxHeight: "300px", overflow: "scroll" }}>
-                      <Col className="order-md-0" md="0">
-
-
-                        {this.state.recived.map((mess) => (
-                          <section className="section section-lg pt-lg-0 section-contact-us">
-                            <Container>
-                              <Card className="bg-gradient-secondary">
-                                <CardBody className="p-lg-5">
+                                <FormGroup className="mb-2">
+                                  <Input
+                                    className="form-control-alternative"
+                                    cols="80"
+                                    name="name"
+                                    placeholder="Type a message..."
+                                    rows="4"
+                                    type="textarea"
+                                    value={`Message : ${mess.message}`}
+                                    disabled={true}
 
 
-                                  <FormGroup
-                                    className={classnames("mt-2", {
-                                      focused: this.state.nameFocused
-                                    })}
-                                  >
-                                    <InputGroup className="input-group-alternative">
-                                      <Input
-                                        type="text"
-                                        value={`From : ${this.state.all_companies[mess.company]}`}
-                                        disabled={true}
+                                  />
+                                </FormGroup>
 
-                                      />
-                                    </InputGroup>
-                                  </FormGroup>
+                              </CardBody>
+                            </Card>
+                          </Container>
+                        </section>
+                      ))}
 
 
 
-                                  <FormGroup className="mb-2">
+                    </Col>
+
+                  </Row>
+                </TabPane>
+                <TabPane tabId="iconTabs2">
+                  <Row className="row-grid align-items-center" style={{ maxHeight: "300px", overflow: "scroll" }}>
+                    <Col className="order-md-0" md="0">
+
+
+                      {this.state.recived.map((mess) => (
+                        <section className="section section-lg pt-lg-0 section-contact-us">
+                          <Container>
+                            <Card className="bg-gradient-secondary">
+                              <CardBody className="p-lg-5">
+
+
+                                <FormGroup
+                                  className={classnames("mt-2", {
+                                    focused: this.state.nameFocused
+                                  })}
+                                >
+                                  <InputGroup className="input-group-alternative">
                                     <Input
-                                      className="form-control-alternative"
-                                      cols="80"
-                                      name="name"
-                                      placeholder="Type a message..."
-                                      rows="4"
-                                      type="textarea"
-                                      value={`Message : ${mess.message}`}
+                                      type="text"
+                                      value={`From : ${this.state.all_companies[mess.company]}`}
                                       disabled={true}
 
-
                                     />
-                                  </FormGroup>
-
-                                </CardBody>
-                              </Card>
-                            </Container>
-                          </section>
-                        ))}
+                                  </InputGroup>
+                                </FormGroup>
 
 
 
-                      </Col>
+                                <FormGroup className="mb-2">
+                                  <Input
+                                    className="form-control-alternative"
+                                    cols="80"
+                                    name="name"
+                                    placeholder="Type a message..."
+                                    rows="4"
+                                    type="textarea"
+                                    value={`Message : ${mess.message}`}
+                                    disabled={true}
 
-                    </Row>
 
-                  </TabPane>
+                                  />
+                                </FormGroup>
 
-                </TabContent>
-              </CardBody>
-            </Card>
-          </Col>
+                              </CardBody>
+                            </Card>
+                          </Container>
+                        </section>
+                      ))}
 
 
 
-        </Row>
-      </>
-    );
-  }
+                    </Col>
+
+                  </Row>
+
+                </TabPane>
+
+              </TabContent>
+            </CardBody>
+          </Card>
+        </Col>
+
+
+
+      </Row>
+    </>
+  );
+}
 }
 
 export default TabsSection;

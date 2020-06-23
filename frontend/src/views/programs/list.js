@@ -52,7 +52,7 @@ class List extends React.Component {
                 <div>
                     <DemoNavbar />
                     <main ref="main">
-                        <Hero/>
+                        <Hero />
                         <NewProgramModal create={true} resetState={this.resetState} />
                         <section className="section section-lg pt-lg-0 mt--200">
                             <Container>

@@ -75,6 +75,11 @@ ReactDOM.render(
         render={props => <List {...props} />}
       />
       <Route
+        path="/company-programs"
+        exact
+        render={props => <List {...props} />}
+      />
+      <Route
         path="/selected-programs"
         exact
         render={props => <SelectedProgram {...props} />}
