@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from companies.models import CompanyUserMessage
+from companies.permissions import IsCustomer, IsCompany
 
 
 def detail_route(methods, url_path):
@@ -38,7 +39,7 @@ class CustomerView(viewsets.ModelViewSet):
         except user_select.DoesNotExist:
             return Response({}, status=status.HTTP_200_OK)
 
-    @action(detail=False, methods=['get'], name="company's customers")
+    @action(detail=False, methods=['get'], name="company's customers", permission_classes=[IsAuthenticated, IsCompany])
     def company_customer(self, request):
         company = get_object_or_404(Company, user=request.user)
         message = CompanyUserMessage.objects.filter(company=company, sender="U")

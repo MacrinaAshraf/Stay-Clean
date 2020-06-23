@@ -2,7 +2,7 @@ import React from "react";
 import axios from 'axios';
 import classnames from "classnames";
 import Hero from "../IndexSections/Hero.js";
-import TapsMessages from "../IndexSections/Taps-Messages";
+import TapsMessages from "./Taps-Messages";
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
 import {
@@ -56,7 +56,7 @@ class Messages extends React.Component {
       }, {
         headers: {
           Authorization:
-            "Token 687365a03c105c2cbfc33deb0fb9cb342a788c2d",
+            "Token " + localStorage.getItem("token"),
         },
       }).then(() => {
         this.setState({ myMess: "" });
@@ -106,7 +106,7 @@ class Messages extends React.Component {
                 <Col lg="8">
                   <Card className="bg-gradient-secondary shadow">
                     <CardBody className="p-lg-5">
-                      <h4 className="mb-1">Want to send message to company ?</h4>
+                      <h4 className="mb-1">Want to send message to company?</h4>
 
                       <Form onSubmit={this.handleSubmit}>
                         <FormGroup

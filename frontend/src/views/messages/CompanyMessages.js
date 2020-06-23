@@ -2,7 +2,7 @@ import React from "react";
 import axios from 'axios';
 import classnames from "classnames";
 import Hero from "../IndexSections/Hero.js";
-import TapsCMessages from "../IndexSections/TapsC-Messages";
+import TapsCMessages from "./TapsC-Messages";
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
 import {
@@ -30,7 +30,7 @@ class Messages extends React.Component {
     axios.get('http://localhost:8000/user-api/customer/company_customer/',{
       headers: {
         Authorization:
-          "Token 0e9c2682cf618be404411af2289a86b48577b5e9",
+          "Token " + localStorage.getItem("token"),
       }
 
     })
@@ -62,7 +62,7 @@ class Messages extends React.Component {
       }, {
         headers: {
           Authorization:
-            "Token 0e9c2682cf618be404411af2289a86b48577b5e9",
+            "Token " + localStorage.getItem("token"),
         },
       }).then(() => {
         this.setState({ myMess: "" });

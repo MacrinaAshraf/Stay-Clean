@@ -32,7 +32,7 @@ class TabsSection extends React.Component {
     axios.get('http://127.0.0.1:8000/api/message/company_send_messages/', {
       headers: {
         Authorization:
-          "Token 0e9c2682cf618be404411af2289a86b48577b5e9",
+          "Token " + localStorage.getItem("token"),
       }
     })
       .then(res => {
@@ -47,7 +47,7 @@ class TabsSection extends React.Component {
     axios.get('http://127.0.0.1:8000/api/message/company_received_messages/', {
       headers: {
         Authorization:
-          "Token 0e9c2682cf618be404411af2289a86b48577b5e9",
+          "Token " + localStorage.getItem("token"),
       }
     })
       .then(res => {
@@ -56,7 +56,17 @@ class TabsSection extends React.Component {
           this.setState({ recived: res.data })
         }
       })
-      .catch(error => console.error(error))
+      .catch(error => {
+        console.log(error);
+        if (
+          error
+            .toString()
+            .includes("Request failed with status code 403")
+        ) {
+          // localStorage.setItem("token", "");
+          window.location.href = "http://localhost:3000";
+        }
+      });
   }
 
 
@@ -65,7 +75,7 @@ class TabsSection extends React.Component {
     axios.get('http://localhost:8000/user-api/customer/company_customer/', {
       headers: {
         Authorization:
-          "Token 0e9c2682cf618be404411af2289a86b48577b5e9",
+          "Token " + localStorage.getItem("token"),
       }
 
     }).then(res => {
@@ -138,7 +148,7 @@ class TabsSection extends React.Component {
                     href="#pablo"
                     role="tab"
                   >
-                    Send Messages
+                    Sent Messages
                   </NavLink>
                 </NavItem>
                 <NavItem>
@@ -151,7 +161,7 @@ class TabsSection extends React.Component {
                     href="#pablo"
                     role="tab"
                   >
-                    Recive Messages
+                    Recived Messages
                   </NavLink>
                 </NavItem>
 
@@ -181,7 +191,7 @@ class TabsSection extends React.Component {
 
                                       <Input
                                         type="text"
-                                        value={`From : ${this.state.all_users[mess.customer_id]}`}
+                                        value={`To : ${this.state.all_users[mess.customer_id]}`}
                                         disabled={true}
 
                                       />

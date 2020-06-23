@@ -10,6 +10,10 @@ const CompanySelectedProgram = (props) => {
     const [selectedProgram, setselectedProgram] = useState([]);
 
 
+    if(sessionStorage.getItem('is_company') === "false") {
+        window.location.href = "http://localhost:3000/selected-programs";
+    } 
+
     useEffect(() => {
         axios
             .get('http://localhost:8000/api/selected/user_program/', {
@@ -21,7 +25,17 @@ const CompanySelectedProgram = (props) => {
             .then(res => {
                 setselectedProgram(selectedProgram.concat(res.data));
              
-            });
+            }).catch(error => {
+                console.log(error);
+                if (
+                  error
+                    .toString()
+                    .includes("Request failed with status code 403")
+                ) {
+                  // localStorage.setItem("token", "");
+                  window.location.href = "http://localhost:3000/login";
+                }
+              });
             
          
     }, []);

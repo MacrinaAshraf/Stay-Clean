@@ -45,6 +45,7 @@ class Index extends React.Component {
       .catch(error => console.error(error))
   }
 
+
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
@@ -54,7 +55,6 @@ class Index extends React.Component {
     this.all_companies();
     this.most_review_program();
     this.most_selected_program();
-
   }
 
   render() {
@@ -85,17 +85,17 @@ class Index extends React.Component {
               </Row>
               <Row>
                 {this.state.all_companies.map(comp => (
-                  <Col className="mb-5 mb-lg-0" lg="3" md="6">
+                  <Col className="mb-5 mb-lg-0" lg="3" md="6" key={comp.id}>
                     <div className="px-4">
                       <img
                         alt="..."
                         className="rounded-circle img-center img-fluid shadow shadow-lg--hover"
                         src={comp.logo}
-                        style={{ width: "200px", height: "100px",objectFit: "fill" }}
+                        style={{ width: "200px", height: "100px", objectFit: "fill" }}
                       />
                       <div className="pt-4 text-center">
                         <h5 className="title">
-                        <Link to={'/company/'+comp.id}><span className="d-block mb-1">{comp.name}</span></Link>                   
+                          <Link to={'/company/' + comp.id}><span className="d-block mb-1">{comp.name}</span></Link>
 
                         </h5>
                       </div>

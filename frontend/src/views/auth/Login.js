@@ -37,22 +37,34 @@ const Login = (props) => {
     setPasswordInput(value);
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axios.post('http://localhost:8000/api-token-auth/',
+    await axios.post('http://localhost:8000/api-token-auth/',
       {
         username: emailInput,
         password: passwordInput
       }
     ).then((response) => {
-      if (response.status.code ===  400) {
+      if (response.status.code === 400) {
         setError(true);
       }
       else {
-        console.log("hello");
         const { token } = response.data;
         localStorage.setItem("token", token);
-        window.location.href = "http://localhost:3000/";
+        axios.get('http://127.0.0.1:8000/user-api/user/me/', {
+          headers: {
+            Authorization:
+              "Token " + localStorage.getItem("token"),
+          }
+        }).then(res => {
+          if (res.data) {
+            console.log(res.data);
+            sessionStorage.setItem('is_company', res.data['is_company'])
+            sessionStorage.setItem('email', res.data['email'])
+            window.location.href = "http://localhost:3000/";
+
+          }
+        }).catch(error => console.error(error));
       }
     }, (error) => {
       console.log(error);

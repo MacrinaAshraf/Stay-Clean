@@ -8,8 +8,8 @@ const ButtonsComponent = (props) => {
 
   const handleLogout = () => {
     localStorage.setItem("token", "");
-    // sessionStorage.setItem("user", null);
-    // sessionStorage.setItem("loggedIn", false);
+    sessionStorage.setItem("email", "");
+    sessionStorage.setItem("is_company", "");
     window.location.href = "http://localhost:3000/login";
   }
 
