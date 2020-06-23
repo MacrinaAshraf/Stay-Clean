@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "axios";
-import ProgramCard from "./ProgramCard.js";
-import ConfirmRemovalModal from "./ConfirmRemovalModal.js";
-import NewProgramModal from "./NewProgramModal";
+import ProgramCard from "./utils/ProgramCard.js";
+// import ConfirmRemovalModal from "./company/ConfirmRemovalModal.js/index.js";
+// import NewProgramModal from "./company/NewProgramModal";
 // reactstrap components
 import { Container, Row, Col } from "reactstrap";
 
@@ -24,7 +24,9 @@ class List extends React.Component {
         // document.documentElement.scrollTop = 0;
         // document.scrollingElement.scrollTop = 0;
         // this.refs.main.scrollTop = 0;
-
+        if(sessionStorage.getItem('is_company') === "true") {
+            window.location.href = "http://localhost:3000/company-programs/";
+        }
         this.resetState();
 
     }
@@ -53,7 +55,7 @@ class List extends React.Component {
                     <DemoNavbar />
                     <main ref="main">
                         <Hero />
-                        <NewProgramModal create={true} resetState={this.resetState} />
+                        {/* <NewProgramModal create={true} resetState={this.resetState} /> */}
                         <section className="section section-lg pt-lg-0 mt--200">
                             <Container>
                                 <Row className="justify-content-center">
@@ -62,28 +64,8 @@ class List extends React.Component {
 
                                             {this.state.programs.map((item) => (
 
-                                                <ProgramCard program={item} key={item.id}
-                                                >
-                                                    <NewProgramModal
-                                                        create={false}
-                                                        item={item}
-                                                        resetState={this.resetState}
-                                                    />
-
-                                                    <ConfirmRemovalModal
-                                                        id={item.id}
-                                                        resetState={this.resetState}
-                                                    />
-                                                    <div>
-
-
-                                                    </div>
-
-
-                                                </ProgramCard>
-
-
-
+                                                <ProgramCard program={item} key={item.id}/>
+                                                // </ProgramCard>
                                             ))}
 
                                         </Row>

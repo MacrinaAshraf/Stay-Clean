@@ -45,21 +45,6 @@ class Index extends React.Component {
       .catch(error => console.error(error))
   }
 
-  getUserDetails = () => {
-    if (localStorage.getItem('token')) {
-      axios.get('http://127.0.0.1:8000/user-api/user/me/', {
-        headers: {
-          Authorization:
-            "Token " + localStorage.getItem("token"),
-        }
-      }).then(res => {
-        if (res.data) {
-          sessionStorage.setItem('is_company', res.data['is_company'])
-          sessionStorage.setItem('email', res.data['email'])
-        }
-      }).catch(error => console.error(error));
-    }
-  }
 
   componentDidMount() {
     document.documentElement.scrollTop = 0;
@@ -70,7 +55,6 @@ class Index extends React.Component {
     this.all_companies();
     this.most_review_program();
     this.most_selected_program();
-    this.getUserDetails();
   }
 
   render() {

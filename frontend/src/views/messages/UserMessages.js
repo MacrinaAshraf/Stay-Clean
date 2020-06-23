@@ -2,7 +2,7 @@ import React from "react";
 import axios from 'axios';
 import classnames from "classnames";
 import Hero from "../IndexSections/Hero.js";
-import TapsCMessages from "../IndexSections/TapsC-Messages";
+import TapsMessages from "./Taps-Messages";
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
 import {
@@ -21,24 +21,18 @@ import {
 class Messages extends React.Component {
 
   state = {
-    all_users: [],
-    selectedUser: -1,
+    all_companies: [],
+    selectedCompany: -1,
     myMess: ""
   }
 
-  all_users = () => {
-    axios.get('http://localhost:8000/user-api/customer/company_customer/',{
-      headers: {
-        Authorization:
-          "Token " + localStorage.getItem("token"),
-      }
-
-    })
+  all_companies = () => {
+    axios.get('http://127.0.0.1:8000/user-api/company/')
       .then(res => {
         if (res.data) {
-          this.setState({ all_users: res.data })
+          this.setState({ all_companies: res.data })
           if (res.data.length != 0) {
-            this.setState({ selectedUser: res.data[0].id })
+            this.setState({ selectedCompany: res.data[0].id })
           }
         }
       })
@@ -46,19 +40,19 @@ class Messages extends React.Component {
   }
 
   handleChange = (e) => {
-    this.setState({ selectedUser: e.target.value })
+    this.setState({ selectedCompany: e.target.value })
   }
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log(this.state.selectedUser)
+    console.log(this.state.selectedCompany)
     console.log(this.state.myMess)
 
     if (this.state.myMess != "") {
       axios.post("http://127.0.0.1:8000/api/message/", {
         message: this.state.myMess,
-        customer: this.state.selectedUser,
-        sender: "C"
+        company: this.state.selectedCompany,
+        sender: "U"
       }, {
         headers: {
           Authorization:
@@ -77,9 +71,9 @@ class Messages extends React.Component {
     document.scrollingElement.scrollTop = 0;
     this.refs.main.scrollTop = 0;
 
-    this.all_users();    
+    this.all_companies();    
     this.interval = setInterval(() => {
-      this.all_users();
+      this.all_companies();
     }, 8000);
   }
 
@@ -100,7 +94,7 @@ class Messages extends React.Component {
 
           <section className="section section-components">
             <Container>
-              <TapsCMessages />
+              <TapsMessages />
             </Container>
           </section>
 
@@ -112,7 +106,7 @@ class Messages extends React.Component {
                 <Col lg="8">
                   <Card className="bg-gradient-secondary shadow">
                     <CardBody className="p-lg-5">
-                      <h4 className="mb-1">Want to send message to company ?</h4>
+                      <h4 className="mb-1">Want to send message to company?</h4>
 
                       <Form onSubmit={this.handleSubmit}>
                         <FormGroup
@@ -125,14 +119,14 @@ class Messages extends React.Component {
                             onChange={this.handleChange}
                             className="ant-input selectBox"
                             style={{ width: 200 }}
-                            value={this.state.selectedUser}
-                            defaultValue={this.state.selectedUser}
+                            value={this.state.selectedCompany}
+                            defaultValue={this.state.selectedCompany}
                           >
 
-                            {this.state.all_users.map((user) => (
+                            {this.state.all_companies.map((comp) => (
                               (
                                 <>
-                                  <option value={user.id}>{user.first_name + " "+ user.last_name+ " " + user.phone}</option>
+                                  <option value={comp.id}>{comp.name}</option>
                                 </>
                               )
                             ))}

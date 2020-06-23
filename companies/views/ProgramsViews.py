@@ -18,7 +18,7 @@ from companies.serializers.ProgramSerializers import \
 from users.models import Customer, Company
 from rest_framework import status, viewsets
 from django.shortcuts import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from companies.permissions import IsCompany, IsCustomer
 
 
@@ -36,13 +36,14 @@ class ProgramView(viewsets.ModelViewSet):
             pk=self.kwargs.get('pk')
         )
 
-    @action(detail=True, methods=['get'], name="Company Programs", permission_classes=[IsAuthenticated, IsCompany])
-    def company_program(self, request, pk=None):
-        user_select = Program.objects.filter(company=pk)
+    @action(detail=False, methods=['get'], name="Company Programs", permission_classes=[IsAuthenticated, IsCompany])
+    def company_program(self, request):
+        company = get_object_or_404(Company, user=request.user) 
+        user_select = Program.objects.filter(company=company.pk)
         serializer = ProgramSerializer(user_select, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    @action(detail=True, methods=['get'], name="Program Reviews")
+    @action(detail=True, methods=['get'], name="Program Reviews", permission_classes=[AllowAny,])
     def review(self, request, pk=None):
         reviews = ProgramReview.objects.filter(program=pk)
         serializer = ReviewSerializer(reviews, many=True)
@@ -136,7 +137,7 @@ class SelectedProgramView(viewsets.ModelViewSet):
             pk=self.kwargs.get('pk')
         )
 
-    @action(methods=['get'], detail=False, name="User Selected Programs", permission_classes=[IsAuthenticated, IsCustomer])
+    @action(methods=['get'], detail=False, name="User Selected Programs", permission_classes=[IsAuthenticated,])
     def user_program(self, request):
         user = Customer.objects.filter(user=request.user).first()
         if user is None:

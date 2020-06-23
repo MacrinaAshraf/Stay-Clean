@@ -12,11 +12,12 @@ import Login from "views/auth/Login.js";
 import Profile from "views/examples/Profile.js";
 import Register from "views/auth/Register.js";
 import CompanyRegister from "views/auth/CompanyRegister.js";
-import List from "views/programs/list.js";  
+import ListCompanyPrograms from "views/programs/company/list";
+import List from "views/programs/ListAllPrograms";  
 import SelectedProgram from "views/SelectedProgram/SelectedProgram.js";
 import CompanySelectedProgram from "views/SelectedProgram/CompanySelectedProgram.js";
-import UserMessages from "views/examples/UserMessages.js";
-import CompanyMessages from "views/examples/CompanyMessages.js";
+import UserMessages from "views/messages/UserMessages.js";
+import CompanyMessages from "views/messages/CompanyMessages.js";
 import Program from "views/specificData/Program.js";
 import Company from "views/specificData/Company.js";
 
@@ -77,7 +78,7 @@ ReactDOM.render(
       <Route
         path="/company-programs"
         exact
-        render={props => <List {...props} />}
+        render={props => <ListCompanyPrograms {...props} />}
       />
       <Route
         path="/selected-programs"

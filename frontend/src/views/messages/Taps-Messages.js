@@ -169,7 +169,7 @@ render() {
 
 
                       {this.state.send.map((mess) => (
-                        <section className="section section-lg pt-lg-0 section-contact-us">
+                        <section className="section section-lg pt-lg-0 section-contact-us" key={mess.id}>
                           <Container>
                             <Card className="bg-gradient-secondary">
                               <CardBody className="p-lg-5">
@@ -226,7 +226,7 @@ render() {
 
 
                       {this.state.recived.map((mess) => (
-                        <section className="section section-lg pt-lg-0 section-contact-us">
+                        <section className="section section-lg pt-lg-0 section-contact-us" key={mess.id}>
                           <Container>
                             <Card className="bg-gradient-secondary">
                               <CardBody className="p-lg-5">
