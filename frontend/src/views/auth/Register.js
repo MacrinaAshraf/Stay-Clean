@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
-
-// reactstrap components
+import React from "react";
+import axios from 'axios';
+import DemoNavbar from "components/Navbars/DemoNavbar.js";
+import SimpleFooter from "components/Footers/SimpleFooter.js";
 import {
   Button,
   Card,
@@ -17,213 +18,443 @@ import {
   Col
 } from "reactstrap";
 
-import axios from 'axios';
-
-// core components
-import DemoNavbar from "components/Navbars/DemoNavbar.js";
-import SimpleFooter from "components/Footers/SimpleFooter.js";
-
-const Register = (props) => {
-
-  const [fName, setFName] = useState('');
-  const [lName, setLName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('')
-  const [password, setPassword] = useState('');
-  const [conPassword, setConPassword] = useState('');
-  const [error, setError] = useState(false);
 
 
-  const handleRegisterSubmit = (e) => {
-    e.preventDefault();
-    if (conPassword === password) {
+class Register extends React.Component {
 
-      axios.post('http://localhost:8000/user-api/user/',
-        {
-          first_name: fName,
-          last_name: lName,
-          email,
-          phone,
-          password,
-        }, /*{
-        withCredentials: true,
-      }*/).then(response => {
-        console.log(response);
-        if (response.status == 400) {
-          console.log("Not registered 250");
-        } else {
-          console.log("good");
-          window.location = "http://localhost:3000/login";
-        }
-        
-      });
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      fName: "",
+      fNameErr: "",
+      lName: "",
+      lNameErr: "",
+      email: "",
+      emailErr: "",
+      friendEmail: "",
+      friendEmailError: "",
+      phone: "",
+      phoneErr: "",
+      password: "",
+      passwordErr: "",
+      conPassword: "",
+      conPasswordErr: "",
+      errCounter: 0,
+      discount: "0",
+
+
+
     }
-  };
+  }
 
 
-  const handleFNameChange = (e) => {
-    const { target: { value } } = e;
-    setFName(value);
+
+
+
+
+
+
+
+
+  handleRegisterSubmit = (e) => {
+    e.preventDefault();
+    var self = this;
+    console.log(self.state.discount)
+
+    var promise = new Promise((resolve, reject) => {
+
+  
+      this.setState({
+        errCounter: 0,
+        discount: "0",
+      },()=>{
+
+        if (this.state.friendEmail != "") {
+
+          axios.post('http://localhost:8000/user-api/user/user_email/', {
+            email: this.state.friendEmail
+          })
+            .then((response) => {
+              if (response.data.found == "true") {
+                return(true)
+  
+              } else {
+                return(false)
+              }
+            })
+            .then((value) => {
+              console.log(value)
+  
+              if (value == true) {
+                self.setState({ discount: "50%" })
+                self.setState({ friendEmailError: "" })
+              }
+              else {
+                self.setState({ errCounter: 1 })
+                self.setState({ friendEmailError: "not valid email / let it empty if not exist" })
+              }
+            });
+  
+  
+  
+  
+  
+  
+        }
+  
+        else {
+          this.setState({ friendEmailError: "" })
+        }
+
+
+        
+      })
+
+
+  
+    
+      setTimeout(() => resolve("done"), 1000);
+    });
+
+
+
+    promise
+      .then(() => {
+        if (this.state.fName.length < 3) {
+          this.setState({ errCounter: 1 })
+          this.setState({ fNameErr: "first name length should be > 3 " })
+        }
+        else {
+          this.setState({ fNameErr: "" })
+        }
+      })
+      .then(() => {
+        if (this.state.lName.length < 3) {
+          this.setState({ errCounter: 1 })
+          this.setState({ lNameErr: "last name length should be > 3 " })
+        }
+        else {
+          this.setState({ lNameErr: "" })
+        }
+      })
+      .then(() => {
+        /*
+     mysite@ourearth.com
+     my.ownsite@ourearth.org
+     mysite@you.me.net
+     */
+        if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email)) {
+          this.setState({ errCounter: 1 })
+          this.setState({ emailErr: "Inavalid Mail" })
+        }
+        else {
+
+
+          var self = this;
+
+          axios.post('http://localhost:8000/user-api/user/user_email/', {
+            email: this.state.email
+          })
+            .then(function (response) {
+              if (response.data.found == "true") {
+                return(true)
+
+              } else {
+                return(false)
+              }
+            })
+            .then(function (value) {
+              console.log(value)
+
+              if (value != true) {
+                self.setState({ emailErr: "" })
+              }
+              else {
+                self.setState({ errCounter: 1 })
+                self.setState({ emailErr: "exist / select another one" })
+              }
+            });
+
+        }
+      })
+      .then(() => {
+        if (! /^01[0-3]\d{8}$/.test(this.state.phone)) {
+          this.setState({ errCounter: 1 })
+          this.setState({ phoneErr: "mobile format invalid" })
+
+        }
+        else {
+          this.setState({ phoneErr: "" })
+        }
+      })
+      .then(() => {
+        if (! /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+-]).{10}$/.test(this.state.password)) {
+          this.setState({ errCounter: 1 })
+          this.setState({ passwordErr: "password should contain 10 character (lowercase, upercase and special character)" })
+        }
+        else {
+          this.setState({ passwordErr: "" })
+        }
+
+
+      })
+      .then(() => {
+        if (this.state.password != this.state.conPassword) {
+          this.setState({ errCounter: 1 })
+          this.setState({ conPasswordErr: "not same as password " })
+        }
+        else {
+          this.setState({ conPasswordErr: "" })
+        }
+
+      })
+
+      .then(() => {
+        console.log("hnaaaaaaaaaaa");
+        console.log(this.state.errCounter);
+        var self = this;
+        if (this.state.errCounter != 1) {
+          console.log("hnaaaaaaaaaaa3");
+
+          axios.post('http://localhost:8000/user-api/user/', {
+            first_name: self.state.fName,
+            last_name: self.state.lName,
+            email: self.state.email,
+            phone: self.state.phone,
+            password: self.state.password,
+            discount: self.state.discount,
+          })
+            .then(function (response) {
+              if (response.status == 400) {
+                console.log(response.error)
+              } else {
+                console.log("good");
+                window.location = "http://localhost:3000/login";
+              }
+            })
+            .catch(function (error) {
+              console.log(error)
+            });
+        }
+      }).
+      catch((error)=> {
+        console.log(error);
+      });
+
+
   }
-  const handleLNameChange = (e) => {
+
+
+  handleFNameChange = (e) => {
     const { target: { value } } = e;
-    setLName(value);
+    this.setState({ fName: value });
   }
-  const handleEmailChange = (e) => {
+  handleLNameChange = (e) => {
     const { target: { value } } = e;
-    setEmail(value);
+    this.setState({ lName: value });
   }
-  const handlePhoneChange = (e) => {
+  handleEmailChange = (e) => {
     const { target: { value } } = e;
-    setPhone(value);
+    this.setState({ email: value });
   }
-  const handlePasswordChange = (e) => {
+  handleFriendEmailChange = (e) => {
     const { target: { value } } = e;
-    setPassword(value);
+    this.setState({ friendEmail: value });
   }
-  const handleConPasswordChange = (e) => {
+  handlePhoneChange = (e) => {
     const { target: { value } } = e;
-    setConPassword(value);
+    this.setState({ phone: value });
   }
-  return (
-    <>
-      <DemoNavbar />
-      <main>
-        <section className="section section-shaped section-lg">
-          <div className="shape shape-style-1 bg-gradient-default">
-            <span />
-            <span />
-            <span />
-            <span />
-            <span />
-            <span />
-            <span />
-            <span />
-          </div>
-          <Container className="pt-lg-7">
-            <Row className="justify-content-center">
-              <Col lg="5">
-                <Card className="bg-secondary shadow border-0">
-                  <CardHeader className="bg-white">
-                    <div className="text-muted text-center">
-                      <h4>Sign up</h4>
-                    </div>
-                  </CardHeader>
-                  <CardBody className="px-lg-5 py-lg-5">
-                    <Form role="form">
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative mb-3">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-circle-08" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="First Name"
-                            type="text"
-                            value={fName}
-                            onChange={handleFNameChange}
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative mb-3">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-circle-08" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Last Name"
-                            type="text"
-                            value={lName}
-                            onChange={handleLNameChange}
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative mb-3">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-email-83" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Email"
-                            type="email"
-                            value={email}
-                            onChange={handleEmailChange}
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative mb-3">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-mobile-button" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Phone Number"
-                            type="text"
-                            value={phone}
-                            onChange={handlePhoneChange}
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-lock-circle-open" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Password"
-                            type="password"
-                            autoComplete="off"
-                            value={password}
-                            onChange={handlePasswordChange}
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative mb-3">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-lock-circle-open" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Confirm Password"
-                            type="password"
-                            autoComplete="off"
-                            value={conPassword}
-                            onChange={handleConPasswordChange}
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                      <div className="text-center">
-                        <Button
-                          className="mt-4"
-                          color="primary"
-                          type="button"
-                          onClick={handleRegisterSubmit}
-                        >
-                          Create account
-                          </Button>
+  handlePasswordChange = (e) => {
+    const { target: { value } } = e;
+    this.setState({ password: value });
+  }
+  handleConPasswordChange = (e) => {
+    const { target: { value } } = e;
+    this.setState({ conPassword: value });
+  }
+
+  render() {
+    return (
+      <>
+        <DemoNavbar />
+        <main>
+          <section className="section section-shaped section-lg ">
+            <div className="shape shape-style-1 bg-gradient-default">
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+            </div>
+            <Container className="lg-7">
+              <Row className="justify-content-center">
+                <Col lg="5">
+                  <Card className="bg-secondary shadow border-0">
+                    <CardHeader className="bg-white">
+                      <div className="m--2 text-center">
+                        <h4>Sign up</h4>
                       </div>
-                    </Form>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
-          </Container>
-        </section>
-      </main>
-      <SimpleFooter />
-    </>
-  );
+                    </CardHeader>
+                    <CardBody className="lg-5 lg-5">
+                      <Form role="form">
+                        <FormGroup>
+                          <InputGroup className="input-group-alternative mb-3">
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>
+                                <i className="ni ni-circle-08" />
+                              </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                              placeholder="First Name"
+                              type="text"
+                              value={this.state.fName}
+                              onChange={this.handleFNameChange}
+                            />
+                          </InputGroup>
+                          {this.state.fNameErr ?
+                            (<div className="alert alert-danger p-3" role="alert"> {this.state.fNameErr}</div>) :
+                            (<></>)}
+                        </FormGroup>
+                        <FormGroup>
+                          <InputGroup className="input-group-alternative mb-3">
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>
+                                <i className="ni ni-circle-08" />
+                              </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                              placeholder="Last Name"
+                              type="text"
+                              value={this.state.lName}
+                              onChange={this.handleLNameChange}
+                            />
+                          </InputGroup>
+                          {this.state.lNameErr ?
+                            (<div className="alert alert-danger p-3" role="alert"> {this.state.lNameErr}</div>) :
+                            (<></>)}
+                        </FormGroup>
+                        <FormGroup>
+                          <InputGroup className="input-group-alternative mb-3">
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>
+                                <i className="ni ni-email-83" />
+                              </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                              placeholder="Email"
+                              type="email"
+                              value={this.state.email}
+                              onChange={this.handleEmailChange}
+                            />
+                          </InputGroup>
+                          {this.state.emailErr ?
+                            (<div className="alert alert-danger p-3" role="alert"> {this.state.emailErr}</div>) :
+                            (<></>)}
+                        </FormGroup>
+                        <FormGroup>
+                          <InputGroup className="input-group-alternative mb-3">
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>
+                                <i className="ni ni-mobile-button" />
+                              </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                              placeholder="Phone Number"
+                              type="text"
+                              value={this.state.phone}
+                              onChange={this.handlePhoneChange}
+                            />
+                          </InputGroup>
+                          {this.state.phoneErr ?
+                            (<div className="alert alert-danger p-3" role="alert"> {this.state.phoneErr}</div>) :
+                            (<></>)}
+                        </FormGroup>
+                        <FormGroup>
+                          <InputGroup className="input-group-alternative">
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>
+                                <i className="ni ni-lock-circle-open" />
+                              </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                              placeholder="Password"
+                              type="password"
+                              autoComplete="off"
+                              value={this.state.password}
+                              onChange={this.handlePasswordChange}
+                            />
+                          </InputGroup>
+                          {this.state.passwordErr ?
+                            (<div className="alert alert-danger p-3" role="alert"> {this.state.passwordErr}</div>) :
+                            (<></>)}
+                        </FormGroup>
+                        <FormGroup>
+                          <InputGroup className="input-group-alternative mb-3">
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>
+                                <i className="ni ni-lock-circle-open" />
+                              </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                              placeholder="Confirm Password"
+                              type="password"
+                              autoComplete="off"
+                              value={this.state.conPassword}
+                              onChange={this.handleConPasswordChange}
+                            />
+                          </InputGroup>
+                          {this.state.conPasswordErr ?
+                            (<div className="alert alert-danger p-3" role="alert"> {this.state.conPasswordErr}</div>) :
+                            (<></>)}
+                        </FormGroup>
+                        <FormGroup>
+                          <InputGroup className="input-group-alternative mb-3">
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>
+                                <i className="ni ni-email-83" />
+                              </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                              placeholder="Friend Email To Get 50% discount"
+                              type="email"
+                              value={this.state.friendEmail}
+                              onChange={this.handleFriendEmailChange}
+                            />
+                          </InputGroup>
+                          {this.state.friendEmailError ?
+                            (<div className="alert alert-danger p-3" role="alert"> {this.state.friendEmailError}</div>) :
+                            (<></>)}
+                        </FormGroup>
+
+
+                        <div className="text-center">
+                          <Button
+                            className="mt-4"
+                            color="primary"
+                            type="button"
+                            onClick={this.handleRegisterSubmit}
+                          >
+                            Create account
+                          </Button>
+                        </div>
+                      </Form>
+
+
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
+            </Container>
+          </section>
+        </main>
+      </>
+    )
+  }
 }
 
 

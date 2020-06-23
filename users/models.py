@@ -56,6 +56,7 @@ class Customer(models.Model):
                                  message='phone must be an egyptian phone number...')
     first_name = models.CharField(verbose_name="First Name", null=False, max_length=50)
     last_name = models.CharField(verbose_name="Last Name", null=False, max_length=50)
+    discount = models.IntegerField(verbose_name="Discount", null=False, default=0)
     phone = models.CharField(verbose_name="Phone", null=True, validators=[phone_regex], max_length=14)
     photo = models.ImageField(verbose_name="User Photo", upload_to='users/images',null=True,blank=True)
     facebook_link = models.URLField(null=True,blank=True)
@@ -94,7 +95,7 @@ def create_user_profile(sender, instance, created, **kwargs):
     if created:
         if instance.is_admin:
             return
-        if instance.is_company:  # and not instance.is_admin:
+        if instance.is_company == True:  # and not instance.is_admin:
             Company.objects.create(user=instance)
         else:
             Customer.objects.create(user=instance)
