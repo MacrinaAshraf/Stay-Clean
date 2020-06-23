@@ -32,7 +32,7 @@ var items = [
 ];
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
-Geocode.setApiKey("AIzaSyApkOXCx4XowRsfL5pmVApQYmp81LA_PL8");
+Geocode.setApiKey("DET_MAP_KEEY");
 
 
 
