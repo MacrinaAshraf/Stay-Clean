@@ -36,9 +36,9 @@ class ProgramView(viewsets.ModelViewSet):
             pk=self.kwargs.get('pk')
         )
 
-    @action(detail=False, methods=['get'], name="Company Programs", permission_classes=[IsAuthenticated, IsCompany])
-    def company_program(self, request):
-        company = get_object_or_404(Company, user=request.user) 
+    @action(detail=True, methods=['get'], name="Company Programs", permission_classes=[AllowAny,])
+    def company_program(self, request,pk=None):
+        company = get_object_or_404(Company, id=pk)
         user_select = Program.objects.filter(company=company.pk)
         serializer = ProgramSerializer(user_select, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

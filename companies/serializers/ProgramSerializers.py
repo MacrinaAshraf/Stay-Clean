@@ -124,7 +124,7 @@ class SelectedProgramSerializer(serializers.ModelSerializer):
             company=validated_data.get('company'),
             rate=validated_data.get('rate', 0),
             address=validated_data.get('address'),
-            is_active=True
+            notes=validated_data.get('notes')
         )
         return selected_program
 

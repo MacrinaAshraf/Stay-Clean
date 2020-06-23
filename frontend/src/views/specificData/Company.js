@@ -244,7 +244,7 @@ class Profile extends React.Component {
                                 <div>
 
                                 </div>
-                                <Link to={'/program/' + program.id}>
+                                <Link to={'/programs/' + program.id}>
 
                                   <Button
                                     className="mt-4"
