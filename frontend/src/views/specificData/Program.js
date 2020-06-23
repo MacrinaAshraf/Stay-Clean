@@ -7,7 +7,7 @@ import GoogleMapReact from 'google-map-react';
 import Review from "../IndexSections/Review.js";
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
-
+import MapKey from"../../assets/mapKey.js";
 import {
   Button,
   Card,
@@ -32,7 +32,7 @@ var items = [
 ];
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
-Geocode.setApiKey("DET_MAP_KEEY");
+Geocode.setApiKey(MapKey);
 
 
 
