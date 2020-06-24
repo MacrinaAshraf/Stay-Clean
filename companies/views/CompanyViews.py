@@ -1,4 +1,4 @@
-from users.models import Company
+from users.models import Company, User
 from companies.models import CompanyReview
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
@@ -16,7 +16,7 @@ class CompanyView(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
-    parser_classes = [MultiPartParser, FormParser]
+    parser_classes = [MultiPartParser, FileUploadParser, FormParser]
 
     def get_object(self):
         return get_object_or_404(
@@ -42,6 +42,16 @@ class CompanyView(viewsets.ModelViewSet):
         programs = Program.objects.filter(company=company.pk)
         serializer = ProgramSerializer(programs,many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(methods=['post'], detail=False, permission_classes=[AllowAny,])
+    def add_policy(self, request, pk= None):
+        policy_data = request.FILES.get('policy')
+        user = User.objects.all().last()
+        company = Company.objects.filter(user=user).first()
+        print(company.user.email)
+        company.policy = policy_data
+        company.save()
+        return Response({"found": "true"}, status=status.HTTP_200_OK)
 
 # class RetrieveCompanyView(generics.RetrieveAPIView):
 #     permission_classes = (AllowAny,)

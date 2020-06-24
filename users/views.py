@@ -61,7 +61,7 @@ class UserView(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    parser_classes = [MultiPartParser, FormParser]
+    # parser_classes = [MultiPartParser, FormParser]
 
     def get_object(self):
         return get_object_or_404(

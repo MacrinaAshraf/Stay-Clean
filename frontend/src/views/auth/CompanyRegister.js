@@ -43,23 +43,35 @@ const CompanyRegister = (props) => {
       let form_data = new FormData();
       
       form_data.append('policy', file, file.name); 
-      form_data.append('name', name);
-      form_data.append('email', email);
-      form_data.append('description', description);
-      form_data.append('address', address);
-      form_data.append('password', password);
-      form_data.append('is_company', true)
 
-      axios.post('http://localhost:8000/user-api/user/', form_data,
+      axios.post('http://localhost:8000/user-api/user/', {
+        name,
+        email,
+        description, 
+        address,
+        password,
+        is_company: true,
+        is_active: false
+      },
         ).then(response => {
-          console.log(response);
-          if (response.status !== 201) {
-            console.log("Not registered 250");
-          } else {
-            console.log("good");
-            // window.location = "http://localhost:3000/login";
+          if (response.status.code === 400) {
+            setError(true);
           }
-
+          else {
+            // const { token } = response.data;
+            // localStorage.setItem("token", token);
+            axios.post('http://127.0.0.1:8000/user-api/company/add_policy/', form_data).then(res => {
+              if (res.data) {
+                console.log(res.data);
+                // sessionStorage.setItem('is_company', res.data['is_company'])
+                // sessionStorage.setItem('email', res.data['email'])
+                window.location.href = "http://localhost:3000/error";
+    
+              }
+            }).catch(error => console.error(error));
+          }
+        }, (error) => {
+          console.log(error);
         });
     }
   };

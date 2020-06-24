@@ -15,7 +15,7 @@ class CompanySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Company
-        fields = ('id', 'name', 'description', 'logo', 'created_at', 'user', 'address', 'policy')
+        fields = ('id', 'name', 'description', 'logo', 'created_at', 'user', 'address', 'policy', 'is_active')
 
     def get_user(self, obj):
         return obj.user.email

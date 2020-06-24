@@ -43,8 +43,7 @@ class Index extends React.Component {
         }
       })
       .catch(error => console.error(error))
-  }
-
+    }
 
   componentDidMount() {
     document.documentElement.scrollTop = 0;
@@ -55,6 +54,7 @@ class Index extends React.Component {
     this.all_companies();
     this.most_review_program();
     this.most_selected_program();
+    // this.getLoggedUserData();
   }
 
   render() {
