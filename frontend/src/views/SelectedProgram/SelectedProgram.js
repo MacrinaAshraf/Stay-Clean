@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from "react";
-import SimpleFooter from "components/Footers/SimpleFooter.js";
-import TableDetails from "./TableDetails";
 import axios from "axios";
-import DemoNavbar from "components/Navbars/DemoNavbar.js";
+import TableDetails from "./TableDetails";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Table } from "reactstrap";
+import DemoNavbar from "components/Navbars/DemoNavbar.js";
+import SimpleFooter from "components/Footers/SimpleFooter.js";
+
 
 const SelectedProgram = (props) => {
 
     const [selectedProgram, setselectedProgram] = useState([]);
 
-    if(sessionStorage.getItem('is_company') === "true") {
+    if (sessionStorage.getItem('is_company') === "true") {
         window.location.href = "http://localhost:3000/company-selected-programs";
-    } 
+    }
+
+
 
     useEffect(() => {
         axios
@@ -27,14 +30,14 @@ const SelectedProgram = (props) => {
             }).catch(error => {
                 console.log(error);
                 if (
-                  error
-                    .toString()
-                    .includes("Request failed with status code 403")
+                    error
+                        .toString()
+                        .includes("Request failed with status code 403")
                 ) {
-                  // localStorage.setItem("token", "");
-                  window.location.href = "http://localhost:3000/login";
+                    // localStorage.setItem("token", "");
+                    window.location.href = "http://localhost:3000/login";
                 }
-              });
+            });
 
 
     }, []);
@@ -70,12 +73,12 @@ const SelectedProgram = (props) => {
                                     <h1 className="display-3 text-dark">
                                         List selected Company's Programs for user{" "}
                                     </h1>
-                                    
-                                 
+
+
 
                                 </Col>
                             </Row>
-                            
+
                         </div>
                     </Container>
                     {/* SVG separator */}
@@ -98,6 +101,8 @@ const SelectedProgram = (props) => {
 
                 {/* 1st Hero Variation */}
             </div>
+
+
             <Table  >
                 <thead>
                     <tr>
@@ -106,7 +111,14 @@ const SelectedProgram = (props) => {
                         <th>rate</th>
                         <th>program name</th>
                         <th>program price</th>
-
+                        {sessionStorage.getItem("is_company") === "true" ?
+                            <>
+                            </> :
+                            <>
+                            <th>your area</th>
+                            <th>payed</th>
+                            </>
+                        }
 
                     </tr>
                 </thead>

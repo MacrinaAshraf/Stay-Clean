@@ -149,6 +149,16 @@ class SelectedProgramView(viewsets.ModelViewSet):
         serializer = SelectedProgramSerializer(programs, many=True)
         return Response(serializer.data)
 
+    @action(methods=['post'], detail=False, name="update pay")
+    def user_pay(self, request):
+        program = SelectedProgram.objects.filter(id=request.data['select']).first()
+        if program is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        else:
+            program.pay = True
+            program.save()
+            return Response(status=status.HTTP_200_OK)
+
     @action(methods=['get'], detail=True, name="all Users Select")
     def all_selected(self, request, pk=None):
         program = get_object_or_404(Program, id=pk)
