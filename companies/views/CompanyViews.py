@@ -6,6 +6,9 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from companies.serializers.CompanySerializers import CompanySerializer, ReviewSerializer
+from companies.serializers.ProgramSerializers import ProgramSerializer
+from companies.permissions import IsCompany
+from companies.models import Program
 
 
 class CompanyView(viewsets.ModelViewSet):
@@ -30,7 +33,12 @@ class CompanyView(viewsets.ModelViewSet):
         reviews = CompanyReview.objects.filter(company=pk)
         serializer = ReviewSerializer(reviews, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
+    @action(detail=False,methods=['get'],name="loggedin_company_program", permission_classes=[IsAuthenticated,IsCompany])
+    def program(self,request):
+        company = get_object_or_404(Company,user=request.user)
+        programs = Program.objects.filter(company=company.pk)
+        serializer = ProgramSerializer(programs,many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 # class RetrieveCompanyView(generics.RetrieveAPIView):
 #     permission_classes = (AllowAny,)

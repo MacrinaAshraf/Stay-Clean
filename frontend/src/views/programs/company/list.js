@@ -3,8 +3,11 @@ import axios from "axios";
 import ProgramCard from "../utils/ProgramCard.js";
 import ConfirmRemovalModal from "./ConfirmRemovalModal.js";
 import NewProgramModal from "./NewProgramModal";
+import { Link } from 'react-router-dom';
+
 // reactstrap components
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Button } from "reactstrap";
+
 
 // core components
 import Hero from "../../IndexSections/Hero.js";
@@ -35,7 +38,7 @@ class ListCompanyPrograms extends React.Component {
 
     getPrograms = () => {
 
-        axios.get("http://127.0.0.1:8000/api/programs/company_program", {
+        axios.get("http://127.0.0.1:8000/user-api/company/program/", {
             headers: {
                 Authorization:
                     "Token " + localStorage.getItem("token"),
@@ -77,8 +80,13 @@ class ListCompanyPrograms extends React.Component {
                                                         id={item.id}
                                                         resetState={this.resetState}
                                                     />
+                                                    
+                                                    <Link to={'/programs/' + item.id}>
+                                                        view 
+                                                    </Link>
+                                                   
                                                     <div>
-
+                                                     
 
                                                     </div>
 
