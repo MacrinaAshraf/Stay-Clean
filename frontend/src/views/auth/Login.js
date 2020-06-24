@@ -61,7 +61,43 @@ const Login = (props) => {
             console.log(res.data);
             sessionStorage.setItem('is_company', res.data['is_company'])
             sessionStorage.setItem('email', res.data['email'])
-            window.location.href = "http://localhost:3000/";
+            if (sessionStorage.getItem('is_company') === "true") {
+              axios.get('http://127.0.0.1:8000/user-api/company/me/', {
+                headers: {
+                  Authorization:
+                    "Token " + localStorage.getItem("token"),
+                }
+              }).then(res => {
+                if (res.data) {
+                  sessionStorage.setItem('name', res.data['name'])
+                  sessionStorage.setItem('is_active', res.data['is_active'])
+
+                  if(sessionStorage.getItem('is_active') === "false") {
+                    localStorage.clear();
+                    sessionStorage.clear();
+                    window.location.href = 'http://localhost:3000/error';
+                  }
+                  else {
+                    window.location.href = 'http://localhost:3000/company-programs';
+                  }
+                }
+              }).catch(error => console.error(error));
+            } else if (sessionStorage.getItem('is_company') === "false") {
+              axios.get('http://127.0.0.1:8000/user-api/customer/me/', {
+                headers: {
+                  Authorization:
+                    "Token " + localStorage.getItem("token"),
+                }
+              }).then(res => {
+                if (res.data) {
+                  console.log(res.data);
+                  sessionStorage.setItem('name', res.data['first_name'])
+                  sessionStorage.setItem('discount', res.data['discount'])
+
+                  window.location.href = 'http://localhost:3000/'
+                }
+              }).catch(error => console.error(error));
+            }
 
           }
         }).catch(error => console.error(error));

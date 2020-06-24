@@ -13,6 +13,7 @@ import {
   InputGroupText,
   InputGroup,
   Container,
+  Label,
   Row,
   Col
 } from "reactstrap";
@@ -31,6 +32,7 @@ const CompanyRegister = (props) => {
   const [address, setAddress] = useState('')
   const [password, setPassword] = useState('');
   const [conPassword, setConPassword] = useState('');
+  const [file, setFile] = useState('');
   const [error, setError] = useState(false);
 
 
@@ -38,26 +40,39 @@ const CompanyRegister = (props) => {
     e.preventDefault();
     if (conPassword === password) {
 
-      axios.post('http://localhost:8000/user-api/user/',
-        {
-          name,
-          description,
-          email,
-          address,
-          password,
-          is_company: true
-        }, /*{
-        withCredentials: true,
-      }*/).then(response => {
-        console.log(response);
-        if (response.status !== 201) {
-          console.log("Not registered 250");
-        } else {
-          console.log("good");
-          window.location = "http://localhost:3000/login";
-        }
-        
-      });
+      let form_data = new FormData();
+      
+      form_data.append('policy', file, file.name); 
+
+      axios.post('http://localhost:8000/user-api/user/', {
+        name,
+        email,
+        description, 
+        address,
+        password,
+        is_company: true,
+        is_active: false
+      },
+        ).then(response => {
+          if (response.status.code === 400) {
+            setError(true);
+          }
+          else {
+            // const { token } = response.data;
+            // localStorage.setItem("token", token);
+            axios.post('http://127.0.0.1:8000/user-api/company/add_policy/', form_data).then(res => {
+              if (res.data) {
+                console.log(res.data);
+                // sessionStorage.setItem('is_company', res.data['is_company'])
+                // sessionStorage.setItem('email', res.data['email'])
+                window.location.href = "http://localhost:3000/error";
+    
+              }
+            }).catch(error => console.error(error));
+          }
+        }, (error) => {
+          console.log(error);
+        });
     }
   };
 
@@ -86,6 +101,12 @@ const CompanyRegister = (props) => {
     const { target: { value } } = e;
     setConPassword(value);
   }
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0])
+    console.log(e.target.files[0]);
+    console.log("file", file);
+  };
   return (
     <>
       <DemoNavbar />
@@ -201,6 +222,24 @@ const CompanyRegister = (props) => {
                             autoComplete="off"
                             value={conPassword}
                             onChange={handleConPasswordChange}
+                          />
+                        </InputGroup>
+                      </FormGroup>
+                      <FormGroup>
+                        <InputGroup className="input-group-alternative">
+                          <InputGroupAddon addonType="prepend">
+                            <Label for="file">
+                              <h5>Please upload a copy of your policy in pdf format</h5>
+                            </Label>
+                          </InputGroupAddon>
+                          <Input
+                            id="file"
+                            type="file"
+                            accept=".pdf"
+                            onChange={handleFileChange}
+                            // value={password}
+                            // onChange={handlePasswordChange}
+                            required
                           />
                         </InputGroup>
                       </FormGroup>

@@ -1,0 +1,3 @@
+//using stripe
+const payKey = "pk_test_51GxKVKK1Ne9x05l08RYjsIBaBMFvgClKqoHxlvyfycwg9pjIheQmdKfTS3hzEjUqdkzz4113tHbrrQWCzTMOv0mU00DAQpTYM3"
+export default payKey;

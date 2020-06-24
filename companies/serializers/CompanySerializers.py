@@ -11,10 +11,11 @@ class CompanySerializer(serializers.ModelSerializer):
     user = SerializerMethodField()
     created_at = SerializerMethodField()
     logo = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
+    policy = serializers.FileField(max_length=None, allow_empty_file=True, use_url=True)
 
     class Meta:
         model = Company
-        fields = ('id', 'name', 'description', 'logo', 'created_at', 'user', 'address')
+        fields = ('id', 'name', 'description', 'logo', 'created_at', 'user', 'address', 'policy', 'is_active')
 
     def get_user(self, obj):
         return obj.user.email
@@ -24,6 +25,9 @@ class CompanySerializer(serializers.ModelSerializer):
 
     def get_logo(self, obj):
         return obj.get_absolute_url()
+
+    def get_policy(self, obj):
+        return obj.get_absolute_file_url()
 
 
 class ReviewSerializer(serializers.ModelSerializer):

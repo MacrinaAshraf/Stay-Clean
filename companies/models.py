@@ -1,7 +1,9 @@
-from django.contrib.sites.models import Site
 from django.db import models
-from django.template.defaultfilters import slugify
 from users.models import Customer, Company
+from django.contrib.sites.models import Site
+from django.template.defaultfilters import slugify
+from django.core.validators import MaxValueValidator, MinValueValidator
+
 
 
 # Create your models here.
@@ -99,6 +101,9 @@ class SelectedProgram(models.Model):
         Customer, null=True, on_delete=models.CASCADE)
     company = models.ForeignKey(
         Company, null=True, on_delete=models.CASCADE)
+    area = models.IntegerField(null=False, validators=[MinValueValidator(5)])
+    price = models.IntegerField(null=False, validators=[MinValueValidator(0)])
+    pay = models.BooleanField(default=False)
     rate = models.IntegerField(choices=(
         (0, '0'),
         (1, '1'),
@@ -109,6 +114,7 @@ class SelectedProgram(models.Model):
     ))
     notes = models.TextField(max_length=500)
     address = models.TextField(max_length=500)
+    date = models.DateTimeField(null=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -80,10 +80,6 @@ class ListCompanyPrograms extends React.Component {
                                                         id={item.id}
                                                         resetState={this.resetState}
                                                     />
-                                                    
-                                                    <Link to={'/programs/' + item.id}>
-                                                        view 
-                                                    </Link>
                                                    
                                                     <div>
                                                      

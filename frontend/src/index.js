@@ -22,6 +22,7 @@ import UserMessages from "views/messages/UserMessages.js";
 import CompanyMessages from "views/messages/CompanyMessages.js";
 import Program from "views/specificData/Program.js";
 import Company from "views/specificData/Company.js";
+import Error from "./components/Error"
 
 ReactDOM.render(
   <BrowserRouter>
@@ -92,6 +93,12 @@ ReactDOM.render(
         path="/company-selected-programs"
         exact
         render={props => <CompanySelectedProgram {...props} />}
+      />
+
+      <Route
+        path="/error"
+        exact
+        render={props => <Error {...props} />}
       />
 
       <Route

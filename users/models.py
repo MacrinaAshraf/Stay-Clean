@@ -35,6 +35,7 @@ class User(AbstractBaseUser):
     is_company = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
+    
 
     USERNAME_FIELD = 'email'
 
@@ -78,11 +79,17 @@ class Company(models.Model):
     description = models.TextField(max_length=500)
     logo = models.ImageField(upload_to='companies/images', verbose_name='Company Image', null=True)
     address = models.CharField(max_length=300)
+    policy = models.FileField(upload_to='companies/policy', verbose_name='Company Policy')
+    is_active = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.user.email
+
+    def get_absolute_file_url(self):
+        relative = self.policy.url
+        return ('http://%s%s' % (Site.objects.get_current().domain, relative))
 
     def get_absolute_url(self):
         relative = self.logo.url
