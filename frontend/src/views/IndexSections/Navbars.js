@@ -386,7 +386,7 @@ class Navbars extends React.Component {
                     </Col>
                   </Row>
                 </div>
-                <Nav className="align-items-lg-center ml-lg-auto" navbar>
+                <Nav className="align-items-lg ml-lg-auto" navbar>
                   <NavItem>
                     <NavLink
                       className="nav-link-icon"

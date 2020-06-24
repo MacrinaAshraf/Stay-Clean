@@ -19,6 +19,7 @@ import {
     Container,
     Row,
     Col,
+
     UncontrolledTooltip
 } from "reactstrap";
 
@@ -43,47 +44,49 @@ class DropDown extends React.Component {
     render() {
         return (
             <>
-            {
-                sessionStorage.getItem('is_company') === "true"?
-                    <Nav className="navbar-nav-hover align-items-lg-center" navbar>
-                        <UncontrolledDropdown nav>
-                            <DropdownToggle nav>
-                                <i className="ni ni-collection d-lg-none mr-1" />
-                                <span className="nav-link-inner--text" /*style={{ color: "#5e72e4" }}*/>Navigate</span>
-                            </DropdownToggle>
-                            <DropdownMenu>
-                                <DropdownItem to="/company-messages" tag={Link}>
-                                    Messages
-                      </DropdownItem>
-                                <DropdownItem to="/company-programs" tag={Link}>
-                                    Programs
-                      </DropdownItem>
-                                <DropdownItem to="/company-selected-programs" tag={Link}>
-                                    Hired programs
-                      </DropdownItem>
-                            </DropdownMenu>
-                        </UncontrolledDropdown>
-                    </Nav>
-                    : <Nav className="navbar-nav-hover align-items-lg-center" navbar>
-                        <UncontrolledDropdown nav>
-                            <DropdownToggle nav>
-                                <i className="ni ni-collection d-lg-none mr-1" />
-                                <span className="nav-link-inner--text" /*style={{ color: "#5e72e4" }}*/>Navigate</span>
-                            </DropdownToggle>
-                            <DropdownMenu>
-                                <DropdownItem to="/user-messages" tag={Link}>
-                                    My Messages
-                      </DropdownItem>
-                                <DropdownItem to="/programs" tag={Link}>
-                                    Programs
-                      </DropdownItem>
-                                <DropdownItem to="/selected-programs" tag={Link}>
-                                    Hired programs
-                      </DropdownItem>
-                            </DropdownMenu>
-                        </UncontrolledDropdown>
-                    </Nav>
-            }
+                {
+                    sessionStorage.getItem('is_company') === "true" ?
+                        <Link  >
+
+
+                            <Link to="/company-messages" tag={Link} style={{ color: 'orange', paddingLeft: '350px', paddingRight: '40px' }}>
+                                Messages
+                      </Link>
+                            <Link to="/company-programs" tag={Link} style={{ color: 'orange', padding: '40px' }}>
+                                Programs
+                      </Link>
+                            <Link to="/company-selected-programs" tag={Link} style={{ color: 'orange', padding: '40px' }}>
+                                Hired programs
+                      </Link>
+
+
+                            <i className="ni ni-collection d-lg-none mr-1" />
+                            <span className="nav-link-inner--text" style={{ color: "orange", marginLeft: '300px' }} >Welcome Nahla</span>
+
+                        </Link >
+                        : 
+                     
+                   
+                   <Link  >
+
+
+                   <Link to="/user-messages" tag={Link} style={{ color: 'orange', paddingLeft: '350px', paddingRight: '40px' }}>
+                       My Messages
+             </Link>
+                   <Link to="/programs" tag={Link} style={{ color: 'orange', padding: '40px' }}>
+                       Programs
+             </Link>
+                   <Link to="/selected-programs" tag={Link} style={{ color: 'orange', padding: '40px' }}>
+                       Hired programs
+             </Link>
+
+
+                   <i className="ni ni-collection d-lg-none mr-1" />
+                   <span className="nav-link-inner--text" style={{ color: "orange", marginLeft: '300px' }} >Welcome Nahla</span>
+
+               </Link >
+
+                }
             </>
         );
     }

@@ -5,7 +5,7 @@ class Hero extends React.Component {
   render() {
     return (
       <>
-        <div className="position-relative" style={{ backgroundImage: "url(" + require("assets/img/Dark-1.jpg") + ")" }}>
+        <div className="position-relative" style={{ backgroundImage: "url(" + require("assets/img/stay/stay-clean.jpg")  + ")" , backgroundRepeat: 'no-repeat' , backgroundSize: 'cover' , height:'700px', marginTop:'20px' }}>
           {/* shape Hero */}
           <section className="section section-lg section-shaped pb-250">
             <div className="shape shape-style-1 shape-default">
@@ -24,12 +24,10 @@ class Hero extends React.Component {
                 <Row>
                   <Col lg="6">
                     <h1 className="display-3 text-dark">
-                      List Company's Programs{" "}
+                    
                     </h1>
-                    <p className="lead text-white">
-                      The design system comes with four pre-built pages to
-                      help you get started faster. You can change the text and
-                      images and you're good to go.
+                    <p className="lead text-dark">
+                     
                       </p>
                     <div className="btn-wrapper"></div>
 
@@ -49,7 +47,7 @@ class Hero extends React.Component {
               >
                 <polygon
                   className="fill-white"
-                  points="2560 0 2560 100 0 100"
+                  points="2560 0 2560 0 0 100"
                 />
               </svg>
             </div>

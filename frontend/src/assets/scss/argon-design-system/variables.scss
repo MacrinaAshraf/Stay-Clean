@@ -70,6 +70,7 @@ $colors: map-merge((
 $default:       #172b4d !default;
 $primary:       #5e72e4 !default;
 $secondary:     #f4f5f7 !default;
+$navcolor:      #32325d !default;
 $success:       $green !default;
 $info:          $teal !default;
 $warning:       $orange !default;
@@ -100,7 +101,8 @@ $theme-colors: map-merge((
   "white":        $white,
   "neutral":      $white,
   "dark":         $dark,
-  "darker":       $darker
+  "darker":       $darker,
+  "navcolor":     $navcolor,
 ), $theme-colors);
 
 $brand-colors: () !default;
@@ -654,7 +656,7 @@ $nav-pills-border-radius:           $border-radius !default;
 $nav-pills-link-color:              theme-color("primary") !default;
 $nav-pills-link-hover-color:        darken(theme-color("primary"), 5%);
 $nav-pills-link-active-color:       color-yiq(theme-color("primary"));
-$nav-pills-link-active-bg:          theme-color("primary") !default;
+$nav-pills-link-active-bg:          theme-color("navcolor") !default;
 $nav-pills-box-shadow:              $btn-box-shadow !default;
 
 // Navbar

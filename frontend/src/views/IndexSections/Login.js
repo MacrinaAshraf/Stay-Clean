@@ -61,11 +61,11 @@ class Login extends React.Component {
                   <span className="text-white">completed with examples</span>
                 </h3>
                 <p className="lead text-white">
-                  The Design System comes with four pre-built pages to help you
-                  get started faster. You can change the text and images and
-                  you're good to go. More importantly, looking at them will give
-                  you a picture of what you can built with this powerful
-                  Bootstrap 4 Design System.
+                    The Design System comes with four pre-built pages to help you
+                    get started faster. You can change the text and images and
+                    you're good to go. More importantly, looking at them will give
+                    you a picture of what you can built with this powerful
+                    Bootstrap 4 Design System.
                 </p>
                 <div className="btn-wrapper">
                   <Button color="success" to="/login-page" tag={Link}>

@@ -18,12 +18,13 @@ const ButtonsComponent = (props) => {
       {
         localStorage.getItem("token") ?
           < Button
-            className="btn-neutral btn-icon"
+           style={{backgroundColor:'#4682B4',marginRight:'20px'}}
+            className="btn-neutral btn-icon "
             color="default"
             target="_blank"
             onClick={handleLogout}
           >
-            <span className="nav-link-inner--text ml-1">
+            <span className="nav-link-inner--text ml-1" style={{color:'orange'}}>
               Log out
                       </span>
           </Button > :

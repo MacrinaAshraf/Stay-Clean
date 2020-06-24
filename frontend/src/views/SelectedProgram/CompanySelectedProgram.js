@@ -48,7 +48,7 @@ const CompanySelectedProgram = (props) => {
              <div
                             className="position-relative"
                             style={{
-                                backgroundImage: "url(" + require("assets/img/bg_1.jpg") + ")",
+                                backgroundImage: "url(" + require("assets/img/stay/stay-clean.jpg") + ")",
                             }}
                         >
                             {/* shape Hero */}

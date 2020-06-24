@@ -46,6 +46,7 @@ class TabsSection extends React.Component {
               >
                 <NavItem>
                   <NavLink
+                    style={{color:'darkorange' , fontSize:'20px',fontWeight:'bold'}}
                     aria-selected={this.state.iconTabs === 1}
                     className={classnames("mb-sm-3 mb-md-0", {
                       active: this.state.iconTabs === 1
@@ -59,6 +60,7 @@ class TabsSection extends React.Component {
                 </NavItem>
                 <NavItem>
                   <NavLink
+                   style={{color:'darkorange' , fontSize:'20px',fontWeight:'bold'}}
                     aria-selected={this.state.iconTabs === 2}
                     className={classnames("mb-sm-3 mb-md-0", {
                       active: this.state.iconTabs === 2
@@ -67,7 +69,7 @@ class TabsSection extends React.Component {
                     href="#pablo"
                     role="tab"
                   >
-                    Program has most reviews
+                    Most Reviewed Program
                   </NavLink>
                 </NavItem>
 
@@ -92,13 +94,13 @@ class TabsSection extends React.Component {
                           {this.props.most_selected_program.name}
                         </h3>
 
-
-                        <p className="lead">
+                        <br/>
+                        <p className="display-4" >
 
                           {this.props.most_selected_program.description}
                           <br />
-
-                          Sterilizer within  : {this.props.most_selected_program.duration}
+                          <br/>
+                          <b>Duration:</b> {this.props.most_selected_program.duration}
                           {this.props.most_selected_program.duration > 1 &&
                             this.props.most_selected_program.duration < 11 ? (
                               <> Hours</>
@@ -106,7 +108,8 @@ class TabsSection extends React.Component {
                               <> Hour</>
                             )}
                           <br />
-                          Cost is : {this.props.most_selected_program.price} $
+                          <br/>
+                         <b>Cost:</b> {this.props.most_selected_program.price}/5m<sup>2</sup > $ 
 
 
                         </p>
@@ -131,13 +134,13 @@ class TabsSection extends React.Component {
                           {this.props.most_review_program.name}
                         </h3>
 
-
-                        <p className="lead">
+                        <br />
+                        <p  className="display-4">
 
                           {this.props.most_review_program.description}
                           <br />
-
-                          Sterilizer within  : {this.props.most_review_program.duration}
+                          <br />
+                          <b>Duration: </b>  : {this.props.most_review_program.duration}
                           {this.props.most_review_program.duration > 1 &&
                             this.props.most_review_program.duration < 11 ? (
                               <> Hours</>
@@ -145,7 +148,8 @@ class TabsSection extends React.Component {
                               <> Hour</>
                             )}
                           <br />
-                          Cost is : {this.props.most_selected_program.price} $
+                          <br />
+                          <b>Cost: </b> {this.props.most_selected_program.price}/5m<sup>2</sup > $
 
 
                         </p>

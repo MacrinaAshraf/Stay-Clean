@@ -80,7 +80,7 @@ class Index extends React.Component {
             <Container>
               <Row className="justify-content-center text-center mb-lg">
                 <Col lg="8">
-                  <h2 className="display-3">The amazing Companies</h2>
+                  <h2 className="display-3">Top Companies</h2>
                 </Col>
               </Row>
               <Row>

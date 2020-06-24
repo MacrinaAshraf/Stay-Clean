@@ -55,13 +55,13 @@ class DemoNavbar extends React.Component {
             expand="lg"
             id="navbar-main"
           >
-            <Container>
-              <NavbarBrand className="mr-lg-0" to="/" tag={Link} style={{ height: "50px" }}>
+           
+              <NavbarBrand className="mr-lg-0" to="/" tag={Link} style={{ height: "50px" , justifyItems:'center' }}>
                 <img
                   alt="..."
-                  src={require("assets/img/stay/stay1.jpeg")}
-                  width="100"
-                  style={{ height: "50px" }}
+                  src={require("assets/img/stay/stayclean-1.png")}
+                 
+                  style={{ height: "90px" , width:'200px', marginLeft:'0px' , marginTop:'-20px'}}
 
                 />
               </NavbarBrand>
@@ -95,7 +95,7 @@ class DemoNavbar extends React.Component {
                   </NavItem>
                 </Nav>
               </UncontrolledCollapse>
-            </Container>
+           
           </Navbar>
         </header>
       </>

@@ -98,6 +98,7 @@ class ListCompanyPrograms extends React.Component {
                                             ))}
 
                                         </Row>
+
                                     </Col>
 
                                 </Row>
