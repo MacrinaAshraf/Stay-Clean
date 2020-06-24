@@ -8,7 +8,7 @@ const ProgramCard = (props) => {
 
   return (
     <Col lg="4">
-      <Link to={'/programs/' + props.program.id}>
+      {/* <Link to={'/programs/' + props.program.id}> */}
         <Card className="card-lift--hover shadow border-0">
           <CardBody className="py-5">
             <div className="icon icon-shape icon-shape-info rounded-circle mb-4">
@@ -38,7 +38,7 @@ const ProgramCard = (props) => {
             </div>
           </CardBody>
         </Card>
-      </Link>
+      {/* </Link> */}
     </Col>
   );
 };

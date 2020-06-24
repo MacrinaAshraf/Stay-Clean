@@ -72,7 +72,7 @@ const TableDetail = ({ item }) => {
        <tr>
         
         {
-            sessionStorage.getItem("is_company") ?
+            sessionStorage.getItem("is_company") ==="true"?
 
                ( <>
 
