@@ -29,8 +29,8 @@ class Blogs extends React.Component {
   render() {
     return (
       <>
-        <section className="section section-shaped">
-          <div className="shape shape-style-1 shape-default">
+        <section className="section section-shaped" style={{ backgroundColor: "#fce8d5" }}>
+          <div className="shape-default">
             <span />
             <span />
             <span />
@@ -41,16 +41,15 @@ class Blogs extends React.Component {
           <Container className="py-md">
             <Row className="justify-content-between align-items-center">
               <Col className="mb-5 mb-lg-0" lg="5">
-                <h1 className="text-white font-weight-light">
-                Sterilisation ?
-                </h1>
-                <p className="lead text-white mt-4">
-            
-
-                 refers to any process that effectively renders any surface, equipment or article free from viable microorganisms.
+                <h3 className="mb-0"> You Can Get 20% Discount <br />After Booked 5 Programs </h3>
 
 
-</p>
+                <img
+                  alt="..."
+                  className="img-fluid rounded-circle shadow"
+                  src={require("assets/img/save.jpeg")}
+                  style={{ width: "100%" }}
+                />
 
               </Col>
               <Col className="mb-lg-auto" lg="6">
@@ -70,7 +69,7 @@ class Blogs extends React.Component {
               x="0"
               y="0"
             >
-              <polygon className="fill-white" points="2560 0 2560 100 0 100" />
+              <polygon className="fill-white" points="2560 0 2560 0 0 100" />
             </svg>
           </div>
         </section>

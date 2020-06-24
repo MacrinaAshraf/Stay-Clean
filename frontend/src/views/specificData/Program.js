@@ -3,11 +3,12 @@ import axios from 'axios';
 import classnames from "classnames";
 import Geocode from "react-geocode";
 import Hero from "../IndexSections/Hero"
+import MapKey from "../../assets/mapKey.js";
 import GoogleMapReact from 'google-map-react';
 import Review from "../IndexSections/Review.js";
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
-import MapKey from"../../assets/mapKey.js";
+
 import {
   Button,
   Card,
@@ -19,7 +20,8 @@ import {
   Input,
   InputGroup,
   Row,
-  UncontrolledCarousel
+  UncontrolledCarousel,
+  Fade
 } from "reactstrap";
 
 var items = [
@@ -46,6 +48,8 @@ class Profile extends React.Component {
     myReview: "",
     myAddress: "",
     myNotes: "",
+    myArea:5,
+    myDate:"",
     selectProgramEror: "",
     selectProgramSuccess: "",
     center: {
@@ -53,7 +57,9 @@ class Profile extends React.Component {
       lng: 31.233334
     },
     lat: 30.033333,
-    lng: 31.233334
+    lng: 31.233334,
+    
+
   }
 
   handleSelect = (selectedIndex, e) => {
@@ -78,36 +84,49 @@ class Profile extends React.Component {
 
   }
 
+  postSelectedData = self => {
+    axios.post("http://localhost:8000/api/selected/", {
+      company: this.state.data.company,
+      program: this.state.data.id,
+      notes: this.state.myNotes,
+      address: this.state.lng + "/" + this.state.lat + "/" + this.state.myAddress,
+      rate: 0,
+      area: this.state.myArea,
+      date: new Date(this.state.myDate),
+      price:Math.round((this.state.myArea/5)*this.state.data.price)
+
+    }, {
+      headers: {
+        Authorization:
+          "Token " + localStorage.getItem("token"),
+      },
+    }).then(() => {
+      this.setState({ myAddress: "" });
+      this.setState({ myNotes: "" });
+      this.setState({ selectProgramEror: "" });
+      this.setState({ selectProgramSuccess: "wait the company will call you soon" });
+
+    });
+  }
+
+
   handleSubmitSelect = event => {
     event.preventDefault();
-    this.setState({selectProgramSuccess:""});
+    this.setState({ selectProgramSuccess: "" });
     // console.log(this.state.lng)
     // console.log(this.state.lat)
     // console.log(this.state.myAddress)
     // console.log(this.state.myNotes)
-    console.log(this.state.myAddress.length)
-    if (this.state.myAddress.length > 15) {
-      axios.post("http://localhost:8000/api/selected/", {
-        company: this.state.data.company,
-        program: this.state.data.id,
-        notes: this.state.myNotes,
-        address: this.state.lng + "/" + this.state.lat + "/" + this.state.myAddress,
-        rate: 0
-      }, {
-        headers: {
-          Authorization:
-            "Token " + localStorage.getItem("token"),
-        },
-      }).then(() => {
-        this.setState({ myAddress: "" });
-        this.setState({ myNotes: "" });
-        this.setState({ selectProgramEror: "" });
-        this.setState({selectProgramSuccess:"wait the company will call you soon"});
+    let date = new Date(this.state.myDate)
+  
+    // console.log(date)
+    // console.log( new Date())
 
-      });
+    if (this.state.myAddress.length > 15 && this.state.myDate != "" && date >  new Date()) {
+      this.postSelectedData(this)
     }
     else {
-      this.setState({ selectProgramEror: "you sholud write your address in details" });
+      this.setState({ selectProgramEror: "you sholud write your address in details and select futured date" });
 
     }
 
@@ -437,8 +456,8 @@ class Profile extends React.Component {
                                 onClick={e => this.setState({ lat: e.lat, lng: e.lng })}
                               >
                                 <AnyReactComponent
-                                  lat={59.955413}
-                                  lng={30.337844}
+                                  lat={this.state.lat}
+                                  lng={this.state.lng}
                                   text="My Marker"
                                 // onClick={e=>console.log(e.lat)}
 
@@ -471,7 +490,6 @@ class Profile extends React.Component {
                                 </InputGroup>
                               </FormGroup>
 
-
                               <FormGroup
                                 className={classnames("mt-0", {
                                   focused: this.state.nameFocused
@@ -492,14 +510,55 @@ class Profile extends React.Component {
                                 </InputGroup>
                               </FormGroup>
 
+
+                              <FormGroup
+                                className={classnames("mt-0", {
+                                  focused: this.state.nameFocused
+                                })}
+                              >
+                                <InputGroup className="input-group-alternative">
+                              
+                                <h5 className="m-1 p-1"> Area </h5>
+
+                                  <Input
+                                  className="ml-2 pl-2"
+                                    type="number"
+                                    value={this.state.myArea}
+                                    onChange={e => {
+                                      this.setState({ myArea: e.target.value })
+                                    }}
+                                    min="5"
+                                  />
+                                </InputGroup>
+                              </FormGroup>
+                              <FormGroup
+                                className={classnames("mt-0", {
+                                  focused: this.state.nameFocused
+                                })}
+                              >
+                                <InputGroup className="input-group-alternative">
+
+                                  <Input
+                                    type="date"
+                                    value={this.state.myDate}
+                                    onChange={e => {
+                                      this.setState({ myDate: e.target.value })
+                                    }}
+                                  />
+                                </InputGroup>
+                              </FormGroup>
+
+
                               <div>
                                 <Button
                                   block
                                   className="btn-round"
                                   color="default"
-                                  size="lg"
+                                  style={{
+                                    width:"30%"
+                                  }}
                                 >
-                                  Send
+                                 pay on delivery
                         </Button>
                                 <br />
                                 {this.state.selectProgramEror ?
@@ -513,14 +572,16 @@ class Profile extends React.Component {
 
                             </Form>
 
+                        
+
                           </CardBody>
                         </Card>
                       </Col>
                     </Row>
                   </Container>
                 </section>
-
               </main>
+
 
             )
         }

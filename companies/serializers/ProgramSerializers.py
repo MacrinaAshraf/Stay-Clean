@@ -122,10 +122,17 @@ class SelectedProgramSerializer(serializers.ModelSerializer):
             customer=customer,
             program=validated_data.get('program'),
             company=validated_data.get('company'),
+            area=validated_data.get('area'),
+            date=validated_data.get('date'),
             rate=validated_data.get('rate', 0),
             address=validated_data.get('address'),
-            notes=validated_data.get('notes')
+            notes=validated_data.get('notes'),
+            price=validated_data.get('price')
         )
+        numberOfSelectedPrograms = SelectedProgram.objects.filter(customer=customer).count()
+        if numberOfSelectedPrograms % 5 == 0 & customer.discount < 80:
+            customer.discount = customer.discount+20
+            customer.save()
         return selected_program
 
     def update(self, instance, validated_data):
