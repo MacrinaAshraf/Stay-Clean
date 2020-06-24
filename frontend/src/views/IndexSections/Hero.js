@@ -7,6 +7,7 @@ class Hero extends React.Component {
       <>
         <div className="position-relative" style={{ backgroundImage: "url(" + require("assets/img/stay/stay-clean.jpg")  + ")" , backgroundRepeat: 'no-repeat' , backgroundSize: 'cover' , height:'700px', marginTop:'20px' }}>
           {/* shape Hero */}
+          
           <section className="section section-lg section-shaped pb-250">
             <div className="shape shape-style-1 shape-default">
               <span />
