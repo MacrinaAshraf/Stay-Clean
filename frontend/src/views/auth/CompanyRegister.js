@@ -13,6 +13,7 @@ import {
   InputGroupText,
   InputGroup,
   Container,
+  Label,
   Row,
   Col
 } from "reactstrap";
@@ -31,6 +32,7 @@ const CompanyRegister = (props) => {
   const [address, setAddress] = useState('')
   const [password, setPassword] = useState('');
   const [conPassword, setConPassword] = useState('');
+  const [file, setFile] = useState('');
   const [error, setError] = useState(false);
 
 
@@ -38,26 +40,27 @@ const CompanyRegister = (props) => {
     e.preventDefault();
     if (conPassword === password) {
 
-      axios.post('http://localhost:8000/user-api/user/',
-        {
-          name,
-          description,
-          email,
-          address,
-          password,
-          is_company: true
-        }, /*{
-        withCredentials: true,
-      }*/).then(response => {
-        console.log(response);
-        if (response.status !== 201) {
-          console.log("Not registered 250");
-        } else {
-          console.log("good");
-          window.location = "http://localhost:3000/login";
-        }
-        
-      });
+      let form_data = new FormData();
+      
+      form_data.append('policy', file, file.name); 
+      form_data.append('name', name);
+      form_data.append('email', email);
+      form_data.append('description', description);
+      form_data.append('address', address);
+      form_data.append('password', password);
+      form_data.append('is_company', true)
+
+      axios.post('http://localhost:8000/user-api/user/', form_data,
+        ).then(response => {
+          console.log(response);
+          if (response.status !== 201) {
+            console.log("Not registered 250");
+          } else {
+            console.log("good");
+            // window.location = "http://localhost:3000/login";
+          }
+
+        });
     }
   };
 
@@ -86,6 +89,12 @@ const CompanyRegister = (props) => {
     const { target: { value } } = e;
     setConPassword(value);
   }
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0])
+    console.log(e.target.files[0]);
+    console.log("file", file);
+  };
   return (
     <>
       <DemoNavbar />
@@ -201,6 +210,24 @@ const CompanyRegister = (props) => {
                             autoComplete="off"
                             value={conPassword}
                             onChange={handleConPasswordChange}
+                          />
+                        </InputGroup>
+                      </FormGroup>
+                      <FormGroup>
+                        <InputGroup className="input-group-alternative">
+                          <InputGroupAddon addonType="prepend">
+                            <Label for="file">
+                              <h5>Please upload a copy of your policy in pdf format</h5>
+                            </Label>
+                          </InputGroupAddon>
+                          <Input
+                            id="file"
+                            type="file"
+                            accept=".pdf"
+                            onChange={handleFileChange}
+                            // value={password}
+                            // onChange={handlePasswordChange}
+                            required
                           />
                         </InputGroup>
                       </FormGroup>

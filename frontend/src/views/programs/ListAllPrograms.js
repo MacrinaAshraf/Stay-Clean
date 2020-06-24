@@ -1,87 +1,90 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ProgramCard from "./utils/ProgramCard.js";
-// import ConfirmRemovalModal from "./company/ConfirmRemovalModal.js/index.js";
-// import NewProgramModal from "./company/NewProgramModal";
-// reactstrap components
-import { Container, Row, Col } from "reactstrap";
+
+import { Container, Row, Col, Input } from "reactstrap";
 
 // core components
 import Hero from "../IndexSections/Hero.js";
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
-// import StarRatingComponent from "react-star-rating-component";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
-// import NewProgramForm from "./NewProgramForm.js";
 
 
-class List extends React.Component {
-    state = {
-        programs: [],
+const List = () => {
 
-    };
-
-    componentDidMount() {
-        // document.documentElement.scrollTop = 0;
-        // document.scrollingElement.scrollTop = 0;
-        // this.refs.main.scrollTop = 0;
-        if(sessionStorage.getItem('is_company') === "true") {
-            window.location.href = "http://localhost:3000/company-programs/";
-        }
-        this.resetState();
-
-    }
-
-
-    getPrograms = () => {
-
+    const [programs, setPrograms] = useState([])
+    const [filtered, setFiltered] = useState([]);
+    useEffect(() => {
         axios.get("http://127.0.0.1:8000/api/programs/", {
             headers: {
                 Authorization:
                     "Token " + localStorage.getItem("token"),
             },
-        }).then(res => this.setState({ programs: res.data }));
+        }).then(res => {
+            setPrograms(res.data)
+            setFiltered(res.data)
+        });
 
+    }, []);
+
+    const handleChange = (e) => {
+
+        let currentList = [];
+        let newList = [];
+        console.log(e.target.value)
+        
+        if (e.target.value !== "") {
+            currentList = programs;
+
+            newList = currentList.filter(item => {
+                const lc = item.name.toLowerCase();
+                if(lc.includes(e.target.value.toLowerCase()))
+                    return item;
+            });
+        } else {
+            newList = programs;
+        }
+        setFiltered(newList);
     }
 
-    resetState = () => {
-        this.getPrograms();
-    };
+    return (
+        <>
+            <div>
+                <DemoNavbar />
+                <main>
+                    <Hero />
+                    <section className="section section-lg pt-lg-0 mt--200">
+                        <Container>
+                            <Input
+                                type="text"
+                                className="input"
+                                onChange={handleChange}
+                                placeholder="Search..."
+                            />
+                            {/* <SearchBar options={this.state.programs} /> */}
+                            <br />
+                            <Row className="justify-content-center">
+                                <Col lg="12">
+                                    <Row className="row-grid">
+                                        {/* {console.log()} */}
+                                        {filtered.map((item) => (
+                                            <ProgramCard program={item} key={item.id} />
+                                        ))}
+                                    </Row>
+                                </Col>
 
-    render() {
+                            </Row>
 
-        return (
-            <>
-                <div>
-                    <DemoNavbar />
-                    <main ref="main">
-                        <Hero />
-                        {/* <NewProgramModal create={true} resetState={this.resetState} /> */}
-                        <section className="section section-lg pt-lg-0 mt--200">
-                            <Container>
-                                <Row className="justify-content-center">
-                                    <Col lg="12">
-                                        <Row className="row-grid">
+                        </Container>
+                    </section>
 
-                                            {this.state.programs.map((item) => (
+                    {/* <ListFiltered programs={programs} /> */}
+                </main>
 
-                                                <ProgramCard program={item} key={item.id}/>
-                                                // </ProgramCard>
-                                            ))}
-
-                                        </Row>
-                                    </Col>
-
-                                </Row>
-
-                            </Container>
-                        </section>
-                    </main>
-
-                    <SimpleFooter />
-                </div>
-            </>
-        );
-    }
+                <SimpleFooter />
+            </div>
+        </>
+    );
 }
 
 export default List;

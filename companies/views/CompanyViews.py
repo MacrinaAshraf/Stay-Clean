@@ -6,12 +6,14 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from companies.serializers.CompanySerializers import CompanySerializer, ReviewSerializer
+from rest_framework.parsers import MultiPartParser, FormParser, FileUploadParser
 
 
 class CompanyView(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
+    parser_classes = [MultiPartParser, FormParser]
 
     def get_object(self):
         return get_object_or_404(

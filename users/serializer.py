@@ -38,12 +38,17 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data.get('password'))
         user.save()
         if is_company == True:
+            policy_data = self.context.get('view').request.FILES
             company = Company.objects.filter(user=user.pk).first()
             company.name = self.context['request'].data.get('name')
             company.address = self.context['request'].data.get('address')
             company.description = self.context['request'].data.get('description')
+            company.is_active = False
             company.save()
-            serializer = CompanySerializer(company)
+            # company.policy = policy_data
+            # serializer = CompanySerializer()
+            # if serializer.is_valid(data=**company):
+            #     serializer.update(company)
         else:
             customer = Customer.objects.filter(user=user.pk).first()
             customer.first_name = self.context['request'].data.get('first_name')

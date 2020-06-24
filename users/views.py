@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from companies.models import CompanyUserMessage
 from companies.permissions import IsCustomer, IsCompany
-
+from rest_framework.parsers import MultiPartParser, FormParser, FileUploadParser
 
 def detail_route(methods, url_path):
     pass
@@ -61,6 +61,7 @@ class UserView(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    parser_classes = [MultiPartParser, FormParser]
 
     def get_object(self):
         return get_object_or_404(
