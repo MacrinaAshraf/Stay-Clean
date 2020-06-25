@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import GoogleLogin from 'react-google-login';
 
 // reactstrap components
 import {
