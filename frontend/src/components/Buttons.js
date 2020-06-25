@@ -17,17 +17,37 @@ const ButtonsComponent = (props) => {
     <>
       {
         localStorage.getItem("token") ?
+       <ButtonGroup>
+          < Link 
+          style={{color:'orange'}}
+                className="  mr-4 text-capitalize"
+               
+                
+                >
+               
+                 Welcome {sessionStorage.getItem("name")}
+                  
+            
+            </Link >
+          
           < Button
            style={{backgroundColor:'#4682B4',marginRight:'20px'}}
-            className="btn-neutral btn-icon "
+            className="btn-neutral btn-icon mr-4"
             color="default"
             target="_blank"
             onClick={handleLogout}
           >
             <span className="nav-link-inner--text ml-1" style={{color:'orange'}}>
               Log out
+
                       </span>
-          </Button > :
+
+                                
+          </Button > 
+          
+         
+          </ButtonGroup>
+          :
           <ButtonGroup>
             < Link to={'/company-register'}>
               <Button

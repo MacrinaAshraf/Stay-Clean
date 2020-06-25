@@ -59,9 +59,8 @@ class DropDown extends React.Component {
                                     Hired programs
                       </Link>
                       
-                             
-                                {/* <span  style={{color:'orange',marginLeft:'20px'}}>welcome user</span> */}
-                         
+                            
+                                
                     </Nav>
                     : 
 
