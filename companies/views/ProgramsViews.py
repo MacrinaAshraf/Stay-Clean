@@ -159,6 +159,15 @@ class SelectedProgramView(viewsets.ModelViewSet):
             program.save()
             return Response(status=status.HTTP_200_OK)
 
+    @action(methods=['post'], detail=False, name="user check to pay")
+    def user_check_to_pay(self, request):
+        key = request.data['code']-4444
+        program = SelectedProgram.objects.filter(id=key).first()
+        if program is None:
+            return Response({"found": False}, status=status.HTTP_200_OK)
+        else:
+            return Response({"found": True}, status=status.HTTP_200_OK)
+
     @action(methods=['get'], detail=True, name="all Users Select")
     def all_selected(self, request, pk=None):
         program = get_object_or_404(Program, id=pk)

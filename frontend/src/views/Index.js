@@ -1,6 +1,7 @@
 import React from "react";
 import axios from 'axios';
 import { Link } from "react-router-dom";
+import Pay from "./IndexSections/Pay.js";
 import Hero from "./IndexSections/Hero.js";
 import Blogs from "./IndexSections/Blogs.js";
 import TapsMost from "./IndexSections/Taps-Most";
@@ -105,6 +106,7 @@ class Index extends React.Component {
               </Row>
             </Container>
           </section>
+          <Pay/>
         </main>
         <SimpleFooter />
       </>

@@ -1,7 +1,5 @@
 import axios from "axios";
-import PayKey from "../../assets/payKey.js";
 import React, { useState, useEffect } from "react";
-import StripeCheckout from 'react-stripe-checkout';
 import SimpleFooter from "components/Footers/SimpleFooter.js";
 import StarRatingComponent from "react-star-rating-component";
 
@@ -11,25 +9,8 @@ function TableDetail ({ item }) {
     const [rating, setRating] = useState(item.rate);
     const [program, setProgram] = useState({});
     const [customer, setCustomer] = useState({});
-    const [payKey, setPayKey] = useState(PayKey);
-    const [programID, setProgramID] = useState(0);
 
-    function handlePayOnline(token)
-    {
-        // console.log(token)
-        // console.log(programID)
-
-       
-        axios.post("http://localhost:8000/api/selected/user_pay/", 
-        {
-            select: programID,
-        } ).then(() => {
-            getPrograms();
-            getCompanies();
-        });
-        
-    }
-
+   
     const onStarClick = async (nextValue) => {
 
         setRating(nextValue);
@@ -134,23 +115,11 @@ function TableDetail ({ item }) {
                         <td>{program.name}</td>
                         <td>{program.price}</td>
                         <td>{item.area}</td>
-                        <td
-                            onClick={e => {
-                                // console.log(item.id);
-                                setProgramID(item.id)
-                            }}
-                        >{
+                        <td>{
                             item.pay ?
                             (<>Yes</>)
                             :
-                            (<>
-                                <StripeCheckout
-                                    stripeKey={payKey}
-                                    token={handlePayOnline}
-
-
-                                />
-                            </>)
+                        (<>{item.id+4444}</>)
                             }</td>
 
                     </>)

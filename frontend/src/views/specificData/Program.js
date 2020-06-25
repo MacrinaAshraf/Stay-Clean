@@ -21,7 +21,6 @@ import {
   InputGroup,
   Row,
   UncontrolledCarousel,
-  Fade
 } from "reactstrap";
 
 var items = [
