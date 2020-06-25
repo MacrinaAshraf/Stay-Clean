@@ -9,6 +9,10 @@ const CompanySelectedProgram = (props) => {
 
     const [selectedProgram, setselectedProgram] = useState([]);
 
+    if(! localStorage.getItem("token"))
+    {
+        window.location.href = "/";
+    }
 
     if(sessionStorage.getItem('is_company') === "false") {
         window.location.href = "http://localhost:3000/selected-programs";

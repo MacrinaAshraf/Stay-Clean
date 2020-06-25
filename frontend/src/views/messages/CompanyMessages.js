@@ -27,7 +27,7 @@ class Messages extends React.Component {
   }
 
   all_users = () => {
-    axios.get('http://localhost:8000/user-api/customer/company_customer/',{
+    axios.get('http://localhost:8000/user-api/customer/company_customer/', {
       headers: {
         Authorization:
           "Token " + localStorage.getItem("token"),
@@ -73,14 +73,21 @@ class Messages extends React.Component {
 
 
   componentDidMount() {
-    document.documentElement.scrollTop = 0;
-    document.scrollingElement.scrollTop = 0;
-    this.refs.main.scrollTop = 0;
+    if (localStorage.getItem("token") && localStorage.getItem("is_company") == "true") {
+      document.documentElement.scrollTop = 0;
+      document.scrollingElement.scrollTop = 0;
+      this.refs.main.scrollTop = 0;
 
-    this.all_users();    
-    this.interval = setInterval(() => {
       this.all_users();
-    }, 8000);
+      this.interval = setInterval(() => {
+        this.all_users();
+      }, 8000);
+    }
+    else
+    {
+      window.location.href = "/";
+    }
+
   }
 
 
@@ -132,7 +139,7 @@ class Messages extends React.Component {
                             {this.state.all_users.map((user) => (
                               (
                                 <>
-                                  <option value={user.id}>{user.first_name + " "+ user.last_name+ " " + user.phone}</option>
+                                  <option value={user.id}>{user.first_name + " " + user.last_name + " " + user.phone}</option>
                                 </>
                               )
                             ))}

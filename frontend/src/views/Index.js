@@ -32,8 +32,12 @@ class Index extends React.Component {
         if (res.data.most_review_program) {
           this.setState({ most_review_program: res.data.most_review_program })
         }
+        else {
+          this.setState({ most_review_program: {} })
+        }
       })
-      .catch(error => console.error(error))
+      .catch(error => this.setState({ most_review_program: {} })
+      )
   }
 
   most_selected_program = () => {
@@ -42,21 +46,38 @@ class Index extends React.Component {
         if (res.data.most_selected_program) {
           this.setState({ most_selected_program: res.data.most_selected_program })
         }
+        else {
+          this.setState({ most_selected_program: {} })
+        }
       })
-      .catch(error => console.error(error))
-    }
+      .catch(error => this.setState({ most_selected_program: {} }))
+  }
+
 
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     this.refs.main.scrollTop = 0;
 
-
     this.all_companies();
     this.most_review_program();
     this.most_selected_program();
-    // this.getLoggedUserData();
+
+    this.interval = setInterval(() => {
+      this.all_companies();
+      this.most_review_program();
+      this.most_selected_program();
+
+    }, 12000);
+
   }
+
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+
 
   render() {
 
@@ -106,7 +127,7 @@ class Index extends React.Component {
               </Row>
             </Container>
           </section>
-          <Pay/>
+          <Pay />
         </main>
         <SimpleFooter />
       </>

@@ -9,10 +9,16 @@ import SimpleFooter from "components/Footers/SimpleFooter.js";
 const SelectedProgram = (props) => {
 
     const [selectedProgram, setselectedProgram] = useState([]);
+    
+    if(! localStorage.getItem("token"))
+    {
+        window.location.href = "/";
+    }
 
     if (sessionStorage.getItem('is_company') === "true") {
         window.location.href = "http://localhost:3000/company-selected-programs";
     }
+    
 
 
 
