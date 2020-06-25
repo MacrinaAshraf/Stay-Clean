@@ -28,21 +28,21 @@ ReactDOM.render(
   <BrowserRouter>
     <Switch>
       <Route path="/" exact render={props => <Index {...props} />} />
-      <Route
+      {/* <Route
         path="/landing-page"
         exact
         render={props => <Landing {...props} />}
-      />
+      /> */}
       <Route 
         path="/login" 
         exact 
         render={props => <Login {...props} />} 
       />
-      <Route
+      {/* <Route
         path="/profile-page"
         exact
         render={props => <Profile {...props} />}
-      />
+      /> */}
       <Route
         path="/register"
         exact
@@ -88,24 +88,22 @@ ReactDOM.render(
         exact
         render={props => <SelectedProgram {...props} />}
       />
-
       <Route
         path="/company-selected-programs"
         exact
         render={props => <CompanySelectedProgram {...props} />}
       />
-
       <Route
         path="/error"
         exact
         render={props => <Error {...props} />}
       />
 
-      <Route
+      {/* <Route
         path="/test"
         exact
         render={props => <Test {...props} />}
-      />
+      /> */}
 
       
       <Redirect to="/" />

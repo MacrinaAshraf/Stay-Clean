@@ -1,18 +1,15 @@
 import React from "react";
-// nodejs library that concatenates classes
 import classnames from "classnames";
-
-// reactstrap components
 import {
   Card,
   CardBody,
+  Col,
   NavItem,
   NavLink,
   Nav,
   TabContent,
   TabPane,
   Row,
-  Col
 } from "reactstrap";
 
 class TabsSection extends React.Component {
@@ -20,12 +17,14 @@ class TabsSection extends React.Component {
     iconTabs: 1,
     plainTabs: 1
   };
+
   toggleNavs = (e, state, index) => {
     e.preventDefault();
     this.setState({
       [state]: index
     });
   };
+
   render() {
     return (
       <>
@@ -34,7 +33,6 @@ class TabsSection extends React.Component {
             {/* Tabs with icons */}
             <div className="mb-3">
               <small className="text-uppercase font-weight-bold">
-
               </small>
             </div>
             <div className="nav-wrapper">
@@ -46,7 +44,7 @@ class TabsSection extends React.Component {
               >
                 <NavItem>
                   <NavLink
-                    style={{color:'darkorange' , fontSize:'20px',fontWeight:'bold'}}
+                    style={{ color: 'darkorange', fontSize: '20px', fontWeight: 'bold' }}
                     aria-selected={this.state.iconTabs === 1}
                     className={classnames("mb-sm-3 mb-md-0", {
                       active: this.state.iconTabs === 1
@@ -60,7 +58,7 @@ class TabsSection extends React.Component {
                 </NavItem>
                 <NavItem>
                   <NavLink
-                   style={{color:'darkorange' , fontSize:'20px',fontWeight:'bold'}}
+                    style={{ color: 'darkorange', fontSize: '20px', fontWeight: 'bold' }}
                     aria-selected={this.state.iconTabs === 2}
                     className={classnames("mb-sm-3 mb-md-0", {
                       active: this.state.iconTabs === 2
@@ -88,38 +86,50 @@ class TabsSection extends React.Component {
                         />
                       </Col>
                       <Col className="order-md-2" md="6">
+                        {console.log(this.props.most_review_program)}
+                        {this.props.most_selected_program.id ?
+                          (<>
 
+                            <h3 className="display-3">
+                              {this.props.most_selected_program.name}
+                            </h3>
 
-                        <h3 className="display-3">
-                          {this.props.most_selected_program.name}
-                        </h3>
+                            <br />
+                            <p className="display-4" >
 
-                        <br/>
-                        <p className="display-4" >
-
-                          {this.props.most_selected_program.description}
-                          <br />
-                          <br/>
-                          <b>Duration:</b> {this.props.most_selected_program.duration}
-                          {this.props.most_selected_program.duration > 1 &&
-                            this.props.most_selected_program.duration < 11 ? (
-                              <> Hours</>
-                            ) : (
-                              <> Hour</>
-                            )}
-                          <br />
-                          <br/>
-                         <b>Cost:</b> {this.props.most_selected_program.price}/5m<sup>2</sup > $ 
-
+                              {this.props.most_selected_program.description}
+                              <br />
+                              <br />
+                              <b>Duration:</b> {this.props.most_selected_program.duration}
+                              {this.props.most_selected_program.duration > 1 &&
+                                this.props.most_selected_program.duration < 11 ? (
+                                  <> Hours</>
+                                ) : (
+                                  <> Hour</>
+                                )}
+                              <br />
+                              <br />
+                              <b>Cost:</b> {this.props.most_selected_program.price}/5m<sup>2</sup > $
 
                         </p>
+
+                          </>)
+                          :
+                          (<>
+                            <img
+                              alt="..."
+                              className="img-fluid floating"
+                              src={require("assets/img/soon.png")}
+                            />
+                          </>)
+                        }
 
                       </Col>
 
                     </Row>
                   </TabPane>
                   <TabPane tabId="iconTabs2">
-                  <Row className="row-grid align-items-center">
+                    <Row className="row-grid align-items-center">
                       <Col className="order-md-2" md="6">
                         <img
                           alt="..."
@@ -129,35 +139,44 @@ class TabsSection extends React.Component {
                       </Col>
                       <Col className="order-md-2" md="6">
 
+                        {this.props.most_review_program.id ?
+                          (<>
+                            <h3 className="display-3">
+                              {this.props.most_review_program.name}
+                            </h3>
+                            <br />
+                            <p className="display-4">
 
-                        <h3 className="display-3">
-                          {this.props.most_review_program.name}
-                        </h3>
-
-                        <br />
-                        <p  className="display-4">
-
-                          {this.props.most_review_program.description}
-                          <br />
-                          <br />
-                          <b>Duration: </b>  : {this.props.most_review_program.duration}
-                          {this.props.most_review_program.duration > 1 &&
-                            this.props.most_review_program.duration < 11 ? (
-                              <> Hours</>
-                            ) : (
-                              <> Hour</>
-                            )}
-                          <br />
-                          <br />
-                          <b>Cost: </b> {this.props.most_selected_program.price}/5m<sup>2</sup > $
+                              {this.props.most_review_program.description}
+                              <br />
+                              <br />
+                              <b>Duration: </b>{this.props.most_review_program.duration}
+                              {this.props.most_review_program.duration > 1 &&
+                                this.props.most_review_program.duration < 11 ? (
+                                  <> Hours</>
+                                ) : (
+                                  <> Hour</>
+                                )}
+                              <br />
+                              <br />
+                              <b>Cost: </b> {this.props.most_selected_program.price}/5m<sup>2</sup > $
 
 
                         </p>
-
+                          </>)
+                          :
+                          (<>
+                            <img
+                              alt="..."
+                              className="img-fluid floating"
+                              src={require("assets/img/soon.png")}
+                            />
+                          </>)
+                        }
                       </Col>
 
                     </Row>
-                
+
                   </TabPane>
 
                 </TabContent>

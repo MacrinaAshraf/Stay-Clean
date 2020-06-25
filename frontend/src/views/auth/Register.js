@@ -1,6 +1,7 @@
 import React from "react";
 import axios from 'axios';
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
+import SimpleFooter from "components/Footers/SimpleFooter.js";
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
 
@@ -561,6 +562,7 @@ class Register extends React.Component {
               </Row>
             </Container>
           </section>
+          <SimpleFooter/>
         </main>
       </>
     )

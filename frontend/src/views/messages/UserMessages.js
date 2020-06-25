@@ -23,7 +23,8 @@ class Messages extends React.Component {
   state = {
     all_companies: [],
     selectedCompany: -1,
-    myMess: ""
+    myMess: "",
+    enableMessage:true,
   }
 
   all_companies = () => {
@@ -32,7 +33,7 @@ class Messages extends React.Component {
         if (res.data) {
           this.setState({ all_companies: res.data })
           if (res.data.length != 0) {
-            this.setState({ selectedCompany: res.data[0].id })
+            this.setState({ selectedCompany: res.data[0].id,enableMessage:true })
           }
         }
       })
@@ -67,14 +68,22 @@ class Messages extends React.Component {
 
 
   componentDidMount() {
-    document.documentElement.scrollTop = 0;
-    document.scrollingElement.scrollTop = 0;
-    this.refs.main.scrollTop = 0;
-
-    this.all_companies();    
-    this.interval = setInterval(() => {
-      this.all_companies();
-    }, 8000);
+    if(localStorage.getItem("token") && localStorage.getItem("is_company") == "false")
+    {
+      document.documentElement.scrollTop = 0;
+      document.scrollingElement.scrollTop = 0;
+      this.refs.main.scrollTop = 0;
+  
+      this.all_companies();    
+      this.interval = setInterval(() => {
+        this.all_companies();
+      }, 8000);
+    }
+    else
+    {
+      window.location.href = "/";
+    }
+    
   }
 
 
@@ -157,6 +166,7 @@ class Messages extends React.Component {
                             className="btn-round"
                             color="default"
                             size="lg"
+                            disabled={this.state.enableMessage}
                           >
                             Send Message
                         </Button>

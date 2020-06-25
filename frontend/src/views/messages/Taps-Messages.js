@@ -164,7 +164,7 @@ render() {
             <CardBody>
               <TabContent activeTab={"iconTabs" + this.state.iconTabs}>
                 <TabPane tabId="iconTabs1">
-                  <Row className="row-grid align-items-center" style={{ maxHeight: "300px", overflow: "scroll" }}>
+                  <Row className="row-grid align-items-center" style={{ maxHeight: "300px", overflowY: "scroll" }}>
                     <Col className="order-md-0" md="0">
 
 
@@ -221,7 +221,7 @@ render() {
                   </Row>
                 </TabPane>
                 <TabPane tabId="iconTabs2">
-                  <Row className="row-grid align-items-center" style={{ maxHeight: "300px", overflow: "scroll" }}>
+                  <Row className="row-grid align-items-center" style={{ maxHeight: "300px", overflowY: "scroll" }}>
                     <Col className="order-md-0" md="0">
 
 
