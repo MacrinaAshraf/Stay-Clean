@@ -30,8 +30,8 @@ class ConfirmRemovalModal extends Component {
     return (
       <Fragment>
         
-        <Button  onClick={() => this.toggle()} className="mt-4"
-                          color="info"
+        <Button  onClick={() => this.toggle()} className="mt-4" size='lg'
+                          color="logocolor"
                            outline type="button"
                         
                     >
@@ -48,7 +48,7 @@ class ConfirmRemovalModal extends Component {
             </Button>
             <Button
               type="button"
-              color="primary"
+              color="warning"
               onClick={() => this.deleteProgram(this.props.id)}
               
             >

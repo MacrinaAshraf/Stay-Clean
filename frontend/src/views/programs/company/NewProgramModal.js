@@ -19,21 +19,24 @@ class NewProgramModal extends Component {
         var title = "Editing program";
         var button = 
         <Button 
-            color="info"
+            color="logocolor"
+            size='lg'
             className="mt-4"
             outline type="button" 
             onClick={this.toggle}>
                 Edit
         </Button>;
         if (create) {
+
             title = "Creating New program";
 
             button = (
                 <Button
-                    color="primary"
+                   
+                    
                     className="float-right"
                     onClick={this.toggle}
-                    style={{ minWidth: "200px" }}
+                    style={{ minWidth: "200px",marginTop:'-10%',marginRight:'85%', backgroundColor:'#4682B4',color:'orange' }}
                 >
                     Create New program
                 </Button>

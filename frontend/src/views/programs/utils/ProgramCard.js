@@ -11,38 +11,40 @@ const ProgramCard = (props) => {
       {/* <Link to={'/programs/' + props.program.id}> */}
       <Card className="card-lift--hover shadow border-0">
         <CardBody className="py-5">
-          <div className="icon icon-shape icon-shape-info rounded-circle mb-4">
+          <div className="icon icon-shape icon-shape-logocolor rounded-circle mb-4">
             <i className="ni ni-istanbul" />
           </div>
 
-          <h6 className="text-info text-uppercase">{props.program.name}</h6>
-
-          <p className="description mt-3">{props.program.description}</p>
+          <h4 className="text-logocolor text-uppercase" ><b>{props.program.name}</b>
           <div>
-            <Badge color="info" pill className="mr-1  ">
+          <StarRatingComponent
+
+            name="avgRate"
+            starCount={5}
+            value={parseInt(props.program.avgRate)}
+            editing={false}
+          /></div></h4>
+         
+
+          <h5 className=" text-logocolor  " >{props.program.description}</h5>
+          <div>
+
+            <h3 ><Badge color="logocolor" className="ml-4">
               {props.program.price} $
             </Badge>
-            <Badge color="info" pill className="mr-1">
-              {props.program.duration} days
-            </Badge>
+              <Badge color="logocolor" className="ml-4" >
+                {props.program.duration} days
+            </Badge></h3>
+
+
+
           </div>
 
           {props.children}
           <div style={{ marginTop: 10 }}>
-            <StarRatingComponent
-              name="avgRate"
-              starCount={5}
-              value={parseInt(props.program.avgRate)}
-              editing={false}
-            />
+
           </div>
-          <Link 
-            color="info"
-            className="mt-4 btn-outline-info btn"
-            to={'/programs/' + props.program.id}
-          >
-            view
-          </Link>
+
         </CardBody>
       </Card>
       {/* </Link> */}

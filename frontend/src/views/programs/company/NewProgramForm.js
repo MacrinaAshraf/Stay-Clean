@@ -19,8 +19,8 @@ class NewProgramForm extends React.Component {
   componentDidMount() {
     if (this.props.item) {
       console.log("hello" + this.props.item);
-      const { id, name, description, duration, price } = this.props.item;
-      this.setState({ id, name, description, duration, price });
+      const { id, name, description, duration, price ,images } = this.props.item;
+      this.setState({ id, name, description, duration, price ,images});
     }
   }
 
@@ -100,6 +100,7 @@ class NewProgramForm extends React.Component {
           <Input
             type="text"
             name="name"
+            placeholder="Enter the name of the program"
             onChange={this.onChange}
             value={this.defaultIfEmpty(this.state.name)}
           />
@@ -108,6 +109,7 @@ class NewProgramForm extends React.Component {
           <Label for="description">Description:</Label>
           <Input
             type="text"
+            placeholder="Enter the Descirption of the program"
             name="description"
             onChange={this.onChange}
             value={this.defaultIfEmpty(this.state.description)}
@@ -118,6 +120,9 @@ class NewProgramForm extends React.Component {
           <Input
             type="number"
             name="duration"
+            step="any"
+            min = '0'
+            placeholder="Enter the duration of the program"
             onChange={this.onChange}
             value={this.defaultIfEmpty(this.state.duration)}
           />
@@ -126,12 +131,15 @@ class NewProgramForm extends React.Component {
           <Label for="price">price:</Label>
           <Input
             type="number"
-            name="price"
+            step="any"
+            min = '0'
+            name='price'
+            placeholder="Enter price of the program per 5m^2"
             onChange={this.onChange}
             value={this.defaultIfEmpty(this.state.price)}
           />
         </FormGroup>
-        <Button>Send</Button>
+        <Button color='logocolor'>Send</Button>
       </Form>
     );
   }

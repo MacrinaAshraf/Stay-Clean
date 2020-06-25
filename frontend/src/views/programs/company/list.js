@@ -27,7 +27,7 @@ class ListCompanyPrograms extends React.Component {
         // document.documentElement.scrollTop = 0;
         // document.scrollingElement.scrollTop = 0;
         // this.refs.main.scrollTop = 0;
-        if(sessionStorage.getItem('is_company') === "false") {
+        if (sessionStorage.getItem('is_company') === "false") {
             window.location.href = "http://localhost:3000/programs";
         }
 
@@ -57,11 +57,15 @@ class ListCompanyPrograms extends React.Component {
             <>
                 <div>
                     <DemoNavbar />
+
                     <main ref="main">
+
                         <Hero />
-                        <NewProgramModal create={true} resetState={this.resetState} />
+
                         <section className="section section-lg pt-lg-0 mt--200">
+                            <NewProgramModal create={true} resetState={this.resetState} />
                             <Container>
+
                                 <Row className="justify-content-center">
                                     <Col lg="12">
                                         <Row className="row-grid">
@@ -80,9 +84,21 @@ class ListCompanyPrograms extends React.Component {
                                                         id={item.id}
                                                         resetState={this.resetState}
                                                     />
-                                                   
+                                                    <Button 
+                                                         color="logocolor"
+                                                         size='lg'
+                                                         className="mt-4"
+                                                         outline type="button" 
+                                                        href={'/programs/' + item.id}
+                                                        >
+                                                    
+
+                                                  
+                                                        view
+                                                 
+                                                   </Button>
                                                     <div>
-                                                     
+
 
                                                     </div>
 
