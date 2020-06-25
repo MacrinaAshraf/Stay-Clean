@@ -52,17 +52,12 @@ class Pay extends React.Component {
 
   }
   handlePayOnline = (token) => {
-    // console.log(token)
-    // console.log(programID)
-
-
     axios.post("http://localhost:8000/api/selected/user_pay/",
       {
-        // select: programID,
+        select: this.state.orderID,
       }).then(() => {
 
       });
-
   }
 
 
