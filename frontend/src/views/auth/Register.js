@@ -2,6 +2,9 @@ import React from "react";
 import axios from 'axios';
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import GoogleLogin from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
+
+
 import "assets/css/googlebutton.css";
 
 import {
@@ -276,19 +279,54 @@ class Register extends React.Component {
     const { target: { value } } = e;
     this.setState({ conPassword: value });
   }
+
+
+
+
+  responseFacebook = (response) => {
+    console.log(response);
+
+    const token = response.id;
+    localStorage.setItem("token", token);
+    console.log("token" + token)
+
+    axios.post('http://localhost:8000/user-api/user/', {
+      first_name: response.name,
+      last_name: ' ',
+      email: response.email,
+      password: '12345',
+      discount: 0,
+      token: token,
+    })
+      .then(function (response) {
+        if (response.status == 400) {
+          console.log(response.error)
+        } else {
+          console.log("good");
+          window.location = "http://localhost:3000/test";
+        }
+      })
+      .catch(function (error) {
+        console.log(error)
+      });
+
+
+
+  }
+
   responseGoogle = (res) => {
 
 
-    console.log("token" + res.accessToken);
-    console.log(res.profileObj);
-    console.log("hello" + res.profileObj.Id);
+    // console.log("token" + res.accessToken);
+    // console.log(res.profileObj);
+    // console.log("hello" + res.profileObj.Id);
 
     const token = res.profileObj.googleId;
     localStorage.setItem("token", token);
     console.log(token);
     // window.location.href = "http://localhost:3000/";
 
-  
+
 
     console.log(res.profileObj.givenName);
 
@@ -316,7 +354,7 @@ class Register extends React.Component {
 
   }
   render() {
-    const inStyle = { width:'300px'};
+    const inStyle = { width: '300px' };
 
     return (
       <>
@@ -486,22 +524,32 @@ class Register extends React.Component {
                           </Button>
 
                           <br></br>
-                          <br></br>
-                        
-                          <GoogleLogin 
                           
-                          clientId="777963071043-r303g49u2e8ksnjmg2764c4760na901a.apps.googleusercontent.com"
-                          buttonText="USE GOOGLE"
-                          onSuccess={this.responseGoogle}
-                          onFailure={this.responseGoogle}
-                          cookiePolicy={'single_host_origin'}
-                        
-                          
-                       
-                         
-                        />
 
-                         
+                          <GoogleLogin
+
+                            clientId="777963071043-r303g49u2e8ksnjmg2764c4760na901a.apps.googleusercontent.com"
+                            buttonText=" GOOGLE"
+                            onSuccess={this.responseGoogle}
+                            onFailure={this.responseGoogle}
+                            cookiePolicy={'single_host_origin'}
+
+
+
+
+                          />
+                      
+                          <FacebookLogin
+                          cssClass="my-facebook-button-class ml-2  p-2 mt-4 btn-primary"
+                            icon="fa-facebook"
+                            appId="1217932635211907"
+                            fields="name,email,picture"
+                            textButton='  FACEBOOK'
+                            
+                            callback={this.responseFacebook}
+                          />
+
+
                         </div>
 
                       </Form>
