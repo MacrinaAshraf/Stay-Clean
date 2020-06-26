@@ -9,6 +9,7 @@ import "assets/scss/argon-design-system-react.scss?v1.1.0";
 import Index from "views/Index.js";
 import Login from "views/auth/Login.js";
 import Register from "views/auth/Register.js";
+import Test from "views/auth/test.js";
 
 import CompanyRegister from "views/auth/CompanyRegister.js";
 import ListCompanyPrograms from "views/programs/company/list";
