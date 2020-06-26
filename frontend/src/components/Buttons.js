@@ -18,7 +18,7 @@ const ButtonsComponent = (props) => {
       {
         localStorage.getItem("token") ?
        <ButtonGroup>
-          < Link 
+          {/* < Link 
           style={{color:'orange'}}
                 className="  mr-4 text-capitalize"
                
@@ -28,7 +28,7 @@ const ButtonsComponent = (props) => {
                  Welcome {sessionStorage.getItem("name")}
                   
             
-            </Link >
+            </Link > */}
           
           < Button
            style={{backgroundColor:'#4682B4',marginRight:'20px'}}

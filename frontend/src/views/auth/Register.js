@@ -1,9 +1,8 @@
 import React from "react";
 import axios from 'axios';
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
-import SimpleFooter from "components/Footers/SimpleFooter.js";
 import GoogleLogin from 'react-google-login';
-import FacebookLogin from 'react-facebook-login';
+// import FacebookLogin from 'react-facebook-login';
 
 
 import "assets/css/googlebutton.css";
@@ -53,14 +52,6 @@ class Register extends React.Component {
 
     }
   }
-
-
-
-
-
-
-
-
 
 
   handleRegisterSubmit = (e) => {
@@ -283,73 +274,79 @@ class Register extends React.Component {
 
 
 
+  // responseFacebook = (response) => {
+  //   console.log(response);
+  //   const token = response.id;
+  //   localStorage.setItem("token", token);
+  //   // console.log(token)
+  //   // axios.post('http://localhost:8000/user-api/user/user_email/', {
+  //   //   email: response.email
+  //   // })
+  //   //   .then(function (response) {
+  //   //     if (response.data.found == "true") {
+  //   //       window.location.href="http://localhost:3000/"
 
-  responseFacebook = (response) => {
-    console.log(response);
-
-    const token = response.id;
-    localStorage.setItem("token", token);
-    console.log("token" + token)
-
-    axios.post('http://localhost:8000/user-api/user/', {
-      first_name: response.name,
-      last_name: ' ',
-      email: response.email,
-      password: '12345',
-      discount: 0,
-      token: token,
-    })
-      .then(function (response) {
-        if (response.status == 400) {
-          console.log(response.error)
-        } else {
-          console.log("good");
-          window.location = "http://localhost:3000/test";
-        }
-      })
-      .catch(function (error) {
-        console.log(error)
-      });
+  //   //     } else {
+  //     axios.post('http://localhost:8000/user-api/user/', {
+  //       first_name: response.name,
+  //       last_name: '',
+  //       email: response.email,
+  //       password: '12345',
+  //       discount: 0,
+  //       token: token,
+  //     })
+  //       .then(function (response) {
+  //         if (response.status == 400) {
+  //           console.log(response.error)
+  //         } else {
+  //           console.log("good");
+  //           window.location = "http://localhost:3000/test";
+  //         }
+  //       })
+  //       .catch(function (error) {
+  //         console.log(error)
+  //       });
+  //   }
 
 
-
-  }
+  // })
+  // }
 
   responseGoogle = (res) => {
 
-
-    // console.log("token" + res.accessToken);
-    // console.log(res.profileObj);
-    // console.log("hello" + res.profileObj.Id);
-
     const token = res.profileObj.googleId;
     localStorage.setItem("token", token);
-    console.log(token);
-    // window.location.href = "http://localhost:3000/";
-
-
-
-    console.log(res.profileObj.givenName);
-
-    axios.post('http://localhost:8000/user-api/user/', {
-      first_name: res.profileObj.givenName,
-      last_name: res.profileObj.familyName,
-      email: res.profileObj.email,
-      password: '12345',
-      discount: 0,
-      token: token,
+    axios.post('http://localhost:8000/user-api/user/user_email/', {
+      email:res.profileObj.email
     })
       .then(function (response) {
-        if (response.status == 400) {
-          console.log(response.error)
+        if (response.data.found == "true") {
+          window.location = "http://localhost:3000/";
+
         } else {
-          console.log("good");
-          window.location = "http://localhost:3000/test";
+          axios.post('http://localhost:8000/user-api/user/', {
+            first_name: res.profileObj.givenName,
+            last_name: res.profileObj.familyName,
+            email: res.profileObj.email,
+            password: '12345',
+            discount: 0,
+            token: token,
+          })
+            .then(function (response) {
+              if (response.status == 400) {
+                console.log(response.error)
+              } else {
+                console.log("good");
+                window.location = "http://localhost:3000/test";
+              }
+            })
+            .catch(function (error) {
+              console.log(error)
+            });
         }
       })
-      .catch(function (error) {
-        console.log(error)
-      });
+
+
 
 
 
@@ -525,12 +522,12 @@ class Register extends React.Component {
                           </Button>
 
                           <br></br>
-                          
+                          <br></br>
 
                           <GoogleLogin
 
                             clientId="777963071043-r303g49u2e8ksnjmg2764c4760na901a.apps.googleusercontent.com"
-                            buttonText=" GOOGLE"
+                            buttonText="USE GOOGLE"
                             onSuccess={this.responseGoogle}
                             onFailure={this.responseGoogle}
                             cookiePolicy={'single_host_origin'}
@@ -539,16 +536,15 @@ class Register extends React.Component {
 
 
                           />
-                      
-                          <FacebookLogin
-                          cssClass="my-facebook-button-class ml-2  p-2 mt-4 btn-primary"
-                            icon="fa-facebook"
+
+                          {/* <FacebookLogin
                             appId="1217932635211907"
-                            fields="name,email,picture"
-                            textButton='  FACEBOOK'
-                            
+                            autoload={false}
+                            fields="name,email"
+
                             callback={this.responseFacebook}
-                          />
+
+                          /> */}
 
 
                         </div>
@@ -562,7 +558,6 @@ class Register extends React.Component {
               </Row>
             </Container>
           </section>
-          <SimpleFooter/>
         </main>
       </>
     )

@@ -43,43 +43,42 @@ class DropDown extends React.Component {
     render() {
         return (
             <>
-            {
-                sessionStorage.getItem('is_company') === "true"?
-                    <Nav className="navbar-nav-hover align-items-lg-center" navbar>
-                       
-                           
-                           
-                                <Link to="/company-messages" tag={Link} style={{color:'orange',paddingRight:'20px'}}>
-                                    Messages
-                      </Link>
-                                <Link to="/company-programs" tag={Link} style={{color:'orange',paddingRight:'20px'}}>
-                                    Programs
-                      </Link>
-                                <Link to="/company-selected-programs" tag={Link} style={{color:'orange',paddingRight:'20px'}}>
-                                    Hired programs
-                      </Link>
-                      
-                            
-                                
-                    </Nav>
-                    : 
+                {
+                    sessionStorage.getItem('is_company') === "true" ?
+                        <Link className="navbar-nav-hover align-items-lg-center" navbar>
 
-<Nav className="navbar-nav-hover align-items-lg-center" navbar>
-                       
-                           
-                           
-<Link to="/user-messages" tag={Link} style={{color:'orange',paddingRight:'20px'}}>
-    Messages
-</Link>
-<Link to="/programs" tag={Link} style={{color:'orange',paddingRight:'20px'}}>
-    Programs
-</Link>
-<Link to="/selected-programs" tag={Link} style={{color:'orange',paddingRight:'20px'}}>
-    Hired programs
-</Link>
-</Nav>
 
-            }
+
+                           
+                            <Link to="/company-programs" tag={Link} style={{ color: 'orange', paddingRight: '20px' }}>
+                                Programs
+                      </Link>
+                            <Link to="/company-selected-programs" tag={Link} style={{ color: 'orange', paddingRight: '20px' }}>
+                                Hired programs
+                      </Link>
+                      <Link to="/company-messages" tag={Link} style={{ color: 'orange', paddingRight: '20px' }}>
+                                Messages
+                      </Link>
+
+                        </Link>
+                        :
+
+                        <Nav className="navbar-nav-hover align-items-lg-center" navbar>
+
+
+
+                            <Link to="/user-messages" tag={Link} style={{ color: 'orange', paddingRight: '20px' }}>
+                                Messages
+</Link>
+                            <Link to="/programs" tag={Link} style={{ color: 'orange', paddingRight: '20px' }}>
+                                Programs
+</Link>
+                            <Link to="/selected-programs" tag={Link} style={{ color: 'orange', paddingRight: '20px' }}>
+                                Hired programs
+</Link>
+                        </Nav>
+
+                }
             </>
         );
     }

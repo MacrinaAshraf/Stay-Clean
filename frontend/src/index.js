@@ -99,11 +99,11 @@ ReactDOM.render(
         render={props => <Error {...props} />}
       />
 
-      {/* <Route
+       <Route
         path="/test"
         exact
         render={props => <Test {...props} />}
-      /> */}
+      /> 
 
       
       <Redirect to="/" />

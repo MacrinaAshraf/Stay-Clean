@@ -29,8 +29,7 @@ const Test = (props) => {
   //   const [lName, setLName] = useState('');
   //   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('')
-  const [password, setPassword] = useState('');
-  const [conPassword, setConPassword] = useState('');
+ 
   const [error, setError] = useState(false);
 
   //   const responseGoogle=(res)=>{
@@ -64,16 +63,16 @@ const Test = (props) => {
   //   }
   const handleRegisterSubmit = (e) => {
     e.preventDefault();
-    if(conPassword===password)
+    // if(conPassword===password)
     {
 
-        console.log(password, phone);
+        console.log( phone);
         axios({
             method: 'post',
             url: 'http://localhost:8000/user-api/update_data/' ,
             data: {
               "phone": phone,
-              "password": password
+              // "password": password
             }
           })
         .then(response => {
@@ -106,14 +105,14 @@ const Test = (props) => {
     const { target: { value } } = e;
     setPhone(value);
   }
-    const handlePasswordChange = (e) => {
-      const { target: { value } } = e;
-      setPassword(value);
-    }
-    const handleConPasswordChange = (e) => {
-      const { target: { value } } = e;
-      setConPassword(value);
-    }
+    // const handlePasswordChange = (e) => {
+    //   const { target: { value } } = e;
+    //   setPassword(value);
+    // }
+    // const handleConPasswordChange = (e) => {
+    //   const { target: { value } } = e;
+    //   setConPassword(value);
+    // }
   return (
     <>
       <DemoNavbar />
@@ -158,7 +157,7 @@ const Test = (props) => {
                           />
                         </InputGroup>
                       </FormGroup>
-                      <FormGroup>
+                      {/* <FormGroup>
                         <InputGroup className="input-group-alternative mb-3">
                         
                           <Input
@@ -179,7 +178,7 @@ const Test = (props) => {
                             onChange={handleConPasswordChange}
                           />
                         </InputGroup>
-                      </FormGroup>
+                      </FormGroup> */}
 
                       <div className="text-center">
                         <Button

@@ -16,15 +16,15 @@ const ProgramCard = (props) => {
           </div>
 
           <h4 className="text-logocolor text-uppercase" ><b>{props.program.name}</b>
-          <div>
-          <StarRatingComponent
+          
+          </h4>
+         <StarRatingComponent
 
             name="avgRate"
             starCount={5}
             value={parseInt(props.program.avgRate)}
             editing={false}
-          /></div></h4>
-         
+          />
 
           <h5 className=" text-logocolor  " >{props.program.description}</h5>
           <div>
