@@ -1,11 +1,9 @@
 import React from "react";
 import axios from 'axios';
-import DemoNavbar from "components/Navbars/DemoNavbar.js";
-import GoogleLogin from 'react-google-login';
-// import FacebookLogin from 'react-facebook-login';
-
-
 import "assets/css/googlebutton.css";
+import GoogleLogin from 'react-google-login';
+import DemoNavbar from "components/Navbars/DemoNavbar.js";
+import SimpleFooter from "components/Footers/SimpleFooter.js";
 
 import {
   Button,
@@ -48,8 +46,6 @@ class Register extends React.Component {
       errCounter: 0,
       discount: "0",
 
-
-
     }
   }
 
@@ -57,7 +53,7 @@ class Register extends React.Component {
   handleRegisterSubmit = (e) => {
     e.preventDefault();
     var self = this;
-    console.log(self.state.discount)
+    // console.log(self.state.discount)
 
     var promise = new Promise((resolve, reject) => {
 
@@ -92,25 +88,11 @@ class Register extends React.Component {
                 self.setState({ friendEmailError: "not valid email / let it empty if not exist" })
               }
             });
-
-
-
-
-
-
         }
-
         else {
           this.setState({ friendEmailError: "" })
         }
-
-
-
       })
-
-
-
-
       setTimeout(() => resolve("done"), 1000);
     });
 
@@ -391,6 +373,7 @@ class Register extends React.Component {
                             <Input
                               placeholder="First Name"
                               type="text"
+                              maxLength="30"
                               value={this.state.fName}
                               onChange={this.handleFNameChange}
                             />
@@ -409,6 +392,7 @@ class Register extends React.Component {
                             <Input
                               placeholder="Last Name"
                               type="text"
+                              maxLength="30"
                               value={this.state.lName}
                               onChange={this.handleLNameChange}
                             />
@@ -427,6 +411,7 @@ class Register extends React.Component {
                             <Input
                               placeholder="Email"
                               type="email"
+                              maxLength="20"
                               value={this.state.email}
                               onChange={this.handleEmailChange}
                             />
@@ -445,6 +430,7 @@ class Register extends React.Component {
                             <Input
                               placeholder="Phone Number"
                               type="text"
+                              maxLength="11"
                               value={this.state.phone}
                               onChange={this.handlePhoneChange}
                             />
@@ -501,6 +487,7 @@ class Register extends React.Component {
                             <Input
                               placeholder="Friend Email To Get 50% discount"
                               type="email"
+                              maxLength="20"
                               value={this.state.friendEmail}
                               onChange={this.handleFriendEmailChange}
                             />

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import {
   Button,
   Card,
@@ -102,7 +103,7 @@ const Login = (props) => {
         }).catch(error => console.error(error));
       }
     }, (error) => {
-      console.log(error);
+      setError("this mail doesn't match this password, recheck your data")
     });
 
     setEmailInput('');

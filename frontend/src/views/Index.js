@@ -106,24 +106,46 @@ class Index extends React.Component {
                 </Col>
               </Row>
               <Row>
-                {this.state.all_companies.map(comp => (
-                  <Col className="mb-5 mb-lg-0" lg="3" md="6" key={comp.id}>
-                    <div className="px-4">
-                      <img
-                        alt="..."
-                        className="rounded-circle img-center img-fluid shadow shadow-lg--hover"
-                        src={comp.logo}
-                        style={{ width: "200px", height: "100px", objectFit: "fill" }}
-                      />
-                      <div className="pt-4 text-center">
-                        <h5 className="title">
-                          <Link to={'/company/' + comp.id}><span className="d-block mb-1">{comp.name}</span></Link>
+                {this.state.all_companies.length > 0 ?
+                  (<>
+                    {this.state.all_companies.map(comp => (
+                      <Col className="mb-5 mb-lg-0" lg="3" md="6" key={comp.id}>
+                        <div className="px-4">
+                          <img
+                            alt="..."
+                            className="rounded-circle img-center img-fluid shadow shadow-lg--hover"
+                            src={comp.logo}
+                            style={{ width: "200px", height: "100px", objectFit: "fill" }}
+                          />
+                          <div className="pt-4 text-center">
+                            <h5 className="title">
+                              <Link to={'/company/' + comp.id}><span className="d-block mb-1">{comp.name}</span></Link>
 
-                        </h5>
-                      </div>
-                    </div>
-                  </Col>
-                ))}
+                            </h5>
+                          </div>
+                        </div>
+                      </Col>
+                    ))}
+                  </>)
+                  :
+                  (<>
+                    <img
+                      alt="..."
+                      className="img-fluid floating"
+                      src={require("assets/img/soon2.jpg")}
+                      style={{
+                        width:"50%",
+                        marginLeft:"250px",
+                        marginTop:"-100px"
+                        
+                      }}
+                    />
+                  </>)
+
+                }
+
+
+
               </Row>
             </Container>
           </section>

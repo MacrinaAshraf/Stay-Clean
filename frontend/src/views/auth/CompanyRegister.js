@@ -1,6 +1,7 @@
+import axios from 'axios';
 import React, { useState, useEffect } from "react";
-
-// reactstrap components
+import DemoNavbar from "components/Navbars/DemoNavbar.js";
+import SimpleFooter from "components/Footers/SimpleFooter.js";
 import {
   Button,
   Card,
@@ -18,62 +19,157 @@ import {
   Col
 } from "reactstrap";
 
-import axios from 'axios';
-
-// core components
-import DemoNavbar from "components/Navbars/DemoNavbar.js";
-import SimpleFooter from "components/Footers/SimpleFooter.js";
 
 const CompanyRegister = (props) => {
 
   const [name, setName] = useState('');
+  const [nameErr, setNameErr] = useState('');
   const [description, setDescription] = useState('');
+  const [descriptionErr, setDescriptionErr] = useState('');
   const [email, setEmail] = useState('');
+  const [emailErr, setEmailErr] = useState('');
   const [address, setAddress] = useState('')
+  const [addressErr, setAddressErr] = useState('')
   const [password, setPassword] = useState('');
+  const [passwordErr, setPasswordErr] = useState('');
   const [conPassword, setConPassword] = useState('');
+  const [conPasswordErr, setConPasswordErr] = useState('');
   const [file, setFile] = useState('');
+  const [fileErr, setFileErr] = useState('');
   const [error, setError] = useState(false);
+  const [errorCounter, setErrorCounter] = useState(0);
 
 
   const handleRegisterSubmit = (e) => {
     e.preventDefault();
-    if (conPassword === password) {
+
+    var promise = new Promise((resolve, reject) => {
+      setError(0);
+      setTimeout(() => resolve("done"), 1000);
+    });
+    promise.then((r) => {
+      if (name.length < 2) {
+        setError(1)
+        setNameErr("company name should containe more than 2 characters")
+      }
+      else {
+        setNameErr("")
+      }
+
+      if (description.length < 15) {
+        setError(1)
+        setDescriptionErr("company name should containe more than 15 characters")
+      }
+      else {
+        setDescriptionErr("")
+      }
+
+      if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+        setError(1)
+        setEmailErr("Inavalid Email")
+      }
+      else {
+        
+        axios.post('http://localhost:8000/user-api/user/user_email/', {
+            email: email
+          })
+            .then(function (response) {
+              if (response.data.found == "true") {
+                return (true)
+
+              } else {
+                return (false)
+              }
+            })
+            .then(function (value) {
+              // console.log(value)
+
+              if (value != true) {
+                setEmailErr("")
+              }
+              else {
+                setErrorCounter(1)
+                setEmailErr("exist / select another one")
+              }
+            });
+      }
+
+      if (address.length < 15) {
+        setError(1)
+        setAddressErr("company name should containe more than 15 characters")
+      }
+      else {
+        setAddressErr("")
+      }
+
+
+      if (! /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+-]).{10}$/.test(password)) {
+        setError(1)
+        setPasswordErr("password should contain 10 character (lowercase, upercase and special character)")
+      }
+      else {
+        setPasswordErr("")
+      }
+     
+      if (password != conPassword) {
+        setError(1)
+        setConPasswordErr("not same as password")
+      }
+      else {
+        setConPasswordErr("")
+      }
+
+      if (file) {
+        setFileErr("")
+      }
+      else {
+        setError(1)
+        setFileErr("PDF File is Mandatory")
+      }
+
+    }).then(()=>{
 
       let form_data = new FormData();
-      
-      form_data.append('policy', file, file.name); 
+
+      form_data.append('policy', file, file.name);
 
       axios.post('http://localhost:8000/user-api/user/', {
         name,
         email,
-        description, 
+        description,
         address,
         password,
         is_company: true,
         is_active: false
       },
-        ).then(response => {
-          if (response.status.code === 400) {
-            setError(true);
-          }
-          else {
-            // const { token } = response.data;
-            // localStorage.setItem("token", token);
-            axios.post('http://127.0.0.1:8000/user-api/company/add_policy/', form_data).then(res => {
-              if (res.data) {
-                console.log(res.data);
-                // sessionStorage.setItem('is_company', res.data['is_company'])
-                // sessionStorage.setItem('email', res.data['email'])
-                window.location.href = "http://localhost:3000/error";
+      ).then(response => {
+        if(errorCounter != 1)
+        {
+        if (response.status.code === 400) {
+          setError(true);
+        }
+        else {
+          // const { token } = response.data;
+          // localStorage.setItem("token", token);
+          axios.post('http://127.0.0.1:8000/user-api/company/add_policy/', form_data).then(res => {
+            if (res.data) {
+              console.log(res.data);
+              // sessionStorage.setItem('is_company', res.data['is_company'])
+              // sessionStorage.setItem('email', res.data['email'])
+              window.location.href = "http://localhost:3000/error";
+
+            }
+          }).catch(error => console.error(error));
+        }
+      }
+      }, (error) => {
+        console.log(error);
+      });
+    });
+
+
+
     
-              }
-            }).catch(error => console.error(error));
-          }
-        }, (error) => {
-          console.log(error);
-        });
-    }
   };
 
 
@@ -142,11 +238,15 @@ const CompanyRegister = (props) => {
                           </InputGroupAddon>
                           <Input
                             placeholder="Company Name"
+                            maxLength="30"
                             type="text"
                             value={name}
                             onChange={handleNameChange}
                           />
                         </InputGroup>
+                        {nameErr ?
+                          (<div className="alert alert-danger p-3" role="alert"> {nameErr}</div>) :
+                          (<></>)}
                       </FormGroup>
                       <FormGroup>
                         <InputGroup className="input-group-alternative mb-3">
@@ -162,6 +262,9 @@ const CompanyRegister = (props) => {
                             onChange={handleDescriptionChange}
                           />
                         </InputGroup>
+                        {descriptionErr ?
+                          (<div className="alert alert-danger p-3" role="alert"> {descriptionErr}</div>) :
+                          (<></>)}
                       </FormGroup>
                       <FormGroup>
                         <InputGroup className="input-group-alternative mb-3">
@@ -174,9 +277,13 @@ const CompanyRegister = (props) => {
                             placeholder="Email"
                             type="email"
                             value={email}
+                            maxLength="30"
                             onChange={handleEmailChange}
                           />
                         </InputGroup>
+                        {emailErr ?
+                          (<div className="alert alert-danger p-3" role="alert"> {emailErr}</div>) :
+                          (<></>)}
                       </FormGroup>
                       <FormGroup>
                         <InputGroup className="input-group-alternative mb-3">
@@ -192,6 +299,9 @@ const CompanyRegister = (props) => {
                             onChange={handleAddressChange}
                           />
                         </InputGroup>
+                        {addressErr ?
+                          (<div className="alert alert-danger p-3" role="alert"> {addressErr}</div>) :
+                          (<></>)}
                       </FormGroup>
                       <FormGroup>
                         <InputGroup className="input-group-alternative">
@@ -208,6 +318,9 @@ const CompanyRegister = (props) => {
                             onChange={handlePasswordChange}
                           />
                         </InputGroup>
+                        {passwordErr ?
+                          (<div className="alert alert-danger p-3" role="alert"> {passwordErr}</div>) :
+                          (<></>)}
                       </FormGroup>
                       <FormGroup>
                         <InputGroup className="input-group-alternative mb-3">
@@ -224,6 +337,9 @@ const CompanyRegister = (props) => {
                             onChange={handleConPasswordChange}
                           />
                         </InputGroup>
+                        {conPasswordErr ?
+                          (<div className="alert alert-danger p-3" role="alert"> {conPasswordErr}</div>) :
+                          (<></>)}
                       </FormGroup>
                       <FormGroup>
                         <InputGroup className="input-group-alternative">
@@ -242,7 +358,11 @@ const CompanyRegister = (props) => {
                             required
                           />
                         </InputGroup>
+                        
                       </FormGroup>
+                      {fileErr ?
+                          (<div className="alert alert-danger p-3" role="alert"> {fileErr}</div>) :
+                          (<></>)}
                       <div className="text-center">
                         <Button
                           className="mt-4"
