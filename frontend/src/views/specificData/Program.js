@@ -61,6 +61,8 @@ class Profile extends React.Component {
 
   }
 
+
+
   handleSelect = (selectedIndex, e) => {
     this.setState({ selectedIndex: selectedIndex })
   };
@@ -74,7 +76,7 @@ class Profile extends React.Component {
       }, {
         headers: {
           Authorization:
-            "Token 687365a03c105c2cbfc33deb0fb9cb342a788c2d",
+          "Token " + localStorage.getItem("token"),
         },
       }).then(() => {
         this.setState({ myReview: "" });
@@ -84,6 +86,7 @@ class Profile extends React.Component {
   }
 
   postSelectedData = self => {
+
     axios.post("http://localhost:8000/api/selected/", {
       company: this.state.data.company,
       program: this.state.data.id,
@@ -97,7 +100,7 @@ class Profile extends React.Component {
     }, {
       headers: {
         Authorization:
-          "Token " + sessionStorage.getItem("token"),
+        "Token " + localStorage.getItem("token"),
       },
     }).then(() => {
       this.setState({ myAddress: "" });
@@ -171,6 +174,8 @@ class Profile extends React.Component {
   };
 
   componentDidMount() {
+    console.log(sessionStorage.getItem("discount") + " here ")
+
     this.getProgramData()
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
@@ -180,12 +185,12 @@ class Profile extends React.Component {
     else {
 
       this.getSelectedPrograms()
+      this.getReviews()
 
-      if (sessionStorage.getItem("is_company") != "true") { this.getReviews() }
 
       this.interval = setInterval(() => {
-        this.getSelectedPrograms()
-        if (sessionStorage.getItem("is_company") != "true") { this.getReviews() }
+        this.getSelectedPrograms();
+        this.getReviews()
       }, 8000);
 
     }
@@ -326,7 +331,7 @@ class Profile extends React.Component {
                   </Container>
                 </section>
 
-                {sessionStorage.getItem("is_company") != "true" ?
+                {this.state.reviews.length > 0 ?
                   (<>
                     <section className="row-grid align-items-center scrollbar style-9">
                       {this.state.reviews.map((review, index) => (
@@ -560,6 +565,9 @@ class Profile extends React.Component {
                                   </FormGroup>
 
 
+
+
+
                                   <div>
                                     <Button
                                       block
@@ -569,7 +577,7 @@ class Profile extends React.Component {
                                         width: "30%"
                                       }}
                                     >
-                                      pay on delivery
+                                      send
                         </Button>
                                     <br />
                                     {this.state.selectProgramEror ?

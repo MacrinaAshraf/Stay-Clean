@@ -272,6 +272,7 @@ class Register extends React.Component {
     })
       .then(function (response) {
         if (response.data.found == "true") {
+          sessionStorage.setItem('is_company', 'false')
           window.location.href="http://localhost:3000/"
 
         } else {
@@ -311,7 +312,7 @@ class Register extends React.Component {
     })
       .then(function (response) {
         if (response.data.found == "true") {
-           
+          sessionStorage.setItem('is_company', 'false')
           window.location = "http://localhost:3000/";
 
         } else {
