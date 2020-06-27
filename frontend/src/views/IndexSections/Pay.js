@@ -52,10 +52,11 @@ class Pay extends React.Component {
 
   }
   handlePayOnline = (token) => {
-    axios.post("http://localhost:8000/api/selected/user_pay/",
+    axios.put("http://localhost:8000/api/selected/user_pay/",
       {
         select: this.state.orderID,
       }).then(() => {
+        this.setState({disablePay:true})
 
       });
   }
