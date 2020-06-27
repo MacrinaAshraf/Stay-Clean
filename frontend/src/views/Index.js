@@ -67,7 +67,7 @@ class Index extends React.Component {
         }
       }).then(res => {
         if (res.data) {
-          console.log(res.data.discount);
+          // console.log(res.data.discount);
           sessionStorage.setItem('discount', res.data['discount'])
 
         }

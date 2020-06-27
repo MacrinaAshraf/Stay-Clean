@@ -153,7 +153,7 @@ const CompanyRegister = (props) => {
           // localStorage.setItem("token", token);
           axios.post('http://127.0.0.1:8000/user-api/company/add_policy/', form_data).then(res => {
             if (res.data) {
-              console.log(res.data);
+              // console.log(res.data);
               // sessionStorage.setItem('is_company', res.data['is_company'])
               // sessionStorage.setItem('email', res.data['email'])
               window.location.href = "http://localhost:3000/error";
@@ -200,8 +200,8 @@ const CompanyRegister = (props) => {
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0])
-    console.log(e.target.files[0]);
-    console.log("file", file);
+    // console.log(e.target.files[0]);
+    // console.log("file", file);
   };
   return (
     <>

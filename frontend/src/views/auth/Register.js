@@ -79,7 +79,7 @@ class Register extends React.Component {
               }
             })
             .then((value) => {
-              console.log(value)
+              // console.log(value)
 
               if (value == true) {
                 self.setState({ discount: "50%" })
@@ -146,7 +146,7 @@ class Register extends React.Component {
               }
             })
             .then(function (value) {
-              console.log(value)
+              // console.log(value)
 
               if (value != true) {
                 self.setState({ emailErr: "" })
@@ -192,11 +192,8 @@ class Register extends React.Component {
       })
 
       .then(() => {
-        console.log("hnaaaaaaaaaaa");
-        console.log(this.state.errCounter);
         var self = this;
         if (this.state.errCounter != 1) {
-          console.log("hnaaaaaaaaaaa3");
 
           axios.post('http://localhost:8000/user-api/user/', {
             first_name: self.state.fName,
@@ -210,7 +207,6 @@ class Register extends React.Component {
               if (response.status == 400) {
                 console.log(response.error)
               } else {
-                console.log("good");
                 window.location = "http://localhost:3000/login";
               }
             })
@@ -259,13 +255,11 @@ class Register extends React.Component {
 
 
   responseFacebook = (res) => {
-    console.log(res);
     const token = res.id;
     localStorage.setItem("token", token);
     const name = res.name;
     sessionStorage.setItem('name', name)
     
-    console.log(token)
     axios.post('http://localhost:8000/user-api/user/user_email/', {
       email: res.email,
      
@@ -328,9 +322,7 @@ class Register extends React.Component {
              
               if (response.status == 400) {
                 console.log(response.error)
-              } else {
-                console.log("good");
-                
+              } else {                
                 window.location = "http://localhost:3000/test";
               }
             })

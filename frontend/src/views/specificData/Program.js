@@ -174,7 +174,7 @@ class Profile extends React.Component {
   };
 
   componentDidMount() {
-    console.log(sessionStorage.getItem("discount") + " here ")
+    // console.log(sessionStorage.getItem("discount") + " here ")
 
     this.getProgramData()
     document.documentElement.scrollTop = 0;

@@ -30,7 +30,7 @@ class Messages extends React.Component {
     axios.get('http://localhost:8000/user-api/customer/company_customer/', {
       headers: {
         Authorization:
-          "Token " + sessionStorage.getItem("token"),
+        "Token " + localStorage.getItem("token"),
       }
 
     })

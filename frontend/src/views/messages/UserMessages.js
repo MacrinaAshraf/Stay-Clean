@@ -46,8 +46,8 @@ class Messages extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log(this.state.selectedCompany)
-    console.log(this.state.myMess)
+    // console.log(this.state.selectedCompany)
+    // console.log(this.state.myMess)
 
     if (this.state.myMess != "") {
       axios.post("http://127.0.0.1:8000/api/message/", {
@@ -57,7 +57,7 @@ class Messages extends React.Component {
       }, {
         headers: {
           Authorization:
-            "Token " + sessionStorage.getItem("token"),
+          "Token " + localStorage.getItem("token"),
         },
       }).then(() => {
         this.setState({ myMess: "" });

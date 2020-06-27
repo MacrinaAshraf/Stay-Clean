@@ -14,11 +14,11 @@ function TableDetail ({ item }) {
     const onStarClick = async (nextValue) => {
 
         setRating(nextValue);
-        console.log(rating, nextValue);
+        // console.log(rating, nextValue);
         try {
             axios.patch(
                 "http://localhost:8000/api/selected/" + item.id + "/",
-                { fieldName: "rate", fieldValue: nextValue },
+                { rate: nextValue },
                 {
                     headers: {
                         Authorization:

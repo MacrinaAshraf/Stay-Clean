@@ -87,7 +87,7 @@ class TabsSection extends React.Component {
           dict[user.pk] = user.first_name + " "+ user.last_name+ " " + user.phone;
         })
         this.setState({ all_users: dict })
-        console.log(this.state.all_users)
+        // console.log(this.state.all_users)
       }
     })
       .catch(error => console.error(error))
