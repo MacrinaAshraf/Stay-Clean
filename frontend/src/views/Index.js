@@ -130,9 +130,9 @@ class Index extends React.Component {
                             alt="..."
                             className="rounded-circle img-center img-fluid shadow shadow-lg--hover"
                             src={comp.logo}
-                            style={{ width: "200px", height: "100px", objectFit: "fill" }}
+                            style={{ width: "400px", height: "300px", objectFit: "fill" }}
                           />
-                          <div className="pt-4 text-center">
+                          <div className="pt-5 text-center">
                             <h5 className="title">
                               <Link to={'/company/' + comp.id}><span className="d-block mb-1">{comp.name}</span></Link>
 

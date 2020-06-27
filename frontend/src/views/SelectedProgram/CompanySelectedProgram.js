@@ -51,10 +51,8 @@ const CompanySelectedProgram = (props) => {
              <DemoNavbar />
              <div
                             className="position-relative"
-                            style={{
-                                backgroundImage: "url(" + require("assets/img/stay/stay-clean.jpg") + ")",
-                            }}
-                        >
+                            style={{ backgroundImage: "url(" + require("assets/img/stay/stay-clean.jpg")  + ")" , 
+                            backgroundRepeat: 'no-repeat' , backgroundSize: 'cover' , height:'600px', marginTop:'20px' }}>
                             {/* shape Hero */}
                             <section className="section section-lg section-shaped pb-250">
                                 <div className="shape shape-style-1 shape-default">
@@ -72,9 +70,7 @@ const CompanySelectedProgram = (props) => {
                                     <div className="col px-0">
                                         <Row>
                                             <Col lg="6">
-                                                <h1 className="display-3 text-dark">
-                                                    List Company's Programs{" "}
-                                                </h1>
+                                              
                                                
                                               
                                             
@@ -95,7 +91,7 @@ const CompanySelectedProgram = (props) => {
                                     >
                                         <polygon
                                             className="fill-white"
-                                            points="2560 0 2560 100 0 100"
+                                            points="2560 0 2560 0 0 100"
                                         />
                                     </svg>
                                 </div>
@@ -103,17 +99,18 @@ const CompanySelectedProgram = (props) => {
                         
                             {/* 1st Hero Variation */}
                         </div>
-            <Table  >
+                        <Table className=" table-bordered table-hover mt-2 h5 text-center"  >
+
                 <thead>
-                    <tr>
+                    <tr  style={{ background: 'navy' , color:'orange' , fontSize:'20px' , textAlign:'center'}}>
                         <th>customer name</th>
                         <th>customer phone number</th>
+                        <th>program name</th>
+                        <th>program price</th>
                         <th>note</th>
                         <th>address</th>
                         <th>rate</th>
-                        <th>program name</th>
-                        <th>program price</th>
-                        
+                       
                       
                     
                     </tr>

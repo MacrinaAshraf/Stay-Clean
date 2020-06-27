@@ -9,6 +9,7 @@ import SimpleFooter from "components/Footers/SimpleFooter.js";
 const SelectedProgram = (props) => {
 
     const [selectedProgram, setselectedProgram] = useState([]);
+ 
     
     if(! localStorage.getItem("token"))
     {
@@ -47,18 +48,16 @@ const SelectedProgram = (props) => {
 
 
     }, []);
-
+  
 
     return (
 
         <div>
             <DemoNavbar />
-            <div
-                className="position-relative"
-                style={{
-                    backgroundImage: "url(" + require("assets/img/bg_1.jpg") + ")",
-                }}
-            >
+            <div className="position-relative" 
+            style={{ backgroundImage: "url(" + require("assets/img/stay/stay-clean.jpg")  + ")" , 
+            backgroundRepeat: 'no-repeat' , backgroundSize: 'cover' , height:'600px', marginTop:'20px' }}>
+
                 {/* shape Hero */}
                 <section className="section section-lg section-shaped pb-250">
                     <div className="shape shape-style-1 shape-default">
@@ -76,9 +75,7 @@ const SelectedProgram = (props) => {
                         <div className="col px-0">
                             <Row>
                                 <Col lg="6">
-                                    <h1 className="display-3 text-dark">
-                                        List selected Company's Programs for user{" "}
-                                    </h1>
+                                   
 
 
 
@@ -99,7 +96,7 @@ const SelectedProgram = (props) => {
                         >
                             <polygon
                                 className="fill-white"
-                                points="2560 0 2560 100 0 100"
+                                // points="2560 0 2560 0 0 100"
                             />
                         </svg>
                     </div>
@@ -107,16 +104,19 @@ const SelectedProgram = (props) => {
 
                 {/* 1st Hero Variation */}
             </div>
+            <br></br>
+            <br></br>
+            
 
-
-            <Table  >
+            <Table className=" table-bordered table-hover mt-2 h5 text-center"  >
                 <thead>
-                    <tr>
-                        <th>note</th>
-                        <th>address</th>
-                        <th>rate</th>
+                    <tr  style={{ background: 'navy' , color:'orange' , fontSize:'22px' , textAlign:'center'}}  >
                         <th>program name</th>
                         <th>program price</th>
+                        <th >note</th>
+                        <th>address</th>
+                        <th>rate</th>
+                        
                         {sessionStorage.getItem("is_company") === "true" ?
                             <>
                             </> :

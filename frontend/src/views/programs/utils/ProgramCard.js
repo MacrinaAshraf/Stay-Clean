@@ -11,9 +11,7 @@ const ProgramCard = (props) => {
       {/* <Link to={'/programs/' + props.program.id}> */}
       <Card className="card-lift--hover shadow border-0">
         <CardBody className="py-5">
-          <div className="icon icon-shape icon-shape-logocolor rounded-circle mb-4">
-            <i className="ni ni-istanbul" />
-          </div>
+         
 
           <h4 className="text-logocolor text-uppercase" ><b>{props.program.name}</b>
           

@@ -54,7 +54,7 @@ class DropDown extends React.Component {
                                 Programs
                       </Link>
                             <Link to="/company-selected-programs" tag={Link} style={{ color: 'orange', paddingRight: '20px' }}>
-                                Hired programs
+                                Selected programs
                       </Link>
                       <Link to="/company-messages" tag={Link} style={{ color: 'orange', paddingRight: '20px' }}>
                                 Messages
@@ -74,7 +74,7 @@ class DropDown extends React.Component {
                                 Programs
 </Link>
                             <Link to="/selected-programs" tag={Link} style={{ color: 'orange', paddingRight: '20px' }}>
-                                Hired programs
+                                Selected programs
 </Link>
                         </Nav>
 

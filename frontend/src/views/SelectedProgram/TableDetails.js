@@ -71,7 +71,10 @@ function TableDetail ({ item }) {
 
 
     return (
-        <tr>
+
+        
+    
+        <tr >
 
             {
                 sessionStorage.getItem("is_company") === "true" ?
@@ -81,7 +84,8 @@ function TableDetail ({ item }) {
 
                         <td>{customer.first_name + " " + customer.last_name}</td>
                         <td>{customer.phone}</td>
-
+                        <td>{program.name}</td>
+                        <td>{program.price}</td>
                         <td>{item.notes}</td>
                         <td>{item.address}</td>
                         <td>
@@ -93,8 +97,7 @@ function TableDetail ({ item }) {
                             />
 
                         </td>
-                        <td>{program.name}</td>
-                        <td>{program.price}</td>
+                       
 
 
 
@@ -127,6 +130,7 @@ function TableDetail ({ item }) {
                     </>)
             }
         </tr>
+        
     );
 };
 
