@@ -262,6 +262,9 @@ class Register extends React.Component {
     console.log(res);
     const token = res.id;
     localStorage.setItem("token", token);
+    const name = res.name;
+    sessionStorage.setItem('name', name)
+    
     console.log(token)
     axios.post('http://localhost:8000/user-api/user/user_email/', {
       email: res.email,
@@ -301,11 +304,14 @@ class Register extends React.Component {
 
     const token = res.profileObj.googleId;
     localStorage.setItem("token", token);
+    const name = res.profileObj.givenName;
+    sessionStorage.setItem('name', name)
     axios.post('http://localhost:8000/user-api/user/user_email/', {
       email:res.profileObj.email
     })
       .then(function (response) {
         if (response.data.found == "true") {
+           
           window.location = "http://localhost:3000/";
 
         } else {
@@ -318,10 +324,12 @@ class Register extends React.Component {
             token: token,
           })
             .then(function (response) {
+             
               if (response.status == 400) {
                 console.log(response.error)
               } else {
                 console.log("good");
+                
                 window.location = "http://localhost:3000/test";
               }
             })
