@@ -59,6 +59,21 @@ class Index extends React.Component {
     document.scrollingElement.scrollTop = 0;
     this.refs.main.scrollTop = 0;
 
+    if (sessionStorage.getItem('is_company') === "false") {
+      axios.get('http://127.0.0.1:8000/user-api/customer/me/', {
+        headers: {
+          Authorization:
+            "Token " + localStorage.getItem("token"),
+        }
+      }).then(res => {
+        if (res.data) {
+          // console.log(res.data.discount);
+          sessionStorage.setItem('discount', res.data['discount'])
+
+        }
+      }).catch(error => console.error(error));
+    }
+
     this.all_companies();
     this.most_review_program();
     this.most_selected_program();
@@ -134,10 +149,10 @@ class Index extends React.Component {
                       className="img-fluid floating"
                       src={require("assets/img/soon2.jpg")}
                       style={{
-                        width:"50%",
-                        marginLeft:"250px",
-                        marginTop:"-100px"
-                        
+                        width: "50%",
+                        marginLeft: "250px",
+                        marginTop: "-100px"
+
                       }}
                     />
                   </>)

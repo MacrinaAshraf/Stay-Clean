@@ -33,7 +33,7 @@ const List = () => {
 
 
     const handleClick = (e) => {
-        console.log(e.target.value);
+        // console.log(e.target.value);
 
         if (e.target.value === "lowest") {
             const compareLowest = (a, b) => {
@@ -67,7 +67,7 @@ const List = () => {
 
         let currentList = [];
         let newList = [];
-        console.log(e.target.value)
+        // console.log(e.target.value)
 
         if (e.target.value !== "") {
             currentList = programs;

@@ -18,7 +18,7 @@ class NewProgramForm extends React.Component {
 
   componentDidMount() {
     if (this.props.item) {
-      console.log("hello" + this.props.item);
+      // console.log("hello" + this.props.item);
       const { id, name, description, duration, price ,images } = this.props.item;
       this.setState({ id, name, description, duration, price ,images});
     }
@@ -35,7 +35,7 @@ class NewProgramForm extends React.Component {
         dummy.push(e.target.files[key])
     }
     this.setState({ images: dummy })
-    console.log(e.target.files);
+    // console.log(e.target.files);
     
   };
   

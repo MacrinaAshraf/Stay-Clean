@@ -58,7 +58,7 @@ const Login = (props) => {
           }
         }).then(res => {
           if (res.data) {
-            console.log(res.data);
+            // console.log(res.data);
             sessionStorage.setItem('is_company', res.data['is_company'])
             sessionStorage.setItem('email', res.data['email'])
             if (sessionStorage.getItem('is_company') === "true") {
@@ -90,7 +90,7 @@ const Login = (props) => {
                 }
               }).then(res => {
                 if (res.data) {
-                  console.log(res.data);
+                  // console.log(res.data);
                   sessionStorage.setItem('name', res.data['first_name'])
                   sessionStorage.setItem('discount', res.data['discount'])
 

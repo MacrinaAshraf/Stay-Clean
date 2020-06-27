@@ -40,7 +40,7 @@ class Profile extends React.Component {
       }, {
         headers: {
           Authorization:
-            "Token 687365a03c105c2cbfc33deb0fb9cb342a788c2d",
+          "Token " + localStorage.getItem("token"),
         },
       }).then(() => {
         this.setState({ myReview: "" });
@@ -129,7 +129,7 @@ class Profile extends React.Component {
               className="rounded-circle"
               src={require("assets/img/notFound.jpg")}
               style={{
-                width:"50%"
+                width: "50%"
               }}
             /></>
           )
@@ -270,7 +270,9 @@ class Profile extends React.Component {
               </section>
 
 
-                <section className="row-grid align-items-center scrollbar style-9">
+              {this.state.reviews.length > 0 ?
+                (<>
+                  <section className="row-grid align-items-center scrollbar style-9">
 
 
                     {this.state.reviews.map((review, index) => (
@@ -281,85 +283,93 @@ class Profile extends React.Component {
 
                     ))}
 
-              </section>
+                  </section>
 
 
 
-
-              <section className="section section-lg bg-gradient-default">
-                <Container className="pt-0 pb-25">
-                  <Row className="text-center justify-content-center">
-                    <Col lg="10">
+                </>) :
+                (<></>)}
 
 
-                    </Col>
-                  </Row>
+              {sessionStorage.getItem("is_company") != "true" ?
+                (<>
 
-                </Container>
-                {/* SVG separator */}
-                <div className="separator separator-bottom separator-skew zindex-100">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    preserveAspectRatio="none"
-                    version="1.1"
-                    viewBox="0 0 1460 100"
-                    x="0"
-                    y="0"
-                  >
-                    <polygon
-                      className="fill-white"
-                      points="1460 0 1460 0 0 100"
-                    />
-                  </svg>
-                </div>
-              </section>
-              <section className="section section-lg section-contact-us">
-                <Container>
-                  <Row className="justify-content-center mt--200" >
-                    <Col lg="8">
-                      <Card className="bg-gradient-secondary shadow">
-                        <CardBody className="p-lg-5">
-                          <h4 className="mb-1">Want to Add Review ?</h4>
-                          <Form onSubmit={this.handleSubmit}>
+                  <section className="section section-lg bg-gradient-default">
+                    <Container className="pt-0 pb-25">
+                      <Row className="text-center justify-content-center">
+                        <Col lg="10">
 
-                            <FormGroup
-                              className={classnames("mt-0", {
-                                focused: this.state.nameFocused
-                              })}
-                            >
-                              <InputGroup className="input-group-alternative">
 
-                                <Input
-                                  type="text"
-                                  onFocus={e => this.setState({ nameFocused: true })}
-                                  onBlur={e => this.setState({ nameFocused: false })}
-                                  value={this.state.myReview}
-                                  onChange={e => {
-                                    this.setState({ myReview: e.target.value })
-                                  }}
-                                />
-                              </InputGroup>
-                            </FormGroup>
+                        </Col>
+                      </Row>
 
-                            <div>
-                              <Button
-                                block
-                                className="btn-round"
-                                color="default"
-                                size="lg"
-                              >
-                                Send
+                    </Container>
+                    {/* SVG separator */}
+                    <div className="separator separator-bottom separator-skew zindex-100">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        preserveAspectRatio="none"
+                        version="1.1"
+                        viewBox="0 0 1460 100"
+                        x="0"
+                        y="0"
+                      >
+                        <polygon
+                          className="fill-white"
+                          points="1460 0 1460 0 0 100"
+                        />
+                      </svg>
+                    </div>
+                  </section>
+                  <section className="section section-lg section-contact-us">
+                    <Container>
+                      <Row className="justify-content-center mt--200" >
+                        <Col lg="8">
+                          <Card className="bg-gradient-secondary shadow">
+                            <CardBody className="p-lg-5">
+                              <h4 className="mb-1">Want to Add Review ?</h4>
+                              <Form onSubmit={this.handleSubmit}>
+
+                                <FormGroup
+                                  className={classnames("mt-0", {
+                                    focused: this.state.nameFocused
+                                  })}
+                                >
+                                  <InputGroup className="input-group-alternative">
+
+                                    <Input
+                                      type="text"
+                                      onFocus={e => this.setState({ nameFocused: true })}
+                                      onBlur={e => this.setState({ nameFocused: false })}
+                                      value={this.state.myReview}
+                                      onChange={e => {
+                                        this.setState({ myReview: e.target.value })
+                                      }}
+                                    />
+                                  </InputGroup>
+                                </FormGroup>
+
+                                <div>
+                                  <Button
+                                    block
+                                    className="btn-round"
+                                    color="default"
+                                    size="lg"
+                                  >
+                                    Send
                         </Button>
-                            </div>
+                                </div>
 
-                          </Form>
+                              </Form>
 
-                        </CardBody>
-                      </Card>
-                    </Col>
-                  </Row>
-                </Container>
-              </section>
+                            </CardBody>
+                          </Card>
+                        </Col>
+                      </Row>
+                    </Container>
+                  </section>
+
+                </>) : (<></>)}
 
 
             </main>

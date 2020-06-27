@@ -124,12 +124,11 @@ class SelectedProgramSerializer(serializers.ModelSerializer):
             company=validated_data.get('company'),
             area=validated_data.get('area'),
             date=validated_data.get('date'),
-            rate=validated_data.get('rate'),
+            rate=validated_data.get('rate', 0),
             address=validated_data.get('address'),
             notes=validated_data.get('notes'),
             price=validated_data.get('price')
         )
-        return rate 
         numberOfSelectedPrograms = SelectedProgram.objects.filter(customer=customer).count()
         if numberOfSelectedPrograms % 5 == 0 & customer.discount < 80:
             customer.discount = customer.discount+20
@@ -138,7 +137,6 @@ class SelectedProgramSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         SelectedProgram.objects.filter(pk=instance.pk).update(**validated_data)
-        print(validated_data)
         selected_program = SelectedProgram.objects.filter(
             pk=instance.pk).first()
         avg_rate = get_average_rate(selected_program.program)
