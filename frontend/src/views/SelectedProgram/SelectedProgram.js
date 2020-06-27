@@ -110,7 +110,7 @@ const SelectedProgram = (props) => {
 
             <Table className=" table-bordered table-hover mt-2 h5 text-center"  >
                 <thead>
-                    <tr  style={{ background: 'navy' , color:'orange' , fontSize:'22px' , textAlign:'center'}}  >
+                    <tr   >
                         <th>program name</th>
                         <th>program price</th>
                         <th >note</th>
