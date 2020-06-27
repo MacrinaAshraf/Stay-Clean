@@ -47,8 +47,8 @@ class Profile extends React.Component {
     myReview: "",
     myAddress: "",
     myNotes: "",
-    myArea:5,
-    myDate:"",
+    myArea: 5,
+    myDate: "",
     selectProgramEror: "",
     selectProgramSuccess: "",
     center: {
@@ -57,7 +57,7 @@ class Profile extends React.Component {
     },
     lat: 30.033333,
     lng: 31.233334,
-    
+
 
   }
 
@@ -92,12 +92,12 @@ class Profile extends React.Component {
       rate: 0,
       area: this.state.myArea,
       date: new Date(this.state.myDate),
-      price:Math.round((this.state.myArea/5)*this.state.data.price)
+      price: Math.round((this.state.myArea / 5) * this.state.data.price)
 
     }, {
       headers: {
         Authorization:
-          "Token " + localStorage.getItem("token"),
+          "Token " + sessionStorage.getItem("token"),
       },
     }).then(() => {
       this.setState({ myAddress: "" });
@@ -117,11 +117,11 @@ class Profile extends React.Component {
     // console.log(this.state.myAddress)
     // console.log(this.state.myNotes)
     let date = new Date(this.state.myDate)
-  
+
     // console.log(date)
     // console.log( new Date())
 
-    if (this.state.myAddress.length > 15 && this.state.myDate != "" && date >  new Date()) {
+    if (this.state.myAddress.length > 15 && this.state.myDate != "" && date > new Date()) {
       this.postSelectedData(this)
     }
     else {
@@ -180,11 +180,12 @@ class Profile extends React.Component {
     else {
 
       this.getSelectedPrograms()
-      this.getReviews()
+
+      if (sessionStorage.getItem("is_company") != "true") { this.getReviews() }
 
       this.interval = setInterval(() => {
         this.getSelectedPrograms()
-        this.getReviews()
+        if (sessionStorage.getItem("is_company") != "true") { this.getReviews() }
       }, 8000);
 
     }
@@ -221,7 +222,7 @@ class Profile extends React.Component {
                 className="rounded-circle"
                 src={require("assets/img/notFound.jpg")}
                 style={{
-                  width:"50%"
+                  width: "50%"
                 }}
 
               /></>
@@ -324,92 +325,19 @@ class Profile extends React.Component {
                     </Card>
                   </Container>
                 </section>
-                <section className="row-grid align-items-center scrollbar style-9">
-                  {this.state.reviews.map((review, index) => (
-                    <Review
-                      customerID={review.customer}
-                      review={review.review}
-                    />
 
-                  ))}
-                </section>
+                {sessionStorage.getItem("is_company") != "true" ?
+                  (<>
+                    <section className="row-grid align-items-center scrollbar style-9">
+                      {this.state.reviews.map((review, index) => (
+                        <Review
+                          customerID={review.customer}
+                          review={review.review}
+                        />
 
-
-                <section className="section section-lg bg-gradient-default">
-                  <Container className="pt-0 pb-25">
-                    <Row className="text-center justify-content-center">
-                      <Col lg="10">
-
-
-                      </Col>
-                    </Row>
-
-                  </Container>
-                  {/* SVG separator */}
-                  <div className="separator separator-bottom separator-skew zindex-100">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      preserveAspectRatio="none"
-                      version="1.1"
-                      viewBox="0 0 1460 100"
-                      x="0"
-                      y="0"
-                    >
-                      <polygon
-                        className="fill-white"
-                        points="1460 0 1460 0 0 100"
-                      />
-                    </svg>
-                  </div>
-                </section>
-                <section className="section section-lg section-contact-us">
-                  <Container>
-                    <Row className="justify-content-center mt--200" >
-                      <Col lg="8">
-                        <Card className="bg-gradient-secondary shadow">
-                          <CardBody className="p-lg-5">
-                            <h4 className="mb-1">Want to Add Review ?</h4>
-                            <Form onSubmit={this.handleSubmitReview}>
-
-                              <FormGroup
-                                className={classnames("mt-0", {
-                                  focused: this.state.nameFocused
-                                })}
-                              >
-                                <InputGroup className="input-group-alternative">
-
-                                  <Input
-                                    type="text"
-                                    onFocus={e => this.setState({ nameFocused: true })}
-                                    onBlur={e => this.setState({ nameFocused: false })}
-                                    value={this.state.myReview}
-                                    onChange={e => {
-                                      this.setState({ myReview: e.target.value })
-                                    }}
-                                  />
-                                </InputGroup>
-                              </FormGroup>
-
-                              <div>
-                                <Button
-                                  block
-                                  className="btn-round"
-                                  color="default"
-                                  size="lg"
-                                >
-                                  Send
-                        </Button>
-                              </div>
-
-                            </Form>
-
-                          </CardBody>
-                        </Card>
-                      </Col>
-                    </Row>
-                  </Container>
-                </section>
-
+                      ))}
+                    </section>
+                  </>) : (<></>)}
 
                 <section className="section section-lg bg-gradient-default">
                   <Container className="pt-0 pb-25">
@@ -438,150 +366,237 @@ class Profile extends React.Component {
                     </svg>
                   </div>
                 </section>
-                <section className="section section-lg section-contact-us">
-                  <Container>
-                    <Row className="justify-content-center mt--200" >
-                      <Col lg="8">
-                        <Card className="bg-gradient-secondary shadow">
-                          <CardBody className="p-lg-5">
-                            <h4 className="mb-1">Want to Select ?</h4>
-                            <h6 className="mb-1">please click over your location to get right longitude and latitude</h6>
-                            <h6 className="mb-1">current latitude is {this.state.lat}</h6>
-                            <h6 className="mb-1">current longitude is {this.state.lng}</h6>
+
+                {sessionStorage.getItem("is_company") != "true" ?
+                  (<>
 
 
-                            <div style={{ height: '50vh', width: '100%' }}>
-                              <GoogleMapReact
-                                bootstrapURLKeys={{ key: "AIzaSyApkOXCx4XowRsfL5pmVApQYmp81LA_PL8" }}
-                                defaultCenter={this.state.center}
-                                defaultZoom={11}
-                                onClick={e => this.setState({ lat: e.lat, lng: e.lng })}
-                              >
-                                <AnyReactComponent
-                                  lat={this.state.lat}
-                                  lng={this.state.lng}
-                                  text="My Marker"
-                                // onClick={e=>console.log(e.lat)}
+                    <section className="section section-lg section-contact-us">
+                      <Container>
+                        <Row className="justify-content-center mt--200" >
+                          <Col lg="8">
+                            <Card className="bg-gradient-secondary shadow">
+                              <CardBody className="p-lg-5">
+                                <h4 className="mb-1">Want to Add Review ?</h4>
+                                <Form onSubmit={this.handleSubmitReview}>
 
-                                />
-                              </GoogleMapReact>
-                            </div>
+                                  <FormGroup
+                                    className={classnames("mt-0", {
+                                      focused: this.state.nameFocused
+                                    })}
+                                  >
+                                    <InputGroup className="input-group-alternative">
 
-                            <br />
+                                      <Input
+                                        type="text"
+                                        onFocus={e => this.setState({ nameFocused: true })}
+                                        onBlur={e => this.setState({ nameFocused: false })}
+                                        value={this.state.myReview}
+                                        onChange={e => {
+                                          this.setState({ myReview: e.target.value })
+                                        }}
+                                      />
+                                    </InputGroup>
+                                  </FormGroup>
 
-                            <Form onSubmit={this.handleSubmitSelect}>
-
-
-                              <FormGroup
-                                className={classnames("mt-0", {
-                                  focused: this.state.nameFocused
-                                })}
-                              >
-                                <InputGroup className="input-group-alternative">
-
-                                  <Input
-                                    type="text"
-                                    onFocus={e => this.setState({ nameFocused: true })}
-                                    onBlur={e => this.setState({ nameFocused: false })}
-                                    value={this.state.myAddress}
-                                    placeholder="Address in Details"
-                                    onChange={e => {
-                                      this.setState({ myAddress: e.target.value })
-                                    }}
-                                  />
-                                </InputGroup>
-                              </FormGroup>
-
-                              <FormGroup
-                                className={classnames("mt-0", {
-                                  focused: this.state.nameFocused
-                                })}
-                              >
-                                <InputGroup className="input-group-alternative">
-
-                                  <Input
-                                    type="text"
-                                    placeholder="Notes"
-                                    onFocus={e => this.setState({ nameFocused: true })}
-                                    onBlur={e => this.setState({ nameFocused: false })}
-                                    value={this.state.myNotes}
-                                    onChange={e => {
-                                      this.setState({ myNotes: e.target.value })
-                                    }}
-                                  />
-                                </InputGroup>
-                              </FormGroup>
-
-
-                              <FormGroup
-                                className={classnames("mt-0", {
-                                  focused: this.state.nameFocused
-                                })}
-                              >
-                                <InputGroup className="input-group-alternative">
-                              
-                                <h5 className="m-1 p-1"> Area </h5>
-
-                                  <Input
-                                  className="ml-2 pl-2"
-                                    type="number"
-                                    value={this.state.myArea}
-                                    onChange={e => {
-                                      this.setState({ myArea: e.target.value })
-                                    }}
-                                    min="5"
-                                  />
-                                </InputGroup>
-                              </FormGroup>
-                              <FormGroup
-                                className={classnames("mt-0", {
-                                  focused: this.state.nameFocused
-                                })}
-                              >
-                                <InputGroup className="input-group-alternative">
-
-                                  <Input
-                                    type="date"
-                                    value={this.state.myDate}
-                                    onChange={e => {
-                                      this.setState({ myDate: e.target.value })
-                                    }}
-                                  />
-                                </InputGroup>
-                              </FormGroup>
-
-
-                              <div>
-                                <Button
-                                  block
-                                  className="btn-round"
-                                  color="default"
-                                  style={{
-                                    width:"30%"
-                                  }}
-                                >
-                                 pay on delivery
+                                  <div>
+                                    <Button
+                                      block
+                                      className="btn-round"
+                                      color="default"
+                                      size="lg"
+                                    >
+                                      Send
                         </Button>
+                                  </div>
+
+                                </Form>
+
+                              </CardBody>
+                            </Card>
+                          </Col>
+                        </Row>
+                      </Container>
+                    </section>
+
+
+                    <section className="section section-lg bg-gradient-default">
+                      <Container className="pt-0 pb-25">
+                        <Row className="text-center justify-content-center">
+                          <Col lg="10">
+
+
+                          </Col>
+                        </Row>
+
+                      </Container>
+                      {/* SVG separator */}
+                      <div className="separator separator-bottom separator-skew zindex-100">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          preserveAspectRatio="none"
+                          version="1.1"
+                          viewBox="0 0 1460 100"
+                          x="0"
+                          y="0"
+                        >
+                          <polygon
+                            className="fill-white"
+                            points="1460 0 1460 0 0 100"
+                          />
+                        </svg>
+                      </div>
+                    </section>
+                    <section className="section section-lg section-contact-us">
+                      <Container>
+                        <Row className="justify-content-center mt--200" >
+                          <Col lg="8">
+                            <Card className="bg-gradient-secondary shadow">
+                              <CardBody className="p-lg-5">
+                                <h4 className="mb-1">Want to Select ?</h4>
+                                <h6 className="mb-1">please click over your location to get right longitude and latitude</h6>
+                                <h6 className="mb-1">current latitude is {this.state.lat}</h6>
+                                <h6 className="mb-1">current longitude is {this.state.lng}</h6>
+
+
+                                <div style={{ height: '50vh', width: '100%' }}>
+                                  <GoogleMapReact
+                                    bootstrapURLKeys={{ key: "AIzaSyApkOXCx4XowRsfL5pmVApQYmp81LA_PL8" }}
+                                    defaultCenter={this.state.center}
+                                    defaultZoom={11}
+                                    onClick={e => this.setState({ lat: e.lat, lng: e.lng })}
+                                  >
+                                    <AnyReactComponent
+                                      lat={this.state.lat}
+                                      lng={this.state.lng}
+                                      text="My Marker"
+                                    // onClick={e=>console.log(e.lat)}
+
+                                    />
+                                  </GoogleMapReact>
+                                </div>
+
                                 <br />
-                                {this.state.selectProgramEror ?
-                                  (<div className="alert alert-danger p-3" role="alert"> {this.state.selectProgramEror}</div>) :
-                                  (<></>)}
 
-                                {this.state.selectProgramSuccess ?
-                                  (<div className="alert alert-success p-3" role="alert"> {this.state.selectProgramSuccess}</div>) :
-                                  (<></>)}
-                              </div>
+                                <Form onSubmit={this.handleSubmitSelect}>
 
-                            </Form>
 
-                        
+                                  <FormGroup
+                                    className={classnames("mt-0", {
+                                      focused: this.state.nameFocused
+                                    })}
+                                  >
+                                    <InputGroup className="input-group-alternative">
 
-                          </CardBody>
-                        </Card>
-                      </Col>
-                    </Row>
-                  </Container>
-                </section>
+                                      <Input
+                                        type="text"
+                                        onFocus={e => this.setState({ nameFocused: true })}
+                                        onBlur={e => this.setState({ nameFocused: false })}
+                                        value={this.state.myAddress}
+                                        placeholder="Address in Details"
+                                        onChange={e => {
+                                          this.setState({ myAddress: e.target.value })
+                                        }}
+                                      />
+                                    </InputGroup>
+                                  </FormGroup>
+
+                                  <FormGroup
+                                    className={classnames("mt-0", {
+                                      focused: this.state.nameFocused
+                                    })}
+                                  >
+                                    <InputGroup className="input-group-alternative">
+
+                                      <Input
+                                        type="text"
+                                        placeholder="Notes"
+                                        onFocus={e => this.setState({ nameFocused: true })}
+                                        onBlur={e => this.setState({ nameFocused: false })}
+                                        value={this.state.myNotes}
+                                        onChange={e => {
+                                          this.setState({ myNotes: e.target.value })
+                                        }}
+                                      />
+                                    </InputGroup>
+                                  </FormGroup>
+
+
+                                  <FormGroup
+                                    className={classnames("mt-0", {
+                                      focused: this.state.nameFocused
+                                    })}
+                                  >
+                                    <InputGroup className="input-group-alternative">
+
+                                      <h5 className="m-1 p-1"> Area </h5>
+
+                                      <Input
+                                        className="ml-2 pl-2"
+                                        type="number"
+                                        value={this.state.myArea}
+                                        onChange={e => {
+                                          this.setState({ myArea: e.target.value })
+                                        }}
+                                        min="5"
+                                      />
+                                    </InputGroup>
+                                  </FormGroup>
+                                  <FormGroup
+                                    className={classnames("mt-0", {
+                                      focused: this.state.nameFocused
+                                    })}
+                                  >
+                                    <InputGroup className="input-group-alternative">
+
+                                      <Input
+                                        type="date"
+                                        value={this.state.myDate}
+                                        onChange={e => {
+                                          this.setState({ myDate: e.target.value })
+                                        }}
+                                      />
+                                    </InputGroup>
+                                  </FormGroup>
+
+
+                                  <div>
+                                    <Button
+                                      block
+                                      className="btn-round"
+                                      color="default"
+                                      style={{
+                                        width: "30%"
+                                      }}
+                                    >
+                                      pay on delivery
+                        </Button>
+                                    <br />
+                                    {this.state.selectProgramEror ?
+                                      (<div className="alert alert-danger p-3" role="alert"> {this.state.selectProgramEror}</div>) :
+                                      (<></>)}
+
+                                    {this.state.selectProgramSuccess ?
+                                      (<div className="alert alert-success p-3" role="alert"> {this.state.selectProgramSuccess}</div>) :
+                                      (<></>)}
+                                  </div>
+
+                                </Form>
+
+
+
+                              </CardBody>
+                            </Card>
+                          </Col>
+                        </Row>
+                      </Container>
+                    </section>
+
+
+                  </>)
+                  : (<>
+
+                  </>)}
               </main>
 
 

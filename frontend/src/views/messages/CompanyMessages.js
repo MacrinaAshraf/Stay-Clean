@@ -30,7 +30,7 @@ class Messages extends React.Component {
     axios.get('http://localhost:8000/user-api/customer/company_customer/', {
       headers: {
         Authorization:
-          "Token " + localStorage.getItem("token"),
+          "Token " + sessionStorage.getItem("token"),
       }
 
     })
@@ -73,7 +73,8 @@ class Messages extends React.Component {
 
 
   componentDidMount() {
-    if (localStorage.getItem("token") && localStorage.getItem("is_company") == "true") {
+    // if (sessionStorage.getItem("token")!="" && sessionStorage.getItem("is_company") == "true") 
+    {
       document.documentElement.scrollTop = 0;
       document.scrollingElement.scrollTop = 0;
       this.refs.main.scrollTop = 0;
@@ -83,9 +84,9 @@ class Messages extends React.Component {
         this.all_users();
       }, 8000);
     }
-    else
+    // else
     {
-      window.location.href = "/";
+      // window.location.href = "/";
     }
 
   }

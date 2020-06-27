@@ -57,7 +57,7 @@ class Messages extends React.Component {
       }, {
         headers: {
           Authorization:
-            "Token " + localStorage.getItem("token"),
+            "Token " + sessionStorage.getItem("token"),
         },
       }).then(() => {
         this.setState({ myMess: "" });
@@ -68,7 +68,7 @@ class Messages extends React.Component {
 
 
   componentDidMount() {
-    if(localStorage.getItem("token") && localStorage.getItem("is_company") == "false")
+    // if(sessionStorage.getItem("token")!="" && sessionStorage.getItem("is_company") == "false")
     {
       document.documentElement.scrollTop = 0;
       document.scrollingElement.scrollTop = 0;
@@ -79,9 +79,9 @@ class Messages extends React.Component {
         this.all_companies();
       }, 8000);
     }
-    else
+    // else
     {
-      window.location.href = "/";
+      // window.location.href = "/";
     }
     
   }
