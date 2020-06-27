@@ -18,7 +18,7 @@ function TableDetail ({ item }) {
         try {
             axios.patch(
                 "http://localhost:8000/api/selected/" + item.id + "/",
-                { fieldName: "rate", fieldValue: nextValue },
+                { fieldName: "rate", rate: nextValue },
                 {
                     headers: {
                         Authorization:
@@ -94,6 +94,8 @@ function TableDetail ({ item }) {
 
                         </td>
                         <td>{program.name}</td>
+                        <td>{program.price}</td>
+
 
 
                     </>

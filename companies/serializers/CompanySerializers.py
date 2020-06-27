@@ -41,7 +41,8 @@ class ReviewSerializer(serializers.ModelSerializer):
         return obj.created_at.strftime("%d/%m/%Y %H:%M")
 
     def create(self, validated_data):
-        customer = get_object_or_404(Customer, user=self.context['request'].user)
+        customer = get_object_or_404(
+            Customer, user=self.context['request'].user)
         review = CompanyReview.objects.create(
             customer=customer,
             company=validated_data.get('company'),
@@ -51,6 +52,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         CompanyReview.objects.filter(pk=instance.pk).update(**validated_data)
+   
         return CompanyReview.objects.filter(pk=instance.pk).first()
 
     def delete(self, request, pk):
