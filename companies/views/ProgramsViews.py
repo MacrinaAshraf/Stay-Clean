@@ -149,7 +149,7 @@ class SelectedProgramView(viewsets.ModelViewSet):
         serializer = SelectedProgramSerializer(programs, many=True)
         return Response(serializer.data)
 
-    @action(methods=['post'], detail=False, name="update pay")
+    @action(methods=['put'], detail=False, name="update pay")
     def user_pay(self, request):
         program = SelectedProgram.objects.filter(id=request.data['select']).first()
         if program is None:
