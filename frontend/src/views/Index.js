@@ -14,6 +14,7 @@ class Index extends React.Component {
     all_companies: [],
     most_review_program: {},
     most_selected_program: {},
+    most_rated_program: {},
   }
 
   all_companies = () => {
@@ -53,6 +54,18 @@ class Index extends React.Component {
       })
       .catch(error => this.setState({ most_selected_program: {} }))
   }
+  most_rated_program = () => {
+    axios.get('http://127.0.0.1:8000/api/programs/most_rated_program')
+      .then(res => {
+        if (res.data.most_rated_program) {
+          this.setState({ most_rated_program: res.data.most_rated_program })
+        }
+        else {
+          this.setState({ most_rated_program: {} })
+        }
+      })
+      .catch(error => this.setState({ most_rated_program: {} }))
+  }
 
 
   componentDidMount() {
@@ -78,11 +91,13 @@ class Index extends React.Component {
     this.all_companies();
     this.most_review_program();
     this.most_selected_program();
+    this.most_rated_program();
 
     this.interval = setInterval(() => {
       this.all_companies();
       this.most_review_program();
       this.most_selected_program();
+      this.most_rated_program();
 
     }, 12000);
 
@@ -108,6 +123,7 @@ class Index extends React.Component {
               <TapsMost
                 most_selected_program={this.state.most_selected_program}
                 most_review_program={this.state.most_review_program}
+                most_rated_program={this.state.most_rated_program}
               />
             </Container>
           </section>

@@ -36,7 +36,6 @@ const CompanyRegister = (props) => {
   const [conPasswordErr, setConPasswordErr] = useState('');
   const [file, setFile] = useState('');
   const [fileErr, setFileErr] = useState('');
-  const [error, setError] = useState(false);
   const [errorCounter, setErrorCounter] = useState(0);
 
 
@@ -44,33 +43,37 @@ const CompanyRegister = (props) => {
     e.preventDefault();
 
     var promise = new Promise((resolve, reject) => {
-      setError(0);
+      setErrorCounter(0);
       setTimeout(() => resolve("done"), 1000);
     });
-    promise.then((r) => {
+    promise.then((res) => {
       if (name.length < 2) {
-        setError(1)
+        setErrorCounter(1)
         setNameErr("company name should containe more than 2 characters")
       }
       else {
         setNameErr("")
       }
+    })
+      .then((res) => {
 
-      if (description.length < 15) {
-        setError(1)
-        setDescriptionErr("company name should containe more than 15 characters")
-      }
-      else {
-        setDescriptionErr("")
-      }
+        if (description.length < 15) {
+          setErrorCounter(1)
+          setDescriptionErr("company name should containe more than 15 characters")
+        }
+        else {
+          setDescriptionErr("")
+        }
+      })
+      .then((res) => {
 
-      if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-        setError(1)
-        setEmailErr("Inavalid Email")
-      }
-      else {
-        
-        axios.post('http://localhost:8000/user-api/user/user_email/', {
+        if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+          setErrorCounter(1)
+          setEmailErr("Inavalid Email")
+        }
+        else {
+
+          axios.post('http://localhost:8000/user-api/user/user_email/', {
             email: email
           })
             .then(function (response) {
@@ -92,84 +95,104 @@ const CompanyRegister = (props) => {
                 setEmailErr("exist / select another one")
               }
             });
-      }
+        }
+      })
+      .then((res) => {
 
-      if (address.length < 15) {
-        setError(1)
-        setAddressErr("company name should containe more than 15 characters")
-      }
-      else {
-        setAddressErr("")
-      }
-
-
-      if (! /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+-]).{10}$/.test(password)) {
-        setError(1)
-        setPasswordErr("password should contain 10 character (lowercase, upercase and special character)")
-      }
-      else {
-        setPasswordErr("")
-      }
-     
-      if (password != conPassword) {
-        setError(1)
-        setConPasswordErr("not same as password")
-      }
-      else {
-        setConPasswordErr("")
-      }
-
-      if (file) {
-        setFileErr("")
-      }
-      else {
-        setError(1)
-        setFileErr("PDF File is Mandatory")
-      }
-
-    }).then(()=>{
-
-      let form_data = new FormData();
-
-      form_data.append('policy', file, file.name);
-
-      axios.post('http://localhost:8000/user-api/user/', {
-        name,
-        email,
-        description,
-        address,
-        password,
-        is_company: true,
-        is_active: false
-      },
-      ).then(response => {
-        if(errorCounter != 1)
-        {
-        if (response.status.code === 400) {
-          setError(true);
+        if (address.length < 15) {
+          setErrorCounter(1)
+          setAddressErr("company name should containe more than 15 characters")
         }
         else {
-          // const { token } = response.data;
-          // localStorage.setItem("token", token);
-          axios.post('http://127.0.0.1:8000/user-api/company/add_policy/', form_data).then(res => {
-            if (res.data) {
-              // console.log(res.data);
-              // sessionStorage.setItem('is_company', res.data['is_company'])
-              // sessionStorage.setItem('email', res.data['email'])
-              window.location.href = "http://localhost:3000/error";
+          setAddressErr("")
+        }
+      })
+      .then((res) => {
 
-            }
-          }).catch(error => console.error(error));
+
+        if (! /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+-]).{10}$/.test(password)) {
+          setErrorCounter(1)
+          setPasswordErr("password should contain 10 character (lowercase, upercase and special character)")
+        }
+        else {
+          setPasswordErr("")
+        }
+      }).then((res) => {
+
+        if (password != conPassword) {
+          setErrorCounter(1)
+          setConPasswordErr("not same as password")
+        }
+        else {
+          setConPasswordErr("")
+        }
+      }).then((res) => {
+
+        if (file) {
+          setFileErr("")
+        }
+        else {
+          setErrorCounter(1)
+          setFileErr("PDF File is Mandatory")
         }
       }
-      }, (error) => {
-        console.log(error);
-      });
-    });
+
+      ).then((res) => {
+        console.log(errorCounter)
+        if (errorCounter == 1) {
+          let form_data = new FormData();
+
+          form_data.append('policy', file, file.name);
+
+          axios.post('http://localhost:8000/user-api/user/', {
+            name,
+            email,
+            description,
+            address,
+            password,
+            is_company: true,
+            is_active: false
+          },
+          ).then(response => {
+
+            if (response.status.code === 400) {
+              setErrorCounter(true);
+            }
+            else {
+              // const { token } = response.data;
+              // localStorage.setItem("token", token);
+              axios.post('http://127.0.0.1:8000/user-api/company/add_policy/', form_data).then(res => {
+                if (res.data) {
+                  // console.log(res.data);
+                  // sessionStorage.setItem('is_company', res.data['is_company'])
+                  // sessionStorage.setItem('email', res.data['email'])
+                  window.location.href = "http://localhost:3000/error";
+
+                }
+              }).catch(error => console.error(error));
+            }
+          })
+        }
 
 
 
-    
+
+
+
+
+
+
+
+
+
+
+
+      })
+
+
+
+
+
   };
 
 
@@ -358,11 +381,11 @@ const CompanyRegister = (props) => {
                             required
                           />
                         </InputGroup>
-                        
+
                       </FormGroup>
                       {fileErr ?
-                          (<div className="alert alert-danger p-3" role="alert"> {fileErr}</div>) :
-                          (<></>)}
+                        (<div className="alert alert-danger p-3" role="alert"> {fileErr}</div>) :
+                        (<></>)}
                       <div className="text-center">
                         <Button
                           className="mt-4"

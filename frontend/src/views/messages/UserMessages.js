@@ -24,7 +24,6 @@ class Messages extends React.Component {
     all_companies: [],
     selectedCompany: -1,
     myMess: "",
-    enableMessage:true,
   }
 
   all_companies = () => {
@@ -33,7 +32,7 @@ class Messages extends React.Component {
         if (res.data) {
           this.setState({ all_companies: res.data })
           if (res.data.length != 0) {
-            this.setState({ selectedCompany: res.data[0].id,enableMessage:true })
+            this.setState({ selectedCompany: res.data[0].id })
           }
         }
       })
@@ -57,7 +56,7 @@ class Messages extends React.Component {
       }, {
         headers: {
           Authorization:
-          "Token " + localStorage.getItem("token"),
+            "Token " + localStorage.getItem("token"),
         },
       }).then(() => {
         this.setState({ myMess: "" });
@@ -73,8 +72,8 @@ class Messages extends React.Component {
       document.documentElement.scrollTop = 0;
       document.scrollingElement.scrollTop = 0;
       this.refs.main.scrollTop = 0;
-  
-      this.all_companies();    
+
+      this.all_companies();
       this.interval = setInterval(() => {
         this.all_companies();
       }, 8000);
@@ -83,7 +82,7 @@ class Messages extends React.Component {
     {
       // window.location.href = "/";
     }
-    
+
   }
 
 
@@ -118,6 +117,14 @@ class Messages extends React.Component {
                       <h4 className="mb-1">Want to send message to company?</h4>
 
                       <Form onSubmit={this.handleSubmit}>
+
+
+
+
+
+
+
+
                         <FormGroup
                           className={classnames("mt-5", {
                             focused: this.state.nameFocused
@@ -132,6 +139,8 @@ class Messages extends React.Component {
                             defaultValue={this.state.selectedCompany}
                           >
 
+
+
                             {this.state.all_companies.map((comp) => (
                               (
                                 <>
@@ -142,6 +151,7 @@ class Messages extends React.Component {
 
                           </select>
                         </FormGroup>
+
 
 
                         <FormGroup className="mb-4">
@@ -166,7 +176,6 @@ class Messages extends React.Component {
                             className="btn-round"
                             color="default"
                             size="lg"
-                            disabled={this.state.enableMessage}
                           >
                             Send Message
                         </Button>

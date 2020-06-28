@@ -23,7 +23,7 @@ class Messages extends React.Component {
   state = {
     all_users: [],
     selectedUser: -1,
-    myMess: ""
+    myMess: "",
   }
 
   all_users = () => {
@@ -171,6 +171,7 @@ class Messages extends React.Component {
                             className="btn-round"
                             color="default"
                             size="lg"
+
                           >
                             Send Message
                         </Button>

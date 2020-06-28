@@ -113,6 +113,18 @@ class ProgramView(viewsets.ModelViewSet):
         else:
             return Response({}, status=status.HTTP_200_OK)
 
+    @action(detail=False, methods=['get'], name="Most Rated Program")
+    def most_rated_program(self, request):
+        program = Program.objects.all().order_by('-avgRate').first()
+        try:
+            serializer = ProgramSerializer(program, context={'request': request})
+            content = {
+                'most_rated_program': serializer.data
+            }
+            return Response(content, status=status.HTTP_200_OK)
+        except program.DoesNotExist:
+            return Response({}, status=status.HTTP_200_OK)
+
 
 class ProgramReviewView(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)

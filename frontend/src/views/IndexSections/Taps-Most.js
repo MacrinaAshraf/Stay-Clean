@@ -71,6 +71,23 @@ class TabsSection extends React.Component {
                   </NavLink>
                 </NavItem>
 
+
+                <NavItem>
+                  <NavLink
+                    style={{ color: 'darkorange', fontSize: '20px', fontWeight: 'bold' }}
+                    aria-selected={this.state.iconTabs === 3}
+                    className={classnames("mb-sm-3 mb-md-0", {
+                      active: this.state.iconTabs === 3
+                    })}
+                    onClick={e => this.toggleNavs(e, "iconTabs", 3)}
+                    href="#pablo"
+                    role="tab"
+                  >
+                   Most Rated Program
+                  </NavLink>
+                </NavItem>
+            
+            
               </Nav>
             </div>
             <Card className="shadow">
@@ -178,6 +195,60 @@ class TabsSection extends React.Component {
                     </Row>
 
                   </TabPane>
+
+                  <TabPane tabId="iconTabs3">
+                    <Row className="row-grid align-items-center">
+                      <Col className="order-md-2" md="6">
+                        <img
+                          alt="..."
+                          className="img-fluid floating"
+                          src={require("assets/img/dez/dez12.jpg")}
+                        />
+                      </Col>
+                      <Col className="order-md-2" md="6">
+                        
+                        {this.props.most_rated_program.id ?
+                          (<>
+
+                            <h3 className="display-3">
+                              {this.props.most_rated_program.name}
+                            </h3>
+
+                            <br />
+                            <p className="display-4" >
+
+                              {this.props.most_rated_program.description}
+                              <br />
+                              <br />
+                              <b>Duration:</b> {this.props.most_rated_program.duration}
+                              {this.props.most_rated_program.duration > 1 &&
+                                this.props.most_rated_program.duration < 11 ? (
+                                  <> Hours</>
+                                ) : (
+                                  <> Hour</>
+                                )}
+                              <br />
+                              <br />
+                              <b>Cost:</b> {this.props.most_rated_program.price}/5m<sup>2</sup > $
+
+                        </p>
+
+                          </>)
+                          :
+                          (<>
+                            <img
+                              alt="..."
+                              className="img-fluid floating"
+                              src={require("assets/img/soon.png")}
+                            />
+                          </>)
+                        }
+
+                      </Col>
+
+                    </Row>
+                  </TabPane>
+
 
                 </TabContent>
               </CardBody>
