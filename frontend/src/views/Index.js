@@ -15,7 +15,6 @@ class Index extends React.Component {
     all_companies: [],
     most_review_program: {},
     most_selected_program: {},
-    all_adv: []
   }
 
   all_companies = () => {
@@ -28,16 +27,6 @@ class Index extends React.Component {
       .catch(error => console.error(error))
   }
 
-  all_adv = () => {
-    axios.get('http://127.0.0.1:8000/api/adv/')
-      .then(res => {
-        if (res.data) {
-          
-          this.setState({ all_adv: res.data })
-        }
-      })
-      .catch(error => console.error(error))
-  }
 
   most_review_program = () => {
     axios.get('http://127.0.0.1:8000/api/programs/most_review_program')
@@ -90,13 +79,11 @@ class Index extends React.Component {
     this.all_companies();
     this.most_review_program();
     this.most_selected_program();
-    this.all_adv();
 
     this.interval = setInterval(() => {
       this.all_companies();
       this.most_review_program();
       this.most_selected_program();
-      this.all_adv();
 
     }, 12000);
 
@@ -179,33 +166,18 @@ class Index extends React.Component {
             </Container>
           </section>
           <Pay />
-{/* 
-          {this.state.all_adv.length > 0 ?
-            (<>
-
-              <Carousel>
-                {
-                  this.state.all_adv.map(adv => (
-                    
-                    <div>
-                      <img src={adv.image} />
-                      <p className="legend">Legend 1</p>
-                    </div>
-                    
-                  ))
-                }
-              </Carousel> */}
 
 
-{/* 
+
+          {/* 
             </>)
             :
             (<></>)} */}
 
 
-<>
+          <>
 
-</>
+          </>
 
 
 

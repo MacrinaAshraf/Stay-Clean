@@ -107,6 +107,7 @@ class Profile extends React.Component {
       this.setState({ myNotes: "" });
       this.setState({ selectProgramEror: "" });
       this.setState({ selectProgramSuccess: "wait the company will call you soon" });
+      
 
     });
   }
