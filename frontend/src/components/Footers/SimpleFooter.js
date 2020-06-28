@@ -50,6 +50,7 @@ class SimpleFooter extends React.Component {
                       target="_blank"
                     >
                       Open Source Application Development
+                     
                     </NavLink>
                   </NavItem>
             

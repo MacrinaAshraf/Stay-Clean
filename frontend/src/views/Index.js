@@ -116,7 +116,7 @@ class Index extends React.Component {
             <Container>
               <Row className="justify-content-center text-center mb-lg">
                 <Col lg="8">
-                  <h2 className="display-3">Top Companies</h2>
+                  <h2 className="display-3">All Companies</h2>
                 </Col>
               </Row>
               <Row>
@@ -132,10 +132,10 @@ class Index extends React.Component {
                             style={{ width: "400px", height: "300px", objectFit: "fill" }}
                           />
                           <div className="pt-5 text-center">
-                            <h5 className="title">
-                              <Link to={'/company/' + comp.id}><span className="d-block mb-1">{comp.name}</span></Link>
+                            <h4 >
+                              <Link to={'/company/' + comp.id}><span className="d-block mb-1 font-weight-bold ">{comp.name}</span></Link>
 
-                            </h5>
+                            </h4>
                           </div>
                         </div>
                       </Col>
