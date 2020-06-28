@@ -1,7 +1,6 @@
 import React from "react";
 import axios from 'axios';
 import { Link } from "react-router-dom";
-import Pay from "./IndexSections/Pay.js";
 import Hero from "./IndexSections/Hero.js";
 import Blogs from "./IndexSections/Blogs.js";
 import TapsMost from "./IndexSections/Taps-Most";
@@ -27,10 +26,7 @@ class Index extends React.Component {
       .catch(error => console.error(error))
   }
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 1cefe62c91aa08d3accacdfcb5039b0858a9cd76
   most_review_program = () => {
     axios.get('http://127.0.0.1:8000/api/programs/most_review_program')
       .then(res => {
@@ -168,7 +164,7 @@ class Index extends React.Component {
               </Row>
             </Container>
           </section>
-          <Pay />
+       
 
 
 

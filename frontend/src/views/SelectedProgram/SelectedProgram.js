@@ -1,5 +1,7 @@
 import axios from "axios";
 import TableDetails from "./TableDetails";
+import Pay from "../IndexSections/Pay.js";
+
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Table } from "reactstrap";
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
@@ -122,7 +124,7 @@ const SelectedProgram = (props) => {
                             </> :
                             <>
                             <th>Selected Area</th>
-                            <th>Your Code</th>
+                            <th>Order Code</th>
                             </>
                         }
 
@@ -142,7 +144,7 @@ const SelectedProgram = (props) => {
                         )}
                 </tbody>
             </Table>
-            
+            <Pay />
             <SimpleFooter />
         </div>
 

@@ -122,7 +122,7 @@ function TableDetail ({ item }) {
                         <td>{item.area}/5m<sup>2</sup ></td>
                         <td>{
                             item.pay ?
-                            (<>Yes</>)
+                            (<>Booked</>)
                             :
                         (<>{item.id+4444}</>)
                             }</td>
