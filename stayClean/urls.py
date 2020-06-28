@@ -8,6 +8,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 from companies.views.CompanyViews import CompanyView, CompanyReviewView
 from companies.views.ProgramsViews import ProgramView, ProgramReviewView, ProgramPhotoView, SelectedProgramView
 from companies.views.MessagesViews import MessageView
+from advertisement.views import AdvertisementView
 from users.views import CustomerView, UserView
 
 router = routers.SimpleRouter()
@@ -17,6 +18,7 @@ router.register('reviewsC', CompanyReviewView)
 router.register('selected', SelectedProgramView)
 router.register('photo', ProgramPhotoView)
 router.register('message', MessageView)
+router.register('adv', AdvertisementView)
 
 user_router = routers.SimpleRouter()
 user_router.register('customer', CustomerView)

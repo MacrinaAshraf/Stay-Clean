@@ -9,11 +9,13 @@ import { Container, Row, Col } from "reactstrap";
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
 
+
 class Index extends React.Component {
   state = {
     all_companies: [],
     most_review_program: {},
     most_selected_program: {},
+    all_adv: []
   }
 
   all_companies = () => {
@@ -21,6 +23,17 @@ class Index extends React.Component {
       .then(res => {
         if (res.data) {
           this.setState({ all_companies: res.data })
+        }
+      })
+      .catch(error => console.error(error))
+  }
+
+  all_adv = () => {
+    axios.get('http://127.0.0.1:8000/api/adv/')
+      .then(res => {
+        if (res.data) {
+          
+          this.setState({ all_adv: res.data })
         }
       })
       .catch(error => console.error(error))
@@ -77,11 +90,13 @@ class Index extends React.Component {
     this.all_companies();
     this.most_review_program();
     this.most_selected_program();
+    this.all_adv();
 
     this.interval = setInterval(() => {
       this.all_companies();
       this.most_review_program();
       this.most_selected_program();
+      this.all_adv();
 
     }, 12000);
 
@@ -164,6 +179,36 @@ class Index extends React.Component {
             </Container>
           </section>
           <Pay />
+{/* 
+          {this.state.all_adv.length > 0 ?
+            (<>
+
+              <Carousel>
+                {
+                  this.state.all_adv.map(adv => (
+                    
+                    <div>
+                      <img src={adv.image} />
+                      <p className="legend">Legend 1</p>
+                    </div>
+                    
+                  ))
+                }
+              </Carousel> */}
+
+
+{/* 
+            </>)
+            :
+            (<></>)} */}
+
+
+<>
+
+</>
+
+
+
         </main>
         <SimpleFooter />
       </>
