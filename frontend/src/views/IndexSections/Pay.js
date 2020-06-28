@@ -128,7 +128,7 @@ class Pay extends React.Component {
             <Row className="justify-content-between align-items-center">
               <Col className="mb-5 mb-lg-0" lg="5">
 
-                <Form onSubmit={this.submitCode} style={{ width: "50%" }}>
+                <Form onSubmit={this.submitCode} style={{ width: "60%" }}>
 
                   <FormGroup
                     className={classnames("mt-0", {
@@ -151,11 +151,13 @@ class Pay extends React.Component {
                   </FormGroup>
 
                   <Button
+                   style={{ fontSize:'18px',color:'orange'}}
+ 
                     block
-                    className="btn-round"
+                    className="btn-round "
                     color="default"
                   >
-                    Check
+                    Book
         </Button>
 
                 </Form>
@@ -163,11 +165,11 @@ class Pay extends React.Component {
                 <br />
                 <br />
 
-                {/* <StripeCheckout
+                 <StripeCheckout
                   stripeKey={this.state.payKey}
                   token={this.handlePayOnline}
                   style={{ width: "100%", height: "100%" }}
-                  disabled={this.state.disablePay} /> */}
+                  disabled={this.state.disablePay} /> 
 
 
 

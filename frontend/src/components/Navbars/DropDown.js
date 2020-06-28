@@ -68,13 +68,7 @@ class DropDown extends React.Component {
           </Link>
         ) : (
           <Nav className="navbar-nav-hover align-items-lg-center font-weight-bold" navbar>
-            <Link
-              to="/user-messages"
-              tag={Link}
-              style={{ color: "orange", paddingRight: "20px" }}
-            >
-              Messages
-            </Link>
+           
             <Link
               to="/programs"
               tag={Link}
@@ -88,6 +82,13 @@ class DropDown extends React.Component {
               style={{ color: "orange", paddingRight: "20px" }}
             >
               Selected programs
+            </Link>
+            <Link
+              to="/user-messages"
+              tag={Link}
+              style={{ color: "orange", paddingRight: "20px" }}
+            >
+              Messages
             </Link>
           </Nav>
         )}
