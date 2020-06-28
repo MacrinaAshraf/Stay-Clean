@@ -105,7 +105,8 @@ function TableDetail ({ item }) {
                     )
                     : (<>
 
-
+                        <td>{program.name}</td>
+                        <td>{program.price}</td>
                         <td>{item.notes}</td>
                         <td>{item.address}</td>
                         <td>
@@ -117,9 +118,8 @@ function TableDetail ({ item }) {
                             />
 
                         </td>
-                        <td>{program.name}</td>
-                        <td>{program.price}</td>
-                        <td>{item.area}</td>
+                       
+                        <td>{item.area}/5m<sup>2</sup ></td>
                         <td>{
                             item.pay ?
                             (<>Yes</>)

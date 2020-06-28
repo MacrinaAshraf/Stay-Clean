@@ -15,7 +15,6 @@ class Index extends React.Component {
     all_companies: [],
     most_review_program: {},
     most_selected_program: {},
-    all_adv: []
   }
 
   all_companies = () => {
@@ -23,17 +22,6 @@ class Index extends React.Component {
       .then(res => {
         if (res.data) {
           this.setState({ all_companies: res.data })
-        }
-      })
-      .catch(error => console.error(error))
-  }
-
-  all_adv = () => {
-    axios.get('http://127.0.0.1:8000/api/adv/')
-      .then(res => {
-        if (res.data) {
-          
-          this.setState({ all_adv: res.data })
         }
       })
       .catch(error => console.error(error))
@@ -90,13 +78,11 @@ class Index extends React.Component {
     this.all_companies();
     this.most_review_program();
     this.most_selected_program();
-    this.all_adv();
 
     this.interval = setInterval(() => {
       this.all_companies();
       this.most_review_program();
       this.most_selected_program();
-      this.all_adv();
 
     }, 12000);
 

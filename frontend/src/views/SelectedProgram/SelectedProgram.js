@@ -110,19 +110,19 @@ const SelectedProgram = (props) => {
 
             <Table className=" table-bordered table-hover mt-2 h5 text-center"  >
                 <thead>
-                    <tr   >
-                        <th>program name</th>
-                        <th>program price</th>
-                        <th >note</th>
-                        <th>address</th>
-                        <th>rate</th>
-                        
+                    <tr  style={{ background: 'navy' , color:'orange' , fontSize:'23px' , textAlign:'center',fontFamily:'Lobster, cursive'}}  >
+                        <th>Program Name</th>
+                        <th>Program Price</th>
+                        <th >Note</th>
+                        <th>Address</th>
+                        <th>Rate</th>
+                      
                         {sessionStorage.getItem("is_company") === "true" ?
                             <>
                             </> :
                             <>
-                            <th>your area</th>
-                            <th>payed</th>
+                            <th>Selected Area</th>
+                            <th>Your Code</th>
                             </>
                         }
 
@@ -142,6 +142,7 @@ const SelectedProgram = (props) => {
                         )}
                 </tbody>
             </Table>
+            
             <SimpleFooter />
         </div>
 

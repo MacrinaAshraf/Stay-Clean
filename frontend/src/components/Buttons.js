@@ -20,7 +20,7 @@ const ButtonsComponent = (props) => {
        <ButtonGroup>
           < Link 
           style={{color:'orange'}}
-                className="  mr-4 text-capitalize"
+                className="  mr-4 text-capitalize font-weight-bold mt-2"
                
                 
                 >
@@ -32,12 +32,11 @@ const ButtonsComponent = (props) => {
           
           < Button
            style={{backgroundColor:'#4682B4',marginRight:'20px'}}
-            className="btn-neutral btn-icon mr-4"
-            color="default"
+            
             target="_blank"
             onClick={handleLogout}
           >
-            <span className="nav-link-inner--text ml-1" style={{color:'orange'}}>
+            <span className='text-capitalize font-weight-bold' style={{color:'orange',fontWeight:'bolder',fontFamily:'Lobster, cursive',fontSize:'20px'}}>
               Log out
 
                       </span>

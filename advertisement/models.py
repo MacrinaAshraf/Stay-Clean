@@ -9,3 +9,7 @@ class Advertisement(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        relative = self.image.url
+        return ('http://%s%s' % (Site.objects.get_current().domain, relative))
