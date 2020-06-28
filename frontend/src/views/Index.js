@@ -27,6 +27,10 @@ class Index extends React.Component {
       .catch(error => console.error(error))
   }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1cefe62c91aa08d3accacdfcb5039b0858a9cd76
   most_review_program = () => {
     axios.get('http://127.0.0.1:8000/api/programs/most_review_program')
       .then(res => {
@@ -165,33 +169,18 @@ class Index extends React.Component {
             </Container>
           </section>
           <Pay />
-{/* 
-          {this.state.all_adv.length > 0 ?
-            (<>
-
-              <Carousel>
-                {
-                  this.state.all_adv.map(adv => (
-                    
-                    <div>
-                      <img src={adv.image} />
-                      <p className="legend">Legend 1</p>
-                    </div>
-                    
-                  ))
-                }
-              </Carousel> */}
 
 
-{/* 
+
+          {/* 
             </>)
             :
             (<></>)} */}
 
 
-<>
+          <>
 
-</>
+          </>
 
 
 

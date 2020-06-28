@@ -1,4 +1,8 @@
 import React from "react";
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1cefe62c91aa08d3accacdfcb5039b0858a9cd76
 import { Button, Container, Row, Col, UncontrolledCarousel } from "reactstrap";
 
 const items = [

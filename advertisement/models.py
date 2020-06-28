@@ -13,3 +13,4 @@ class Advertisement(models.Model):
     def get_absolute_url(self):
         relative = self.image.url
         return ('http://%s%s' % (Site.objects.get_current().domain, relative))
+
