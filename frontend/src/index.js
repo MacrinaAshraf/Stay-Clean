@@ -13,7 +13,7 @@ import Test from "views/auth/test.js";
 
 import CompanyRegister from "views/auth/CompanyRegister.js";
 import ListCompanyPrograms from "views/programs/company/list";
-import List from "views/programs/ListAllPrograms";  
+import List from "views/programs/ListAllPrograms";
 import SelectedProgram from "views/SelectedProgram/SelectedProgram.js";
 import CompanySelectedProgram from "views/SelectedProgram/CompanySelectedProgram.js";
 import UserMessages from "views/messages/UserMessages.js";
@@ -26,80 +26,133 @@ import ListCompanyOffers from './views/offers/company/listOffers'
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      <Route path="/" exact render={props => <Index {...props} />} />
-      <Route 
-        path="/login" 
-        exact 
-        render={props => <Login {...props} />} 
-      />
+      <Route path="/" exact>
+        {
+          sessionStorage.getItem('is_company') === "true" ?
+            <ListCompanyPrograms />
+            : <Index />
+        }
+      </Route>
+      <Route
+        path="/login"
+        exact>
+        {localStorage.getItem('token') && sessionStorage.getItem('is_company') === "false" ?
+          <Index />
+          : sessionStorage.getItem('is_company') === "true" ?
+            <ListCompanyPrograms />
+            : <Login />}
+      </Route>
       <Route
         path="/register"
-        exact
-        render={props => <Register {...props} />}
-      />
+        exact>
+        {localStorage.getItem('token') && sessionStorage.getItem('is_company') === "false" ?
+          <Index />
+          : sessionStorage.getItem('is_company') === "true" ?
+            <ListCompanyPrograms />
+            : <Register />}
+      </Route>
       <Route
         path="/company-register"
-        exact
-        render={props => <CompanyRegister {...props} />}
-      />
-       <Route
+        exact>
+        {localStorage.getItem('token') && sessionStorage.getItem('is_company') === "false" ?
+          <Index />
+          : sessionStorage.getItem('is_company') === "true" ?
+            <ListCompanyPrograms />
+            : <CompanyRegister />}
+      </Route>
+      <Route
         path="/user-messages"
-        exact
-        render={props => <UserMessages {...props} />}
-      />
-       <Route
+        exact>
+        {
+          localStorage.getItem('token') && sessionStorage.getItem('is_company') === "false" ?
+            <UserMessages />
+            : sessionStorage.getItem('is_company') === "true" ?
+              <CompanyMessages />
+              : <Index />
+        }
+      </Route>
+      <Route
         path="/company-messages"
         exact
-        render={props => <CompanyMessages {...props} />}
-      />
+      >
+        {localStorage.getItem('token') && sessionStorage.getItem('is_company') === "false" ?
+          <UserMessages />
+          : sessionStorage.getItem('is_company') === "true" ?
+            <CompanyMessages />
+            : <Index />}
+      </Route>
       <Route
         path="/programs/:id"
         exact
         render={props => <Program {...props} />}
       />
-       <Route
+      <Route
         path="/company/:id"
         exact
         render={props => <Company {...props} />}
       />
-        <Route
+      <Route
         path="/programs"
-        exact
-        render={props => <List {...props} />}
-      />
+        exact>
+        {localStorage.getItem('token') && sessionStorage.getItem('is_company') === "true" ?
+          <ListCompanyPrograms />
+          :
+          <List />}
+      </Route>
+      {/* render={props => <List {...props} />}
+      /> */}
       <Route
         path="/company-programs"
         exact
-        render={props => <ListCompanyPrograms {...props} />}
-      />
+      >
+        {localStorage.getItem('token') && sessionStorage.getItem('is_company') === "true" ?
+          <ListCompanyPrograms />
+          :
+          <List />
+        }
+      </Route>
       <Route
         path="/selected-programs"
-        exact
-        render={props => <SelectedProgram {...props} />}
-      />
+        exact>
+        {localStorage.getItem('token') && sessionStorage.getItem('is_company') === "false" ?
+          <SelectedProgram />
+          : sessionStorage.getItem('is_company') === "true" ?
+            <CompanySelectedProgram />
+            : <Index />}
+      </Route>
       <Route
         path="/company-selected-programs"
-        exact
-        render={props => <CompanySelectedProgram {...props} />}
-      />
+        exact>
+        {localStorage.getItem('token') && sessionStorage.getItem('is_company') === "false" ?
+          <SelectedProgram />
+          : sessionStorage.getItem('is_company') === "true" ?
+            <CompanySelectedProgram />
+            : <Index />}
+      </Route>
+
       <Route
         path="/offer"
-        exact
-        render={props => <ListCompanyOffers {...props} />}
-      />
+        exact>
+        {localStorage.getItem('token') && sessionStorage.getItem('is_company') === "true" ?
+          <ListCompanyOffers />
+          :
+          <Index />
+        }
+      </Route>
+
       <Route
         path="/error"
         exact
         render={props => <Error {...props} />}
       />
 
-       <Route
+      <Route
         path="/test"
         exact
         render={props => <Test {...props} />}
-      /> 
+      />
 
-      
+
       <Redirect to="/" />
     </Switch>
   </BrowserRouter>,
