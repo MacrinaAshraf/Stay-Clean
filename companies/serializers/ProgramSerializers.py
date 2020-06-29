@@ -129,6 +129,8 @@ class SelectedProgramSerializer(serializers.ModelSerializer):
             notes=validated_data.get('notes'),
             price=validated_data.get('price')
         )
+        customer.discount = 0
+        customer.save()
         numberOfSelectedPrograms = SelectedProgram.objects.filter(customer=customer).count()
         if numberOfSelectedPrograms % 5 == 0 & customer.discount < 80:
             customer.discount = customer.discount+20
