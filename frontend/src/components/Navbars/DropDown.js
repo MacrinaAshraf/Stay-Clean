@@ -65,6 +65,13 @@ class DropDown extends React.Component {
             >
               Messages
             </Link>
+            <Link
+              to="/offer"
+              tag={Link}
+              style={{ color: "orange", paddingRight: "20px" }}
+            >
+              Offers
+            </Link>
           </Nav>
         ) : (
           <Nav className="navbar-nav-hover align-items-lg-center font-weight-bold" navbar>

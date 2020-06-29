@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-// import classnames from "classnames";
 import { Link } from "react-router-dom";
-// import Review from "../IndexSections/Review.js";
-// import DemoNavbar from "components/Navbars/DemoNavbar.js";
-// import SimpleFooter from "components/Footers/SimpleFooter.js";
 import "assets/css/scroll.css";
 
 import {
@@ -12,11 +8,10 @@ import {
     CardTitle,
 } from "reactstrap";
 
-class OfferDetails extends React.Component { // ({ offer, programs }) => {
+class OfferDetails extends React.Component {
 
     state = {
         offer: this.props.offer,
-        // customerId: this.props.customerID,
         program: ""
     }
 
@@ -35,26 +30,11 @@ class OfferDetails extends React.Component { // ({ offer, programs }) => {
         this.getProgramName(this.state.offer.program);
     }
 
-    // const [program, setProgram] = useState({});
-
-
-    // useEffect(async () => {
-    //     await axios.get(`http://127.0.0.1:8000/api/programs/${offer.program}`, {
-    //         headers: {
-    //             Authorization:
-    //                 "Token " + localStorage.getItem("token"),
-    //         },
-    //     }).then(res => {
-    //         setProgram(res.data)
-    //     });
-
-    // });
-
     render() {
         return (
             <CardBody>
                 <CardTitle>
-                    <h4>{this.state.program}</h4>
+                    <Link to={'/programs/' + this.state.offer.program}><h4>{this.state.program}</h4></Link>
                 </CardTitle>
                 <CardTitle>
                     {this.state.offer.offer}

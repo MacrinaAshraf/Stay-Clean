@@ -73,6 +73,7 @@
     "react-router-dom": "5.1.2",
     "react-scripts": "3.4.1",
     "react-scrollbar-js": "^1.0.1",
+    "react-select": "^3.1.0",
     "react-star-rating-component": "^1.4.1",
     "react-stripe-checkout": "^2.6.3",
     "react-stripe-elements": "^6.1.2",
