@@ -102,9 +102,10 @@ const CompanySelectedProgram = (props) => {
                         <Table className=" table-bordered table-hover mt-2 h5 text-center"  >
 
                 <thead>
-                    <tr  style={{ background: 'navy' , color:'orange' , fontSize:'20px' , textAlign:'center'}}>
+                <tr  style={{ background: 'navy' , color:'orange' , fontSize:'20px' , textAlign:'center',fontFamily:'Lobster, cursive'}}  >
+
                         <th>customer name</th>
-                        <th>customer phone number</th>
+                        <th>customer number</th>
                         <th>program name</th>
                         <th>program price</th>
                         <th>note</th>

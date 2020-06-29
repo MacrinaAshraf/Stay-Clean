@@ -43,7 +43,7 @@ class DropDown extends React.Component {
     return (
       <>
         {sessionStorage.getItem("is_company") === "true" ? (
-          <Link className="navbar-nav-hover align-items-lg-center" navbar>
+          <Nav className="navbar-nav-hover align-items-lg-center font-weight-bold" navbar>
             <Link
               to="/company-programs"
               tag={Link}
@@ -65,7 +65,7 @@ class DropDown extends React.Component {
             >
               Messages
             </Link>
-          </Link>
+          </Nav>
         ) : (
           <Nav className="navbar-nav-hover align-items-lg-center font-weight-bold" navbar>
            

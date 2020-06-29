@@ -87,7 +87,13 @@ function TableDetail({ item }) {
                         <td>{program.name}</td>
                         <td>{program.price}</td>
                         <td>{item.notes}</td>
-                        <td>{item.address}</td>
+                        <td>  <details>
+                                <summary>Details: {item.address.split('/')[2]}</summary>
+                                <p> latitude: {item.address.split('/')[0]} <br />
+                        longitude: {item.address.split('/')[1]} <br />
+                                </p>
+                            </details>
+</td>
                         <td>
                             <StarRatingComponent
                                 name="rate"

@@ -389,6 +389,8 @@ class Profile extends React.Component {
                                   <InputGroup className="input-group-alternative">
 
                                     <Input
+                                 style={{ fontSize:'20px',fontFamily:'Lobster, cursive',color:'navy'}}
+                                      
                                       type="text"
                                       onFocus={e => this.setState({ nameFocused: true })}
                                       onBlur={e => this.setState({ nameFocused: false })}

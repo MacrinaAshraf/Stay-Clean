@@ -140,6 +140,7 @@ class TabsSection extends React.Component {
               >
                 <NavItem>
                   <NavLink
+                   style={{ color: 'darkorange', fontSize: '20px', fontWeight: 'bold' , fontFamily:'Lobster, cursive'}}
                     aria-selected={this.state.iconTabs === 1}
                     className={classnames("mb-sm-3 mb-md-0", {
                       active: this.state.iconTabs === 1
@@ -153,6 +154,7 @@ class TabsSection extends React.Component {
                 </NavItem>
                 <NavItem>
                   <NavLink
+                   style={{ color: 'darkorange', fontSize: '20px', fontWeight: 'bold',fontFamily:'Lobster, cursive' }}
                     aria-selected={this.state.iconTabs === 2}
                     className={classnames("mb-sm-3 mb-md-0", {
                       active: this.state.iconTabs === 2
@@ -246,6 +248,8 @@ class TabsSection extends React.Component {
                                   >
                                     <InputGroup className="input-group-alternative">
                                       <Input
+                                       style={{ fontSize:'20px',color:'navy',fontFamily:'Lobster, cursive'}}
+
                                         type="text"
                                         value={`From : ${this.state.all_users[mess.customer_id]}`}
                                         disabled={true}
@@ -258,6 +262,7 @@ class TabsSection extends React.Component {
 
                                   <FormGroup className="mb-2">
                                     <Input
+                                     style={{ fontSize:'20px',color:'navy',fontFamily:'Lobster, cursive'}}
                                       className="form-control-alternative"
                                       cols="80"
                                       name="name"
