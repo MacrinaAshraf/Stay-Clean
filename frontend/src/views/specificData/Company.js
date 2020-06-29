@@ -18,6 +18,8 @@ import {
   Input,
   InputGroup,
   Row,
+  CardHeader,
+  CardTitle,
 } from "reactstrap";
 
 
@@ -28,7 +30,8 @@ class Profile extends React.Component {
     },
     programs: [],
     count: 0,
-    reviews: []
+    reviews: [],
+    offers: []
   }
 
   handleSubmit = event => {
@@ -40,7 +43,7 @@ class Profile extends React.Component {
       }, {
         headers: {
           Authorization:
-          "Token " + localStorage.getItem("token"),
+            "Token " + localStorage.getItem("token"),
         },
       }).then(() => {
         this.setState({ myReview: "" });
@@ -59,6 +62,17 @@ class Profile extends React.Component {
       })
       .catch(error => console.error(error))
 
+  }
+
+  getCompanyOffers = async () => {
+    axios.get(`http://127.0.0.1:8000/user-api/company/${this.props.match.params.id}/company_offers/`)
+      .then(res => {
+        if (res.data) {
+          console.log(res.data)
+          this.setState({ offers: res.data })
+        }
+      })
+      .catch(error => console.log(error))
   }
 
   getCompany_program = async () => {
@@ -92,11 +106,13 @@ class Profile extends React.Component {
 
       this.getCompany_program();
       this.getReviews();
+      this.getCompanyOffers();
 
       this.interval = setInterval(() => {
 
         this.getCompany_program();
         this.getReviews();
+        this.getCompanyOffers();
       }, 8000);
 
 
@@ -104,17 +120,9 @@ class Profile extends React.Component {
   }
 
 
-
-
-
-
   componentWillUnmount() {
     clearInterval(this.interval);
   }
-
-
-
-
 
 
   render() {
@@ -216,7 +224,6 @@ class Profile extends React.Component {
                       <div className="mt-5 py-5 border-top text-center">
                         <Row className="justify-content-center">
 
-
                         </Row>
                       </div>
                     </div>
@@ -254,10 +261,8 @@ class Profile extends React.Component {
                                     color="primary"
                                   >
                                     Learn more
-                          </Button>
+                                  </Button>
                                 </Link>
-
-
                               </CardBody>
                             </Card>
                           </Col>
@@ -269,26 +274,63 @@ class Profile extends React.Component {
                 </Container>
               </section>
 
+              <br />
+
+              {this.state.offers.length > 0 ?
+                (<>
+                  <Container>
+                    <Card>
+
+                      <CardHeader>
+                        <h3>Company Offers</h3>
+                      </CardHeader>
+                      <section className="row-grid align-items-center scrollbar style-9">
+                        {this.state.offers.map((offer, index) => (
+                          <CardBody>
+                            <CardTitle>
+                              <h4>{this.state.programs.find(program => program.id == offer.program).name}</h4>
+                              {/* <h4>{this.state.programs[0].id}</h4> */}
+                            </CardTitle>
+                            <CardTitle>
+                              {offer.offer}
+                            </CardTitle>
+                            <hr />
+                          </CardBody>
+
+                        ))}
+                      </section>
+                    </Card>
+                  </Container>
+                </>) :
+                (<></>)}
+
+
+
+              <br />
 
               {this.state.reviews.length > 0 ?
                 (<>
-                  <section className="row-grid align-items-center scrollbar style-9">
+                  <Container>
+                    <Card>
+                      <section className="row-grid align-items-center scrollbar style-9">
 
 
-                    {this.state.reviews.map((review, index) => (
-                      <Review
-                        customerID={review.customer}
-                        review={review.review}
-                      />
+                        {this.state.reviews.map((review, index) => (
+                          <CardBody>
+                            <Review
+                              customerID={review.customer}
+                              review={review.review}
+                            />
+                          </CardBody>
 
-                    ))}
+                        ))}
 
-                  </section>
-
-
-
+                      </section>
+                    </Card>
+                  </Container>
                 </>) :
                 (<></>)}
+
 
 
               {sessionStorage.getItem("is_company") != "true" ?

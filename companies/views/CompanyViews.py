@@ -64,12 +64,10 @@ class CompanyView(viewsets.ModelViewSet):
     
     @action(methods=['get'], detail=True, name="specific company offers")
     def company_offers(self, request, pk=None):
-        # company = get_object_or_404(Company,pk=request.user)
         offers = Offer.objects.filter(company=pk)
         serializer = OfferSerializer(offers,many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
-
 
 class CompanyReviewView(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
