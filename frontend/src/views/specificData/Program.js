@@ -395,6 +395,8 @@ class Profile extends React.Component {
                                     <InputGroup className="input-group-alternative">
 
                                       <Input
+                             style={{ fontSize:'18px',fontFamily:'Lobster, cursive',color:'navy'}}
+
                                         type="text"
                                         onFocus={e => this.setState({ nameFocused: true })}
                                         onBlur={e => this.setState({ nameFocused: false })}
@@ -496,6 +498,8 @@ class Profile extends React.Component {
                                     <InputGroup className="input-group-alternative">
 
                                       <Input
+                             style={{ fontSize:'18px',fontFamily:'Lobster, cursive',color:'navy'}}
+
                                         type="text"
                                         onFocus={e => this.setState({ nameFocused: true })}
                                         onBlur={e => this.setState({ nameFocused: false })}
@@ -516,6 +520,8 @@ class Profile extends React.Component {
                                     <InputGroup className="input-group-alternative">
 
                                       <Input
+                             style={{ fontSize:'18px',fontFamily:'Lobster, cursive',color:'navy'}}
+
                                         type="text"
                                         placeholder="Notes"
                                         onFocus={e => this.setState({ nameFocused: true })}
@@ -539,6 +545,8 @@ class Profile extends React.Component {
                                       <h5 className="m-1 p-1"> Area </h5>
 
                                       <Input
+                             style={{ fontSize:'18px',fontFamily:'Lobster, cursive',color:'navy'}}
+
                                         className="ml-2 pl-2"
                                         type="number"
                                         value={this.state.myArea}
@@ -546,6 +554,7 @@ class Profile extends React.Component {
                                           this.setState({ myArea: e.target.value })
                                         }}
                                         min="5"
+                                        
                                       />
                                     </InputGroup>
                                   </FormGroup>
@@ -557,6 +566,8 @@ class Profile extends React.Component {
                                     <InputGroup className="input-group-alternative">
 
                                       <Input
+                             style={{ fontSize:'18px',fontFamily:'Lobster, cursive',color:'navy'}}
+                                         
                                         type="date"
                                         value={this.state.myDate}
                                         onChange={e => {

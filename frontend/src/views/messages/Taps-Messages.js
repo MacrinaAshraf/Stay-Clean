@@ -133,6 +133,7 @@ render() {
             >
               <NavItem>
                 <NavLink
+                 style={{ color: 'darkorange', fontSize: '20px', fontWeight: 'bold',fontFamily:'Lobster, cursive' }}
                   aria-selected={this.state.iconTabs === 1}
                   className={classnames("mb-sm-3 mb-md-0", {
                     active: this.state.iconTabs === 1
@@ -140,12 +141,14 @@ render() {
                   onClick={e => this.toggleNavs(e, "iconTabs", 1)}
                   href="#pablo"
                   role="tab"
+                  
                 >
                   Sent Messages
                   </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink
+                 style={{ color: 'darkorange', fontSize: '20px', fontWeight: 'bold' , fontFamily:'Lobster, cursive' }}
                   aria-selected={this.state.iconTabs === 2}
                   className={classnames("mb-sm-3 mb-md-0", {
                     active: this.state.iconTabs === 2
@@ -154,7 +157,7 @@ render() {
                   href="#pablo"
                   role="tab"
                 >
-                  Recived Messages
+                  Received Messages
                   </NavLink>
               </NavItem>
 
@@ -183,6 +186,7 @@ render() {
                                   <InputGroup className="input-group-alternative">
 
                                     <Input
+                                     style={{ fontSize:'20px',color:'navy',fontFamily:'Lobster, cursive'}}
                                       type="text"
                                       value={`To : ${this.state.all_companies[mess.company]}`}
                                       disabled={true}
@@ -195,6 +199,7 @@ render() {
 
                                 <FormGroup className="mb-2">
                                   <Input
+                                   style={{ fontSize:'20px',color:'navy',fontFamily:'Lobster, cursive'}}  
                                     className="form-control-alternative"
                                     cols="80"
                                     name="name"

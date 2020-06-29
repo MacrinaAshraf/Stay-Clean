@@ -152,6 +152,8 @@ class Messages extends React.Component {
                         <FormGroup className="mb-4">
                           <InputGroup className="input-group-alternative">
                             <Input
+                             style={{ fontSize:'20px',fontFamily:'Lobster, cursive',color:'navy'}}
+
                               className="form-control-alternative"
                               cols="80"
                               name="name"
@@ -171,6 +173,7 @@ class Messages extends React.Component {
                             className="btn-round"
                             color="default"
                             size="lg"
+                            style={{ fontSize:'18px',color:'orange',fontFamily:'Lobster, cursive'}}
 
                           >
                             Send Message
