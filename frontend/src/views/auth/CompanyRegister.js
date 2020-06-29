@@ -35,6 +35,7 @@ const CompanyRegister = (props) => {
   const [conPassword, setConPassword] = useState('');
   const [conPasswordErr, setConPasswordErr] = useState('');
   const [file, setFile] = useState('');
+  const [image, setImage] = useState('');
   const [fileErr, setFileErr] = useState('');
   const [errorCounter, setErrorCounter] = useState(0);
 
@@ -143,6 +144,7 @@ const CompanyRegister = (props) => {
           let form_data = new FormData();
 
           form_data.append('policy', file, file.name);
+          form_data.append('image', image, image.name);
 
           axios.post('http://localhost:8000/user-api/user/', {
             name,
@@ -161,7 +163,7 @@ const CompanyRegister = (props) => {
             else {
               // const { token } = response.data;
               // localStorage.setItem("token", token);
-              axios.post('http://127.0.0.1:8000/user-api/company/add_policy/', form_data).then(res => {
+              axios.post('http://127.0.0.1:8000/user-api/company/add_image_policy/', form_data).then(res => {
                 if (res.data) {
                   // console.log(res.data);
                   // sessionStorage.setItem('is_company', res.data['is_company'])
@@ -220,6 +222,12 @@ const CompanyRegister = (props) => {
     const { target: { value } } = e;
     setConPassword(value);
   }
+
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0])
+    // console.log(e.target.files[0]);
+    // console.log("file", file);
+  };
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0])
@@ -368,7 +376,25 @@ const CompanyRegister = (props) => {
                         <InputGroup className="input-group-alternative">
                           <InputGroupAddon addonType="prepend">
                             <Label for="file">
-                              <h5>Please upload a copy of your policy in pdf format</h5>
+                              <h6>Please upload company's logo in png or jpeg format</h6>
+                            </Label>
+                          </InputGroupAddon>
+                          <Input
+                            id="file"
+                            type="file"
+                            accept="image/png, image/jpeg"
+                            onChange={handleImageChange}
+                            required
+                          />
+                        </InputGroup>
+
+                      </FormGroup>
+
+                      <FormGroup>
+                        <InputGroup className="input-group-alternative">
+                          <InputGroupAddon addonType="prepend">
+                            <Label for="file">
+                              <h6>Please upload a copy of company's policy in pdf format</h6>
                             </Label>
                           </InputGroupAddon>
                           <Input
