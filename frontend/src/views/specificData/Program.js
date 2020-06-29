@@ -106,7 +106,8 @@ class Profile extends React.Component {
       this.setState({ myNotes: "" });
       this.setState({ selectProgramEror: "" });
       this.setState({ selectProgramSuccess: "wait the company will call you soon" });
-
+      window.location.href="http://localhost:3000/selected-programs"
+       
       
     }).then(()=>{
 
@@ -351,7 +352,7 @@ class Profile extends React.Component {
                       </div>
                     </Card>
                   </Container>
-                </section>
+                </section>  
 
                 {this.state.reviews.length > 0 ?
                   (<>
@@ -612,7 +613,7 @@ class Profile extends React.Component {
                                         width: "30%"
                                       }}
                                     >
-                                      send
+                                      Book
                         </Button>
                                     <br />
                                     {this.state.selectProgramEror ?

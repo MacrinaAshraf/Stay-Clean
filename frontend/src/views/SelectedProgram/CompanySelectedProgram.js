@@ -111,7 +111,7 @@ const CompanySelectedProgram = (props) => {
                         <th>note</th>
                         <th>address</th>
                         <th>rate</th>
-                       
+                        <th>Order Code</th>
                       
                     
                     </tr>

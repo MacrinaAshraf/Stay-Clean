@@ -106,7 +106,12 @@ function TableDetail({ item }) {
 
                         </td>
 
-
+                        <td>{
+                            item.pay ?
+                                (<>Booked</>)
+                                :
+                                (<>{item.id + 4444}</>)
+                        }</td>
 
 
                     </>
