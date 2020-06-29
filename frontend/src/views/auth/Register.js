@@ -46,7 +46,7 @@ class Register extends React.Component {
       conPassword: "",
       conPasswordErr: "",
       errCounter: 0,
-      discount: "0",
+      discount: 0,
 
     }
   }
@@ -62,7 +62,7 @@ class Register extends React.Component {
 
       this.setState({
         errCounter: 0,
-        discount: "0",
+        discount: 0,
       }, () => {
 
         if (this.state.friendEmail != "") {
@@ -72,30 +72,22 @@ class Register extends React.Component {
           })
             .then((response) => {
               if (response.data.found == "true") {
-                return (true)
+                self.setState({ discount: 50 })
+                self.setState({ friendEmailError: "" })
 
               } else {
-                return (false)
-              }
-            })
-            .then((value) => {
-              // console.log(value)
-
-              if (value == true) {
-                self.setState({ discount: "50%" })
-                self.setState({ friendEmailError: "" })
-              }
-              else {
                 self.setState({ errCounter: 1 })
                 self.setState({ friendEmailError: "not valid email / let it empty if not exist" })
               }
-            });
+            })
+
+
         }
         else {
           this.setState({ friendEmailError: "" })
         }
       })
-      setTimeout(() => resolve("done"), 1000);
+      setTimeout(() => resolve("done"), 2000);
     });
 
 
@@ -139,24 +131,12 @@ class Register extends React.Component {
           })
             .then(function (response) {
               if (response.data.found == "true") {
-                return (true)
-
-              } else {
-                return (false)
-              }
-            })
-            .then(function (value) {
-              // console.log(value)
-
-              if (value != true) {
-                self.setState({ emailErr: "" })
-              }
-              else {
                 self.setState({ errCounter: 1 })
                 self.setState({ emailErr: "exist / select another one" })
+              } else {
+                self.setState({ emailErr: "" })
               }
-            });
-
+            })
         }
       })
       .then(() => {
@@ -194,6 +174,8 @@ class Register extends React.Component {
       .then(() => {
         var self = this;
         if (this.state.errCounter != 1) {
+          console.log("discount");
+          console.log(self.state.discount);
 
           axios.post('http://localhost:8000/user-api/user/', {
             first_name: self.state.fName,
@@ -259,40 +241,40 @@ class Register extends React.Component {
     localStorage.setItem("token", token);
     const name = res.name;
     sessionStorage.setItem('name', name)
-    
+
     axios.post('http://localhost:8000/user-api/user/user_email/', {
       email: res.email,
-     
+
     })
       .then(function (response) {
         if (response.data.found == "true") {
           sessionStorage.setItem('is_company', 'false')
-          window.location.href="http://localhost:3000/"
+          window.location.href = "http://localhost:3000/"
 
         } else {
-      axios.post('http://localhost:8000/user-api/user/', {
-        first_name: res.name,
-        last_name: '',
-        email: res.email,
-        password: '12345',
-        discount: 0,
-        token: token,
+          axios.post('http://localhost:8000/user-api/user/', {
+            first_name: res.name,
+            last_name: '',
+            email: res.email,
+            password: '12345',
+            discount: 0,
+            token: token,
+          })
+            .then(function (response) {
+              if (response.status == 400) {
+                console.log(response.error)
+              } else {
+                console.log("good");
+                window.location = "http://localhost:3000/test";
+              }
+            })
+            .catch(function (error) {
+              console.log(error)
+            });
+        }
+
+
       })
-        .then(function (response) {
-          if (response.status == 400) {
-            console.log(response.error)
-          } else {
-            console.log("good");
-            window.location = "http://localhost:3000/test";
-          }
-        })
-        .catch(function (error) {
-          console.log(error)
-        });
-    }
-
-
-  })
   }
 
   responseGoogle = (res) => {
@@ -302,7 +284,7 @@ class Register extends React.Component {
     const name = res.profileObj.givenName;
     sessionStorage.setItem('name', name)
     axios.post('http://localhost:8000/user-api/user/user_email/', {
-      email:res.profileObj.email
+      email: res.profileObj.email
     })
       .then(function (response) {
         if (response.data.found == "true") {
@@ -319,10 +301,10 @@ class Register extends React.Component {
             token: token,
           })
             .then(function (response) {
-             
+
               if (response.status == 400) {
                 console.log(response.error)
-              } else {                
+              } else {
                 window.location = "http://localhost:3000/test";
               }
             })
@@ -529,7 +511,7 @@ class Register extends React.Component {
                           />
 
                           <FacebookLogin
-                           cssClass="my-facebook-button-class  ml-2 p-2 mt-4  btn-primary"
+                            cssClass="my-facebook-button-class  ml-2 p-2 mt-4  btn-primary"
                             appId="1217932635211907"
                             autoload={false}
                             icon="fa-facebook"

@@ -56,6 +56,15 @@ class CustomerView(viewsets.ModelViewSet):
         self.kwargs.update(pk=customer.pk)
         return self.retrieve(request, *args, **kwargs)
 
+    @action(methods=['GET'], detail=False, permission_classes=[IsAuthenticated])
+    def my_discount(self, request, *args, **kwargs):
+        customer = get_object_or_404(Customer, user=request.user)
+        try:
+            return Response({"discount": customer.discount}, status=status.HTTP_200_OK)
+        except customer.DoesNotExist:
+            return Response({"discount": -1}, status=status.HTTP_200_OK)
+
+   
 
 class UserView(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)

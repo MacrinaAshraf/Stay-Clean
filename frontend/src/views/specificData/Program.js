@@ -57,8 +57,7 @@ class Profile extends React.Component {
     },
     lat: 30.033333,
     lng: 31.233334,
-
-
+    discount: 0,
   }
 
 
@@ -76,7 +75,7 @@ class Profile extends React.Component {
       }, {
         headers: {
           Authorization:
-          "Token " + localStorage.getItem("token"),
+            "Token " + localStorage.getItem("token"),
         },
       }).then(() => {
         this.setState({ myReview: "" });
@@ -95,22 +94,23 @@ class Profile extends React.Component {
       rate: 0,
       area: this.state.myArea,
       date: new Date(this.state.myDate),
-      price: Math.round((this.state.myArea / 5) * this.state.data.price)
+      price: Math.round(((this.state.myArea / 5) * this.state.data.price)* (this.state.discount / 100) ) 
 
     }, {
       headers: {
         Authorization:
-        "Token " + localStorage.getItem("token"),
+          "Token " + localStorage.getItem("token"),
       },
     }).then(() => {
       this.setState({ myAddress: "" });
       this.setState({ myNotes: "" });
       this.setState({ selectProgramEror: "" });
       this.setState({ selectProgramSuccess: "wait the company will call you soon" });
-      window.location.href = "http://localhost:3000/selected-programs";
-      
 
-    });
+      
+    }).then(()=>{
+
+    })
   }
 
 
@@ -145,6 +145,24 @@ class Profile extends React.Component {
         }
       })
       .catch(error => console.error(error))
+
+  }
+
+  getDiscount = async () => {
+    if (sessionStorage.getItem('is_company') === "false") {
+      axios.get('http://127.0.0.1:8000/user-api/customer/my_discount/', {
+        headers: {
+          Authorization:
+            "Token " + localStorage.getItem("token"),
+        }
+      }).then(res => {
+        if (res.data) {
+          console.log(res.data)
+          this.setState({ discount: res.data['discount'] })
+
+        }
+      }).catch(error => console.error(error));
+    }
 
   }
 
@@ -188,11 +206,14 @@ class Profile extends React.Component {
 
       this.getSelectedPrograms()
       this.getReviews()
+      this.getDiscount()
 
 
       this.interval = setInterval(() => {
         this.getSelectedPrograms();
         this.getReviews()
+        this.getDiscount()
+
       }, 8000);
 
     }
@@ -460,7 +481,9 @@ class Profile extends React.Component {
                           <Col lg="8">
                             <Card className="bg-gradient-secondary shadow">
                               <CardBody className="p-lg-5">
-                                <h4 className="mb-1">Want to Select ?</h4>
+                                <h4 className="mb-1">
+                                  Want to Select ? You Have {this.state.discount} %
+                                        </h4>
                                 <h6 className="mb-1">please click over your location to get right longitude and latitude</h6>
                                 <h6 className="mb-1">current latitude is {this.state.lat}</h6>
                                 <h6 className="mb-1">current longitude is {this.state.lng}</h6>
