@@ -119,9 +119,19 @@ class Profile extends React.Component {
     }
   }
 
+  
 
   componentWillUnmount() {
     clearInterval(this.interval);
+  }
+
+  getProgramName(offer) {
+    const program = this.state.programs.find(program => {
+      console.log(program);
+      if(program.id == offer.program)
+        return program; 
+    });
+    return program.name;
   }
 
 
@@ -279,8 +289,7 @@ class Profile extends React.Component {
               {this.state.offers.length > 0 ?
                 (<>
                   <Container>
-                    <Card>
-
+                    <Card >
                       <CardHeader>
                         <h3>Company Offers</h3>
                       </CardHeader>
@@ -288,8 +297,8 @@ class Profile extends React.Component {
                         {this.state.offers.map((offer, index) => (
                           <CardBody>
                             <CardTitle>
-                              <h4>{this.state.programs.find(program => program.id == offer.program).name}</h4>
-                              {/* <h4>{this.state.programs[0].id}</h4> */}
+                              <h4>{this.getProgramName(offer)}</h4>
+                              {/* <h4>{this.state.programs.find(program => program.id === parseInt(offer.program)).name}</h4> */}
                             </CardTitle>
                             <CardTitle>
                               {offer.offer}
