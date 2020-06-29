@@ -201,25 +201,26 @@ class Profile extends React.Component {
                           <div className="card-profile-stats d-flex justify-content-center">
 
                             <div>
-                              <span className="heading">{this.state.count}</span>
-                              <span className="description">program</span>
+                              <h3 className="heading text-logocolor">{this.state.count}</h3>
+                              <h3 className="description text-logocolor font-weight-bold">programs</h3>
                             </div>
 
                           </div>
                         </Col>
                       </Row>
-                      <div className="text-center mt-5">
-                        <h3>
+                      <div className="text-center mt-5 ">
+                        <h2 className="text-logocolor font-weight-bold">
                           {this.state.data.name}
-                        </h3>
+                        </h2>
 
                         <div className="h6 mt-2">
-                          <i className="ni business_briefcase-24 mr-2" />
+                          <h4 className="text-logocolor " >
                           {this.state.data.description}
+                          </h4>
                         </div>
-                        <div>
+                        <h4  className="text-logocolor ">
                           Location : {this.state.data.address}
-                        </div>
+                        </h4>
                       </div>
                       <div className="mt-5 py-5 border-top text-center">
                         <Row className="justify-content-center">
@@ -241,16 +242,20 @@ class Profile extends React.Component {
                           <Col lg="4">
                             <Card className="card-lift--hover shadow border-0">
                               <CardBody className="py-5">
-                                <div className="icon icon-shape icon-shape-primary rounded-circle mb-4">
+                                <div className="icon icon-shape icon-shape-logocolor rounded-circle mb-4">
                                   <i className="ni ni-check-bold" />
                                 </div>
-                                <h6 className="text-primary text-uppercase">
+                                <h5 className="text-logocolor text-uppercase font-weight-bold">
                                   {program.name}
-                                </h6>
-                                <p className="description mt-3">
-                                  {program.description}
-
-                                </p>
+                                </h5>
+                                
+          <h5 className=" text-logocolor  " >{program.description.length > 10 ?
+            (<> {program.description.substring(0, 40)}... </>) :
+            (<>{program.description}</>)
+            
+          }
+          
+          </h5>
                                 <div>
 
                                 </div>
@@ -258,7 +263,7 @@ class Profile extends React.Component {
 
                                   <Button
                                     className="mt-4"
-                                    color="primary"
+                                    color="logocolor"
                                   >
                                     Learn more
                                   </Button>
@@ -396,6 +401,8 @@ class Profile extends React.Component {
                                 <div>
                                   <Button
                                     block
+                                    style={{ fontSize:'20px',fontFamily:'Lobster, cursive',color:'orange'}}
+
                                     className="btn-round"
                                     color="default"
                                     size="lg"

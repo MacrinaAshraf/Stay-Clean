@@ -352,7 +352,7 @@ class Profile extends React.Component {
                       </div>
                     </Card>
                   </Container>
-                </section>
+                </section>  
 
                 {this.state.reviews.length > 0 ?
                   (<>
