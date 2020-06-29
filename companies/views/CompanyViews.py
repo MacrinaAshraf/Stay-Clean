@@ -44,11 +44,13 @@ class CompanyView(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(methods=['post'], detail=False, permission_classes=[AllowAny,])
-    def add_policy(self, request, pk= None):
+    def add_image_policy(self, request, pk= None):
         policy_data = request.FILES.get('policy')
+        image_data = request.FILES.get('image')
         user = User.objects.all().last()
         company = Company.objects.filter(user=user).first()
         print(company.user.email)
+        company.logo = image_data
         company.policy = policy_data
         company.save()
         return Response({"found": "true"}, status=status.HTTP_200_OK)
