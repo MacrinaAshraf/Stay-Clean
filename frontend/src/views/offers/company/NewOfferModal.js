@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
-import NewProgramForm from "./NewProgramForm";
+import NewOfferForm from "./NewOfferForm";
 
-class NewProgramModal extends Component {
+class NewOfferModal extends Component {
     state = {
         modal: false
     };
@@ -16,7 +16,7 @@ class NewProgramModal extends Component {
     render() {
         const create = this.props.create;
 
-        var title = "Editing program";
+        var title = "Editing offer";
         var button = 
         <Button 
             color="logocolor"
@@ -28,7 +28,7 @@ class NewProgramModal extends Component {
         </Button>;
         if (create) {
 
-            title = "Creating New program";
+            title = "Add new offer";
 
             button = (
                 <Button
@@ -36,7 +36,7 @@ class NewProgramModal extends Component {
                     onClick={this.toggle}
                     style={{ minWidth: "200px",marginTop:'-10%',marginRight:'85%', backgroundColor:'#4682B4',color:'orange' }}
                 >
-                    Create New program
+                    Add new offer
                 </Button>
             );
         }
@@ -48,7 +48,7 @@ class NewProgramModal extends Component {
                     <ModalHeader toggle={this.toggle}>{title}</ModalHeader>
 
                     <ModalBody>
-                        <NewProgramForm
+                        <NewOfferForm
                             resetState={this.props.resetState}
                             toggle={this.toggle}
                             item={this.props.item}
@@ -60,4 +60,4 @@ class NewProgramModal extends Component {
     }
 }
 
-export default NewProgramModal;
+export default NewOfferModal;
