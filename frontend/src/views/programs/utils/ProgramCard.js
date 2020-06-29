@@ -11,12 +11,12 @@ const ProgramCard = (props) => {
       {/* <Link to={'/programs/' + props.program.id}> */}
       <Card className="card-lift--hover shadow border-0">
         <CardBody className="py-5">
-         
+
 
           <h4 className="text-logocolor text-uppercase" ><b>{props.program.name}</b>
-          
+
           </h4>
-         <StarRatingComponent
+          <StarRatingComponent
 
             name="avgRate"
             starCount={5}
@@ -24,7 +24,11 @@ const ProgramCard = (props) => {
             editing={false}
           />
 
-          <h5 className=" text-logocolor  " >{props.program.description}</h5>
+          <h5 className=" text-logocolor  " >{props.program.description.length > 10 ?
+            (<> {props.program.description.substring(0, 30)}... </>) :
+            (<>{props.program.description}</>)
+          }
+          </h5>
           <div>
 
             <h3 ><Badge color="logocolor" className="ml-4">

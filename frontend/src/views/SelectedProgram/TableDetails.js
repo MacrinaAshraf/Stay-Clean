@@ -4,13 +4,13 @@ import SimpleFooter from "components/Footers/SimpleFooter.js";
 import StarRatingComponent from "react-star-rating-component";
 
 
-function TableDetail ({ item }) {
+function TableDetail({ item }) {
 
     const [rating, setRating] = useState(item.rate);
     const [program, setProgram] = useState({});
     const [customer, setCustomer] = useState({});
 
-   
+
     const onStarClick = async (nextValue) => {
 
         setRating(nextValue);
@@ -33,7 +33,7 @@ function TableDetail ({ item }) {
     };
 
 
-    function getPrograms(){
+    function getPrograms() {
         axios
             .get('http://localhost:8000/api/programs/' + item.program + "/", {
                 headers: {
@@ -48,7 +48,7 @@ function TableDetail ({ item }) {
             });
 
     }
-    function getCompanies(){
+    function getCompanies() {
         axios
             .get('http://localhost:8000/user-api/customer/' + item.customer + "/", {
                 headers: {
@@ -72,8 +72,8 @@ function TableDetail ({ item }) {
 
     return (
 
-        
-    
+
+
         <tr >
 
             {
@@ -97,7 +97,7 @@ function TableDetail ({ item }) {
                             />
 
                         </td>
-                       
+
 
 
 
@@ -108,7 +108,17 @@ function TableDetail ({ item }) {
                         <td>{program.name}</td>
                         <td>{program.price}</td>
                         <td>{item.notes}</td>
-                        <td>{item.address}</td>
+                        <td>
+
+                            <details>
+                                <summary>Details: {item.address.split('/')[2]}</summary>
+                                <p> latitude: {item.address.split('/')[0]} <br />
+                        longitude: {item.address.split('/')[1]} <br />
+                                </p>
+                            </details>
+
+
+                        </td>
                         <td>
                             <StarRatingComponent
                                 name="rate"
@@ -118,19 +128,19 @@ function TableDetail ({ item }) {
                             />
 
                         </td>
-                       
+
                         <td>{item.area}/5m<sup>2</sup ></td>
                         <td>{
                             item.pay ?
-                            (<>Booked</>)
-                            :
-                        (<>{item.id+4444}</>)
-                            }</td>
+                                (<>Booked</>)
+                                :
+                                (<>{item.id + 4444}</>)
+                        }</td>
 
                     </>)
             }
         </tr>
-        
+
     );
 };
 
