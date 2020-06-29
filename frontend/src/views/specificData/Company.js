@@ -6,6 +6,7 @@ import Review from "../IndexSections/Review.js";
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
 import "assets/css/scroll.css";
+import OfferDetails from '../offers/offerData';
 
 import {
   Button,
@@ -24,6 +25,7 @@ import {
 
 
 class Profile extends React.Component {
+
   state = {
     data: {
       id: -1
@@ -69,7 +71,10 @@ class Profile extends React.Component {
       .then(res => {
         if (res.data) {
           console.log(res.data)
-          this.setState({ offers: res.data })
+          console.log(this._isMounted)
+          // if (this._isMounted) {
+            this.setState({ offers: res.data })
+          // }
         }
       })
       .catch(error => console.log(error))
@@ -119,19 +124,10 @@ class Profile extends React.Component {
     }
   }
 
-  
+
 
   componentWillUnmount() {
     clearInterval(this.interval);
-  }
-
-  getProgramName(offer) {
-    const program = this.state.programs.find(program => {
-      console.log(program);
-      if(program.id == offer.program)
-        return program; 
-    });
-    return program.name;
   }
 
 
@@ -289,23 +285,13 @@ class Profile extends React.Component {
               {this.state.offers.length > 0 ?
                 (<>
                   <Container>
-                    <Card >
+                    <Card style={{ fontSize:'20px',color:'navy',fontFamily:'Lobster, cursive'}}>
                       <CardHeader>
                         <h3>Company Offers</h3>
                       </CardHeader>
                       <section className="row-grid align-items-center scrollbar style-9">
                         {this.state.offers.map((offer, index) => (
-                          <CardBody>
-                            <CardTitle>
-                              <h4>{this.getProgramName(offer)}</h4>
-                              {/* <h4>{this.state.programs.find(program => program.id === parseInt(offer.program)).name}</h4> */}
-                            </CardTitle>
-                            <CardTitle>
-                              {offer.offer}
-                            </CardTitle>
-                            <hr />
-                          </CardBody>
-
+                          <OfferDetails key={offer.id} offer={offer}/>
                         ))}
                       </section>
                     </Card>

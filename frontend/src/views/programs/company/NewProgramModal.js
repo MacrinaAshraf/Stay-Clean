@@ -32,8 +32,6 @@ class NewProgramModal extends Component {
 
             button = (
                 <Button
-                   
-                    
                     className="float-right"
                     onClick={this.toggle}
                     style={{ minWidth: "200px",marginTop:'-10%',marginRight:'85%', backgroundColor:'#4682B4',color:'orange' }}
