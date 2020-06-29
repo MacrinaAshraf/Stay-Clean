@@ -614,7 +614,7 @@ class Profile extends React.Component {
                                         width: "30%"
                                       }}
                                     >
-                                      send
+                                      Book
                         </Button>
                                     <br />
                                     {this.state.selectProgramEror ?
