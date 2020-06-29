@@ -61,7 +61,7 @@ class Pay extends React.Component {
             this.setState({ orderID: Number(this.state.code) - 4444, disablePay: false })
           }
           else {
-            console.log("sorry")
+            // console.log("sorry")
           }
 
         }).then((err) => {
@@ -84,7 +84,6 @@ class Pay extends React.Component {
   all_adv = () => {
     axios.get('http://127.0.0.1:8000/api/adv/')
       .then(res => {
-        console.log("here")
         if (res.data.length > 0) {
           res.data.map(adv=>{
             this.setState({
@@ -95,17 +94,17 @@ class Pay extends React.Component {
                 header: ""
               }]} )
           })
-          console.log("here")
 
           
         }
       })
       .then(res=>{
-        console.log("here")
-        console.log(this.state.all_adv)
+        // console.log(this.state.all_adv)
 
       })
-      .catch(error => console.error(error))
+      .catch(error => 
+        {}
+        )
   }
   componentDidMount() {
     this.all_adv()

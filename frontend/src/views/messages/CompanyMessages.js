@@ -51,8 +51,6 @@ class Messages extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log(this.state.selectedUser)
-    console.log(this.state.myMess)
 
     if (this.state.myMess != "") {
       axios.post("http://127.0.0.1:8000/api/message/", {

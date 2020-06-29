@@ -22,10 +22,10 @@ class NewOfferForm extends React.Component {
             "Token " + localStorage.getItem("token"),
         },
       }).then((res) => {
-        console.log(res);
+        // console.log(res);
         let options = res.data;
         this.setState({ programs: options.map(program => ({ value: program.id, label: program.name })) })
-        console.log(this.state.programs);
+        // console.log(this.state.programs);
       });
 
     if (this.props.item) {
@@ -79,7 +79,7 @@ class NewOfferForm extends React.Component {
   handleChange = selectedOption => {
     this.setState(
       { selectedOption },
-      () => console.log(`Option selected:`, this.state.selectedOption)
+      () => {}
     );
   };
 

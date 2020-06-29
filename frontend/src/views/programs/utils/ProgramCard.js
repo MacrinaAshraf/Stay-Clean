@@ -37,7 +37,8 @@ const ProgramCard = (props) => {
               {props.program.price} $
             </Badge>
               <Badge color="logocolor" className="ml-4" >
-                {props.program.duration} days
+                {props.program.duration} 
+                {props.program.duration >= 10? (<>hour</>):(<>hours</>)}
             </Badge></h3>
 
 

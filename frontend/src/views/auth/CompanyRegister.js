@@ -60,7 +60,7 @@ const CompanyRegister = (props) => {
 
         if (description.length < 15) {
           setErrorCounter(1)
-          setDescriptionErr("company name should containe more than 15 characters")
+          setDescriptionErr("company description should containe more than 15 characters")
         }
         else {
           setDescriptionErr("")
@@ -139,7 +139,7 @@ const CompanyRegister = (props) => {
       }
 
       ).then((res) => {
-        console.log(errorCounter)
+        // console.log(errorCounter)
         if (errorCounter == 1) {
           let form_data = new FormData();
 

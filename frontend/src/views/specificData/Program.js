@@ -157,7 +157,6 @@ class Profile extends React.Component {
         }
       }).then(res => {
         if (res.data) {
-          console.log(res.data)
           this.setState({ discount: res.data['discount'] })
 
         }

@@ -37,7 +37,7 @@ const SelectedProgram = (props) => {
                 setselectedProgram(selectedProgram.concat(res.data));
 
             }).catch(error => {
-                console.log(error);
+                // console.log(error);
                 if (
                     error
                         .toString()
@@ -117,6 +117,7 @@ const SelectedProgram = (props) => {
                         <th>Program Price</th>
                         <th >Note</th>
                         <th>Address</th>
+                        <th>Date</th>
                         <th>Rate</th>
                       
                         {sessionStorage.getItem("is_company") === "true" ?

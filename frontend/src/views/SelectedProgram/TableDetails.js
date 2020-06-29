@@ -28,7 +28,7 @@ function TableDetail({ item }) {
                 }
             );
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     };
 
@@ -88,12 +88,14 @@ function TableDetail({ item }) {
                         <td>{program.price}</td>
                         <td>{item.notes}</td>
                         <td>  <details>
-                                <summary>Details: {item.address.split('/')[2]}</summary>
-                                <p> latitude: {item.address.split('/')[0]} <br />
+                            <summary>Details: {item.address.split('/')[2]}</summary>
+                            <p> latitude: {item.address.split('/')[0]} <br />
                         longitude: {item.address.split('/')[1]} <br />
-                                </p>
-                            </details>
-</td>
+                            </p>
+                        </details>
+                        </td>
+                        <td>{item.date}</td>
+
                         <td>
                             <StarRatingComponent
                                 name="rate"
@@ -122,9 +124,9 @@ function TableDetail({ item }) {
                         longitude: {item.address.split('/')[1]} <br />
                                 </p>
                             </details>
-
-
                         </td>
+                        <td>{item.date}</td>
+
                         <td>
                             <StarRatingComponent
                                 name="rate"

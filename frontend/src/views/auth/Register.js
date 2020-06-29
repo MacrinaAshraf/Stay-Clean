@@ -1,9 +1,7 @@
 import React from "react";
 import axios from 'axios';
-
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
-
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
 
@@ -55,7 +53,6 @@ class Register extends React.Component {
   handleRegisterSubmit = (e) => {
     e.preventDefault();
     var self = this;
-    // console.log(self.state.discount)
 
     var promise = new Promise((resolve, reject) => {
 
@@ -174,8 +171,8 @@ class Register extends React.Component {
       .then(() => {
         var self = this;
         if (this.state.errCounter != 1) {
-          console.log("discount");
-          console.log(self.state.discount);
+          // console.log("discount");
+          // console.log(self.state.discount);
 
           axios.post('http://localhost:8000/user-api/user/', {
             first_name: self.state.fName,
@@ -187,18 +184,18 @@ class Register extends React.Component {
           })
             .then(function (response) {
               if (response.status == 400) {
-                console.log(response.error)
+                // console.log(response.error)
               } else {
                 window.location = "http://localhost:3000/login";
               }
             })
             .catch(function (error) {
-              console.log(error)
+              // console.log(error)
             });
         }
       }).
       catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
 
 
@@ -262,14 +259,14 @@ class Register extends React.Component {
           })
             .then(function (response) {
               if (response.status == 400) {
-                console.log(response.error)
+                // console.log(response.error)
               } else {
-                console.log("good");
+                // console.log("good");
                 window.location = "http://localhost:3000/test";
               }
             })
             .catch(function (error) {
-              console.log(error)
+              // console.log(error)
             });
         }
 
@@ -303,13 +300,13 @@ class Register extends React.Component {
             .then(function (response) {
 
               if (response.status == 400) {
-                console.log(response.error)
+                // console.log(response.error)
               } else {
                 window.location = "http://localhost:3000/test";
               }
             })
             .catch(function (error) {
-              console.log(error)
+              // console.log(error)
             });
         }
       })

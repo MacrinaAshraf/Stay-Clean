@@ -66,7 +66,7 @@ const Test = (props) => {
     // if(conPassword===password)
     {
 
-        console.log( phone);
+        // console.log( phone);
         axios({
             method: 'post',
             url: 'http://localhost:8000/user-api/update_data/' ,
@@ -76,11 +76,11 @@ const Test = (props) => {
             }
           })
         .then(response => {
-          console.log(response);
+          // console.log(response);
           if (response.status == 400) {
-            console.log("Not registered 250");
+            // console.log("Not registered 250");
           } else {
-            console.log("good");
+            // console.log("good");
             window.location = "http://localhost:3000";
           }
 

@@ -70,14 +70,14 @@ class Profile extends React.Component {
     axios.get(`http://127.0.0.1:8000/user-api/company/${this.props.match.params.id}/company_offers/`)
       .then(res => {
         if (res.data) {
-          console.log(res.data)
-          console.log(this._isMounted)
+          // console.log(res.data)
+          // console.log(this._isMounted)
           // if (this._isMounted) {
             this.setState({ offers: res.data })
           // }
         }
       })
-      .catch(error => console.log(error))
+      .catch(error => {})
   }
 
   getCompany_program = async () => {

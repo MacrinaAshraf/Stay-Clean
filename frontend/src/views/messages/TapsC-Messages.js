@@ -57,7 +57,7 @@ class TabsSection extends React.Component {
         }
       })
       .catch(error => {
-        console.log(error);
+        // console.log(error);
         if (
           error
             .toString()
@@ -177,7 +177,9 @@ class TabsSection extends React.Component {
                       <Col className="order-md-0" md="0">
 
 
-                        {this.state.send.map((mess) => (
+                      
+
+{this.state.send.map((mess) => (
                           <section className="section section-lg pt-lg-0 section-contact-us">
                             <Container>
                               <Card className="bg-gradient-secondary">
@@ -190,8 +192,9 @@ class TabsSection extends React.Component {
                                     })}
                                   >
                                     <InputGroup className="input-group-alternative">
-
                                       <Input
+                                       style={{ fontSize:'20px',color:'navy',fontFamily:'Lobster, cursive'}}
+
                                         type="text"
                                         value={`To : ${this.state.all_users[mess.customer_id]}`}
                                         disabled={true}
@@ -204,6 +207,7 @@ class TabsSection extends React.Component {
 
                                   <FormGroup className="mb-2">
                                     <Input
+                                     style={{ fontSize:'20px',color:'navy',fontFamily:'Lobster, cursive'}}
                                       className="form-control-alternative"
                                       cols="80"
                                       name="name"
@@ -222,6 +226,7 @@ class TabsSection extends React.Component {
                             </Container>
                           </section>
                         ))}
+
 
 
 

@@ -30,7 +30,7 @@ const CompanySelectedProgram = (props) => {
                 setselectedProgram(selectedProgram.concat(res.data));
              
             }).catch(error => {
-                console.log(error);
+                // console.log(error);
                 if (
                   error
                     .toString()

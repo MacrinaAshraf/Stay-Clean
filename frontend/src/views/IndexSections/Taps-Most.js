@@ -103,7 +103,6 @@ class TabsSection extends React.Component {
                         />
                       </Col>
                       <Col className="order-md-2" md="6">
-                        {console.log(this.props.most_review_program)}
                         {this.props.most_selected_program.id ?
                           (<>
 
@@ -114,7 +113,8 @@ class TabsSection extends React.Component {
                             <br />
                             <p className="display-4" >
 
-                              {this.props.most_selected_program.description}
+                              {this.props.most_selected_program.description.substring(0, 30)}
+
                               <br />
                               <br />
                               <b>Duration:</b> {this.props.most_selected_program.duration}
@@ -164,7 +164,7 @@ class TabsSection extends React.Component {
                             <br />
                             <p className="display-4">
 
-                              {this.props.most_review_program.description}
+                              {this.props.most_review_program.description.substring(0, 30)}
                               <br />
                               <br />
                               <b>Duration: </b>{this.props.most_review_program.duration}
@@ -217,7 +217,7 @@ class TabsSection extends React.Component {
                             <br />
                             <p className="display-4" >
 
-                              {this.props.most_rated_program.description}
+                              {this.props.most_rated_program.description.substring(0, 30)}
                               <br />
                               <br />
                               <b>Duration:</b> {this.props.most_rated_program.duration}
