@@ -24,9 +24,9 @@ class ListCompanyPrograms extends React.Component {
     };
 
     componentDidMount() {
-        // document.documentElement.scrollTop = 0;
-        // document.scrollingElement.scrollTop = 0;
-        // this.refs.main.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        document.scrollingElement.scrollTop = 0;
+        this.refs.main.scrollTop = 0;
         if (sessionStorage.getItem('is_company') === "false") {
             window.location.href = "http://localhost:3000/programs";
         }

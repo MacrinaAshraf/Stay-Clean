@@ -23,11 +23,13 @@ const ProgramCard = (props) => {
             value={parseInt(props.program.avgRate)}
             editing={false}
           />
-
+        
           <h5 className=" text-logocolor  " >{props.program.description.length > 10 ?
-            (<> {props.program.description.substring(0, 30)}... </>) :
+            (<> {props.program.description.substring(0, 20)}... </>) :
             (<>{props.program.description}</>)
+            
           }
+          
           </h5>
           <div>
 

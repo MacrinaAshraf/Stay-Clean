@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ProgramCard from "./utils/ProgramCard.js";
+import { Link } from 'react-router-dom';
 
-import { Container, Row, Col, Input, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
+import { Container, Row, Col, Input, Button,ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 
 // core components
 import Hero from "../IndexSections/Hero.js";
@@ -114,7 +115,25 @@ const List = () => {
                                 <Col lg="12">
                                     <Row className="row-grid">
                                         {filtered.map((item) => (
-                                            <ProgramCard program={item} key={item.id} />
+                                            <ProgramCard program={item} key={item.id}
+                                            
+                                               
+                                            >
+                                             <Button 
+                                                         color="logocolor"
+                                                         size='lg'
+                                                         className="mt-4 "
+                                                         outline type="button" 
+                                                        href={'/programs/' + item.id}
+                                                        >
+                                                    
+
+                                                  
+                                                        Learn More
+                                                 
+                                                   </Button>
+                                                </ProgramCard>
+                                            
                                         ))}
                                     </Row>
                                 </Col>

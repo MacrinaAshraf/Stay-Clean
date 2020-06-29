@@ -133,7 +133,7 @@ class Index extends React.Component {
             <Container>
               <Row className="justify-content-center text-center mb-lg">
                 <Col lg="8">
-                  <h2 className="display-3">All Companies</h2>
+                  <h2 className="display-2">All Companies</h2>
                 </Col>
               </Row>
               <Row>
