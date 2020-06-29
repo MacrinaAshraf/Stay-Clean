@@ -3,7 +3,7 @@ from rest_framework.fields import SerializerMethodField
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 
-from companies.models import Company, CompanyReview
+from companies.models import Company, CompanyReview, Offer
 from users.models import Customer
 
 
@@ -59,3 +59,13 @@ class ReviewSerializer(serializers.ModelSerializer):
         review = CompanyReview.objects.get(pk=pk)
         review.delete()
         return Response(status=status.HTTP_200_OK)
+
+
+class OfferSerializer(serializers.ModelSerializer):
+    # program = SerializerMethodField()
+    class Meta:
+        model = Offer
+        exclude = ['created_at', 'updated_at']
+    
+    # def get_program(self, obj):
+    #     return obj.program.name

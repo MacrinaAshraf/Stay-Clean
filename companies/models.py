@@ -120,3 +120,18 @@ class SelectedProgram(models.Model):
 
     def __str__(self):
         return "%s:%s" % (self.customer, self.rate)
+
+
+class Offer(models.Model):
+    program = models.ForeignKey(
+        'Program', null=True, on_delete=models.CASCADE)
+    company = models.ForeignKey(
+        Company, null=True, on_delete=models.CASCADE)
+    offer = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return "%s:%s" % (self.company.name, self.offer)
+    
+    
