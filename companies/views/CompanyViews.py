@@ -1,11 +1,11 @@
 from users.models import Company, User
-from companies.models import CompanyReview
+from companies.models import CompanyReview, Offer
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from companies.serializers.CompanySerializers import CompanySerializer, ReviewSerializer
+from companies.serializers.CompanySerializers import CompanySerializer, ReviewSerializer, OfferSerializer
 from rest_framework.parsers import MultiPartParser, FormParser, FileUploadParser
 from companies.serializers.ProgramSerializers import ProgramSerializer
 from companies.permissions import IsCompany
@@ -44,7 +44,7 @@ class CompanyView(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(methods=['post'], detail=False, permission_classes=[AllowAny,])
-    def add_image_policy(self, request, pk= None):
+    def add_image_policy(self, request, pk=None):
         policy_data = request.FILES.get('policy')
         image_data = request.FILES.get('image')
         user = User.objects.all().last()
@@ -55,10 +55,21 @@ class CompanyView(viewsets.ModelViewSet):
         company.save()
         return Response({"found": "true"}, status=status.HTTP_200_OK)
 
-# class RetrieveCompanyView(generics.RetrieveAPIView):
-#     permission_classes = (AllowAny,)
-#     queryset = Company.objects.all()
-#     serializer_class = CompanySerializer
+    @action(methods=['get'], detail=False, name="logged in company offers")
+    def my_offers(self, request):
+        company = get_object_or_404(Company,user=request.user)
+        offers = Offer.objects.filter(company=company.pk)
+        serializer = OfferSerializer(offers,many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    @action(methods=['get'], detail=True, name="specific company offers")
+    def company_offers(self, request, pk=None):
+        # company = get_object_or_404(Company,pk=request.user)
+        offers = Offer.objects.filter(company=pk)
+        serializer = OfferSerializer(offers,many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
 
 class CompanyReviewView(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
@@ -70,3 +81,35 @@ class CompanyReviewView(viewsets.ModelViewSet):
             CompanyReview,
             pk=self.kwargs.get('pk')
         )
+
+
+class CompanyOffer(viewsets.ModelViewSet):
+    permission_classes = (AllowAny,)
+    queryset = Offer.objects.all()
+    serializer_class = OfferSerializer
+
+    def get_object(self):
+        return get_object_or_404(
+            Offer,
+            pk=self.kwargs.get('pk')
+        )
+    
+    def create(self, request, *args, **kwargs):
+        company = get_object_or_404(Company, user=request.user)
+        # print(request.data.get('program'))
+        program = get_object_or_404(Program, pk=request.data.get('program'))
+        # print(program.pk)
+        info = {'company': company.pk, 'program': program.pk, 'offer': request.data.get('offer')}
+        # offer = Offer.objects.create(
+        #     company=company,
+        #     program=request.get('program'),
+        #     offer=request.get('offer'),
+        # )
+        # offer.save()
+        serializer = OfferSerializer(data=info)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            print('error', serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
