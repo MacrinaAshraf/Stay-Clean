@@ -431,6 +431,7 @@ class Profile extends React.Component {
 
                                   <div>
                                     <Button
+                                      style={{ fontSize:'20px',color:'orange'}}
                                       block
                                       className="btn-round"
                                       color="default"
@@ -606,12 +607,11 @@ class Profile extends React.Component {
 
                                   <div>
                                     <Button
-                                      block
-                                      className="btn-round"
-                                      color="default"
-                                      style={{
-                                        width: "30%"
-                                      }}
+                                       style={{ fontSize:'20px',color:'orange',width:'30%'}}
+ 
+                                       block
+                                       className="btn-round "
+                                       color="default"
                                     >
                                       Book
                         </Button>

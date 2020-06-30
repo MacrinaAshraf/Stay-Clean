@@ -99,7 +99,7 @@ const CompanySelectedProgram = (props) => {
                         
                             {/* 1st Hero Variation */}
                         </div>
-                        <Table className=" table-bordered table-hover mt-2 h5 text-center"  >
+                        <Table className=" table-bordered table-hover mt-2 text-center"  >
 
                 <thead>
                 <tr  style={{ background: 'navy' , color:'orange' , fontSize:'20px' , textAlign:'center',fontFamily:'Lobster, cursive'}}  >
@@ -108,10 +108,12 @@ const CompanySelectedProgram = (props) => {
                         <th>customer number</th>
                         <th>program name</th>
                         <th>program price</th>
-                        <th>note</th>
+        
                         <th>address</th>
+                       
                         <th>rate</th>
                         <th>Order Code</th>
+                        <th>Details</th>
                       
                     
                     </tr>
