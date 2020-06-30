@@ -343,7 +343,7 @@ class Profile extends React.Component {
                               <div className="rounded shadow-lg overflow-hidden transform-perspective-right"
                                 style={{ width: "500px", height: "400px", objectFit: "fill" }}
                               >
-                                <UncontrolledCarousel items={items}
+                                <UncontrolledCarousel items={items} 
                                 />
                               </div>
                             </Col>
